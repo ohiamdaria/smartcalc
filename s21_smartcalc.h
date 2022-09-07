@@ -25,5 +25,6 @@ void print(Stack *st);
 // for parser
 void parser(char *str, char *str_output, Stack *stack);
 int check_priority(char k);
+void parser_numbers(char *str, char *str_output);
 
-#endif S21_SMARTCALC
+#endif // S21_SMARTCALC

@@ -27,13 +27,12 @@ void print(Stack *st) {
     printf("\n");
 }
 
-void parser_numbers(char *str, Stack *stack) {
-    
-}
-
 void parser(char *str, char *str_output, Stack *stack) {
     for(;*str != '\0';str++) {
         int check = check_priority(*str);
+        if (check == 5) {
+
+        }
         switch(check) {
             case 0:
                 if (*str == '(') {
@@ -50,7 +49,8 @@ void parser(char *str, char *str_output, Stack *stack) {
                 }
                 break;
             case 1:
-                *str_output++ = *str;
+                while(*str != ' ')
+                    *str_output++ = *str++;
                 *str_output++ = ' ';
                 break;
             case 2:  
@@ -82,7 +82,10 @@ int check_priority(char k) {
     int check = -1;
     if (k == '(' || k == ')') check = 0;
     else if (k == '+' || k == '-') check = 3;
-    else if (k == '*' || k == '/') check = 2;
+    else if (k == '*' || k == '/' || k == 'm') check = 2;
+    else if (k == '^') check = 4;
+    else if (k == 's') check = 5;
     else if (k != ' ') check = 1;
+
     return check;
 }
