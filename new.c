@@ -45,7 +45,7 @@ int check_priority(char k);
 int main() {
     Stack stack;
     init_stack(&stack);
-    char meow[256] = "(1 - 3 - 0)";
+    char meow[256] = "(1 * 3 * 0 - 9 + 1 * 7)";
 
     char *str = NULL, *str_output = NULL;
     str = (char *)calloc(256, sizeof(char));
@@ -72,6 +72,7 @@ void parser(char *str, char *str_output, Stack *stack) {
                         *str_output++ = current_symbol;
                     while(peek(stack) > 0 && current_symbol != ')') {
                         *str_output++ = current_symbol;
+                        *str_output++ = ' ';
                         current_symbol = pop(stack);
                     }
                 }
@@ -79,17 +80,19 @@ void parser(char *str, char *str_output, Stack *stack) {
             case 1:
                 *str_output++ = *str;
                 *str_output++ = ' ';
-
                 break;
             case 2:  
             case 3:
             case 4: ;
                 char for_compare = 0;
-                for_compare = pop(stack);
+                if (peek(stack) > 0)
+                    for_compare = pop(stack);
                 while (peek(stack) > 0 && check >= check_priority(for_compare)) {
-                    *str_output = for_compare;
+                    *str_output++ = for_compare;
+                    *str_output++ = ' ';
                     for_compare = pop(stack);
                 }
+                push(stack, for_compare);
                 push(stack, *str);
                 break;
             default:
