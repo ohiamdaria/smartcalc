@@ -39,13 +39,13 @@ void parser(char *str, char *str_output, Stack *stack) {
             while(str && *str == ' ')
                 str--;
         }
-        printf("check: %d\n", check);
         switch(check) {
             case 0:
             case 1: ;
-                 if (*str == ')') {
-                    printf("here before )\n");         
-                    char current_symbol = pop(stack);
+                 if (*str == ')') {     
+                    if (peek(stack) > 0) {
+                        char current_symbol = ' ';
+                        current_symbol = pop(stack);
                     if (peek(stack) == 0)
                         *str_output++ = current_symbol;
                     while(peek(stack) > 0 && current_symbol != '(') {
@@ -60,13 +60,13 @@ void parser(char *str, char *str_output, Stack *stack) {
                         *str_output++ = current_symbol;
                         *str_output++ = ' ';
                     }
-                    printf("here after )\n");      
+                    }   
                 } else {
-                    printf("here ( or function\n");
                     push(stack, *str);
                 }
                 break;
             case 5:
+            // запятая - че с ней делать,,,,,,
                 // if (*str == ',') {
                 //     char for_compare = 0;
                 //     if (peek(stack) > 0)
@@ -85,7 +85,6 @@ void parser(char *str, char *str_output, Stack *stack) {
             case 2:  
             case 3:
             case 4: ;
-                printf("here before operator\n");      
                 char for_compare = 0;
                 if (peek(stack) > 0)
                     for_compare = pop(stack);
@@ -96,7 +95,6 @@ void parser(char *str, char *str_output, Stack *stack) {
                 }
                 push(stack, for_compare);
                 push(stack, *str);
-                printf("here after operator\n");
                 break;
             default:
                 continue;
@@ -106,24 +104,21 @@ void parser(char *str, char *str_output, Stack *stack) {
     while(peek(stack) > 0) {
         *str_output++ = pop(stack);
     }
-    printf("%s\n", str_output);
 }
 
 char rename_function(char *str) {
     char return_char = ' ', c = ' ';
     str = strtok(str, &c);
-    printf("str!!!: %s!\n", str);
-    if (strcmp(str, "sin")) return_char = 's';
-    else if (strcmp(str, "cos")) return_char = 'c';
-    else if (strcmp(str, "tan")) return_char = 't';
-    else if (strcmp(str, "asin")) return_char = 'i';
-    else if (strcmp(str, "acos")) return_char = 'o';
-    else if (strcmp(str, "atan")) return_char = 'a';
-    else if (strcmp(str, "sqrt")) return_char = 'q';
-    else if (strcmp(str, "ln")) return_char = 'n';
-    else if (strcmp(str, "log")) return_char = 'g';
-    else if (strcmp(str, "mod")) return_char = 'm';
-    printf("return char: %c\n", return_char);
+    if (!strcmp(str, "sin")) return_char = 's';
+    else if (!strcmp(str, "cos")) return_char = 'c';
+    else if (!strcmp(str, "tan")) return_char = 't';
+    else if (!strcmp(str, "asin")) return_char = 'i';
+    else if (!strcmp(str, "acos")) return_char = 'o';
+    else if (!strcmp(str, "atan")) return_char = 'a';
+    else if (!strcmp(str, "sqrt")) return_char = 'q';
+    else if (!strcmp(str, "ln")) return_char = 'n';
+    else if (!strcmp(str, "log")) return_char = 'g';
+    else if (!strcmp(str, "mod")) return_char = 'm';
     return return_char;
 }
 
