@@ -14,6 +14,9 @@ typedef struct {
     size_t size;
 } Stack;
 
+#define OK 0
+#define ARITHM_ERROR 1
+
 
 // working with stack
 void init_stack(Stack *st);
@@ -26,5 +29,6 @@ void print(Stack *st);
 void parser(char *str, char *str_output, Stack *stack);
 int check_priority(char k);
 void parser_numbers(char *str, char *str_output);
+char rename_function(char *str);
 
 #endif // S21_SMARTCALC

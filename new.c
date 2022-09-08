@@ -3,7 +3,7 @@
 int main() {
     Stack stack;
     init_stack(&stack);
-    char meow[256] = "(2.235 ^ 12.5 ) * 0.0 - 8 * ( 12452 + 3 ) * ( 9333.0 ^ 3 )";
+    char meow[256] = "( 1 - cos ( 4 / 9 - 5 ) )";
 
     char *str = NULL, *str_output = NULL;
     str = (char *)calloc(256, sizeof(char));
@@ -16,3 +16,4 @@ int main() {
     free(str_output);
     return 0;
 }
+// ( sin ( 3 + 5 ) * 7 - cos ( 4 / 9 - 5 ) )
