@@ -32,7 +32,7 @@ void parser(char *str, char *str_output, Stack *stack) {
     for(;*str != '\0';str++) {
         int check = check_priority(*str);
         if (check == 2 && *str == 'm' || check == 1) {
-            *str = rename_function(str);
+            // *str = rename_function(str);
             str++;
             while(*str != ' ')
                 *str++ = ' ';
@@ -106,6 +106,7 @@ void parser(char *str, char *str_output, Stack *stack) {
     }
 }
 
+// error
 char rename_function(char *str) {
     char return_char = ' ', c = ' ';
     str = strtok(str, &c);
@@ -128,7 +129,7 @@ int check_priority(char k) {
     else if (k == '+' || k == '-') check = 3;
     else if (k == '*' || k == '/' || k == 'm') check = 2;
     else if (k == '^') check = 4;
-    else if (k == 's' || k == 'c') check = 1;
+    else if (k == 's' || k == 'c' || k == 'l') check = 1;
     else if (k != ' ') check = 5;
 
     return check;
