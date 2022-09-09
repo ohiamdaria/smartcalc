@@ -3,7 +3,7 @@
 int main() {
     Stack stack;
     init_stack(&stack);
-    char meow[256] = "( 1 - cos ( 4 / 9 - 5 ) * sin ( log ( 5 ) + 8 ) )";
+    char meow[256] = "( 1 - ln ( 4 / 9 - 5 ) * sin ( log ( 5 ) + 8 ) )";
 
     char *str = NULL, *str_output = NULL;
     str = (char *)calloc(256, sizeof(char));
@@ -19,3 +19,4 @@ int main() {
 
 
 // ( sin ( 3 + 5 ) * 7 - cos ( 4 / 9 - 5 ) )
+// ( 1 - cos ( 4 / 9 - 5 ) * sin ( log ( 5 ) + 8 ) )
