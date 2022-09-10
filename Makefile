@@ -1,14 +1,14 @@
 CC	=	gcc
 CFLAGS	= -Wall -Werror -Wextra -std=c11 -pedantic
-LIB_NAME = smartcalc.a
+LIB_NAME = calculate.a
 
-INC:=$(shell find . -maxdepth 1 -name "s21*.h")
-SRC:=$(shell find . -maxdepth 1 -name "s21*.c")
-OBJS:=$(SRC:%.c=%.o)
+INC:=$(shell find . -maxdepth 1 -name "*.h")
+SRC:=$(shell find . -maxdepth 1 -name "*.c")
+OBJS:=$(SRC:from_notation/%.c=%.o)
 
 all: $(LIB_NAME)
 
-$(OBJS): %.o:%.c $(SRC) $(INC)
+$(OBJS): %.o:%.c from_notation/$(SRC) from_notation/$(INC)
 	$(CC) $(CFLAGS) -o $@ -c $< -g
 
 $(LIB_NAME): 	$(OBJS)

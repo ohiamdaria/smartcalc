@@ -1,4 +1,4 @@
-#include "s21_smartcalc.h"
+#include "notation.h"
 
 void notation(char *str, char *str_output, Stack *stack) {
     int error = OK;

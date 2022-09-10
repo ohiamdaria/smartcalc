@@ -1,16 +1,17 @@
 #include "calculate.h"
 
-double calc(char *s) {
+double calc(char *s, double number) {
     double d =  0.0l;;
     double otvet = 0.0l;
     Stack_number num;
     init_stackn(&num);
     while(*s != '\0') {
         while(check_priority(*s) == 5 || *s == ' ') {
-            if (check_priority(*s) == 5) {
+            if (check_priority(*s) == 5 && *s != 'x') {
                 d = *s - '0';
                 pushn(&num, d);
-            }
+            } else if (*s == 'x')
+                pushn(&num, number);
             s++;
         }
         switch(*s) {
@@ -27,9 +28,8 @@ double calc(char *s) {
             case '*':
                 otvet = popn(&num) * popn(&num);
                 pushn(&num, otvet);
-                printn(&num);
                 break;
-            case '/':
+            case '/': ;
                 double d3 = popn(&num);
                 double d4 = popn(&num);
                 otvet = d4 / d3;
@@ -67,11 +67,12 @@ double calc(char *s) {
                 otvet = sqrt(popn(&num));
                 pushn(&num, otvet);
                 break;
-            case 'n':
+            case 'n': // отриц числа 
                 otvet = ln(popn(&num));
                 pushn(&num, otvet);
                 break;  
         }
+        printf("otvet: %.6lf\n", otvet);
         s++;
     }
     printf("otvet: %.6lf\n", otvet);

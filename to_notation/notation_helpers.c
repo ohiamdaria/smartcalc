@@ -1,4 +1,4 @@
-#include "s21_smartcalc.h"
+#include "notation.h"
 
 void init_stack(Stack *st) {
     st->n = 0;
@@ -91,13 +91,13 @@ int check_unary_minus(char *str) {
     return status;
 }
 
-int check_priority(char k) {
-    int check = -1;
-    if (k == '(' || k == ')') check = 0;
-    else if (k == '+' || k == '-') check = 3;
-    else if (k == '*' || k == '/' || k == 'm') check = 2;
-    else if (k == '^') check = 4;
-    else if (k > 96 && k < 120) check = 1;
-    else if (k > 47 && k < 58 || k == 'x') check = 5;
-    return check;
-}
+// int check_priority(char k) {
+//     int check = -1;
+//     if (k == '(' || k == ')') check = 0;
+//     else if (k == '+' || k == '-') check = 3;
+//     else if (k == '*' || k == '/' || k == 'm') check = 2;
+//     else if (k == '^') check = 4;
+//     else if (k > 96 && k < 120) check = 1;
+//     else if (k > 47 && k < 58 || k == 'x') check = 5;
+//     return check;
+// }
