@@ -14,6 +14,12 @@ typedef struct {
     size_t size;
 } Stack;
 
+typedef struct {
+    double a[N];      // данные
+    unsigned int n; // сколько элементов хранится в стеке
+    size_t size;
+} Stack_number;
+
 #define OK 0
 #define ARITHM_ERROR 1
 

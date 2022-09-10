@@ -1,84 +1,123 @@
 #include "s21_smartcalc.h"
+#include <math.h>
+
+#define ln(x) log(x)
+
+void init_stackn(Stack_number *st) {
+    st->n = 0.0l;
+}
+
+double popn(Stack_number *st) {  //вытащить последний эл-т из стека
+    double res = st->a[st->n - 1];
+    st->n--;
+    return res;
+}
+
+void pushn(Stack_number *st, double data) {
+    st->a[st->n] = data;
+    st->n++;
+}
+
+int peekn(Stack_number* head) {
+    if (head == NULL)
+        return 0;
+    return head->n;
+}
+
+void printn(Stack_number *st) {
+    for (unsigned int i = 0; i < st->n; i++)
+        printf("i: %d int: %.6lf ", i, st->a[i]);
+    printf("\n");
+}
+
 
 double calc(char *s) {
     double d =  0.0l;;
     double otvet = 0.0l;
-    Stack num;
-    init_stack(&num);
+    Stack_number num;
+    init_stackn(&num);
     while(*s != '\0') {
-        printf("char2: %c\n", *s);
         while(check_priority(*s) == 5 || *s == ' ') {
-            printf("char: %c\n", *s);
             if (check_priority(*s) == 5) {
                 d = *s - '0';
-                push(&num, d);
+                pushn(&num, d);
             }
             s++;
         }
-        printf("char3: %c\n", *s);
         switch(*s) {
             case '+':
-                printf("here\n");
-                otvet = pop(&num) + pop(&num);
-                push(&num, otvet);
+                pushn(&num, popn(&num) + popn(&num));
                 break;
-            case '-':
-                otvet = pop(&num) - pop(&num);
-                push(&num, otvet);
+            case '-': ;
+                double d1 = popn(&num);
+                double d2 = popn(&num);
+                otvet = d2 - d1;
+                pushn(&num, d2 - d1);
                 break;
             case '*':
-                otvet = pop(&num) * pop(&num);
-                push(&num, otvet);
+                otvet = popn(&num) * popn(&num);
+                pushn(&num, otvet);
                 break;
-            case '/':
-                otvet = pop(&num) / pop(&num);
-                push(&num, otvet);
+            case '/': ;
+                double d3 = popn(&num);
+                double d4 = popn(&num);
+                otvet = d4 / d3;
+                pushn(&num, otvet);
                 break;
-            //     case 's':
-            //         otvet = sin(pop(num));
-            //         push(num, otvet);
-            //         break;
-            //     case 'c':
-            //         d1 = pop(num);
-            //         otvet = cos(d1);
-            //         push(num, otvet);
-            //         printf("%.2lf\n", otvet);
-            //         break;
-            //     case 't':
-            //         d1 = pop(num);
-            //         otvet = tan(d1);
-            //         push(num, otvet);
-            //         printf("%.2lf\n", otvet);
-            //         break;
-            //    case 'g':
-            //         d1 = pop(num);
-            //         otvet = 1/tan(d1);
-            //         push(num, otvet);
-            //         printf("%.2lf\n", otvet);
-            //         break;
-            //     case 'q':
-            //         d1 = pop(num);
-            //         otvet = sqrt(d1);
-            //         push(num, otvet);
-            //         printf("%.2lf\n", otvet);
-            //         break;
-            //     case 'l':
-            //         d1 = pop(num);
-            //         otvet = log(d1);
-            //         push(num, otvet);
-            //         printf("%.2lf\n", otvet);
-            //         break;  
+            case '^': ;
+                double d5 = popn(&num);
+                double d6 = popn(&num);
+                otvet = pow(d6, d5);
+                pushn(&num, otvet);
+                break;
+            case 'i': // sin
+                otvet = sin(popn(&num));
+                pushn(&num, otvet);
+                break;
+            case 'o': // cos
+                otvet = cos(popn(&num));
+                pushn(&num, otvet);
+                break;
+            case 'a': // tan
+                otvet = tan(popn(&num));
+                pushn(&num, otvet);
+                break;
+            case 's': // asin
+                otvet = asin(popn(&num));
+                pushn(&num, otvet);
+                break;
+            case 'c': // acos
+                otvet = acos(popn(&num));
+                pushn(&num, otvet);
+                break;
+            case 't': // atan
+                otvet = atan(popn(&num));
+                pushn(&num, otvet);
+                break;
+            case 'g': // log
+                otvet = log(popn(&num));
+                pushn(&num, otvet);
+                break;  
+            case 'q': // sqrt
+                otvet = sqrt(popn(&num));
+                pushn(&num, otvet);
+                break;
+            case 'n': // ln
+                otvet = ln(popn(&num));
+                pushn(&num, otvet);
+                break;  
         }
         s++;
-        printf("char4: %c\n", *s);
     }
-    return pop(&num);
+    return otvet;
 }
 
 int main() {
-    char s[20] = "3 5 + 7 *";
+    char s[256] = "1 4 9 / 5 - o 5 g 8 + i * -";
     double rez = 0.0l;
     rez = calc(&s[0]);
-    printf("%.2lf", rez);
+    printf("%.6lf\n", ( 1 - cos ( (double)4 / (double)9 - 5 ) * sin ( log ( 5 ) + 8 ) ));
+    printf("%.6lf\n", rez);
     return 0;
 }
+
