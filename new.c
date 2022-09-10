@@ -3,7 +3,7 @@
 int main() {
     Stack stack;
     init_stack(&stack);
-    char meow[256] = "( 2 ^ (2 + 3))";
+    char meow[256] = "( 2 ^ 3 ^ 2 )";
 
     char *str = NULL, *str_output = NULL;
     str = (char *)calloc(256, sizeof(char));
@@ -24,3 +24,12 @@ int main() {
 
 // correct str: 1 4 9 / 5 - n 5 g 8 + i * - 
 // correct str: 3 5 + i 7 * 4 9 / 5 - o - 
+
+
+// int main() {
+//     char s[256] = "1 4 +";
+//     double rez = 0.0l;
+//     rez = calc(&s[0]);
+//     printf("%.2lf", rez);
+//     return 0;
+// }

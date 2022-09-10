@@ -1,6 +1,32 @@
 #include "s21_smartcalc.h"
 
-// stupid change functions from sin to i
+void init_stack(Stack *st) {
+    st->n = 0;
+}
+
+char pop(Stack *st) {  //вытащить последний эл-т из стека
+    char res = st->a[st->n - 1];
+    st->n--;
+    return res;
+}
+
+void push(Stack *st, int data) {
+    st->a[st->n] = data;
+    st->n++;
+}
+
+int peek(Stack* head) {
+    if (head == NULL)
+        return 0;
+    return head->n;
+}
+
+void print(Stack *st) {
+    for (unsigned int i = 0; i < st->n; i++)
+        printf("%c ", st->a[i]);
+    printf("\n");
+}
+
 char *change_functions_in_str(char *str) {
     if (*str == 'l') {
         *str++ = ' ';
@@ -52,45 +78,13 @@ char *add_numbers(char *str, char *str_output) {
     return str_output;
 }
 
-void parser(char *str, char *str_output, Stack *stack) {
-    int error = OK;
-    for(;*str != '\0';str++) {
-        int check = check_priority(*str);
-        if (*str == 'm' || check == 1)
-            str = change_functions_in_str(str);
-        switch(check) {
-            case 0:
-            case 1:
-                 if (*str == ')') {
-                     str_output = add_from_stack(str, str_output, stack, 1);   
-                } else {
-                    push(stack, *str);
-                }
-                break;
-            case 5:
-                str_output = add_numbers(str, str_output);
-                break;
-            case 2:  
-            case 3:
-            case 4: ;
-                str_output = add_from_stack(str, str_output, stack, check);   // не робит для этих случаев :(
-                break;
-            default:
-                continue;
-                break;
-        }
-    }
-    while(peek(stack) > 0) *str_output++ = pop(stack);
-}
-
 int check_unary_minus(char *str) {
     int status = 0; // yes
     str--;
     while(*str == ' ') str--;
     int check_before = check_priority(*str);
     str++;
-    while(*str != '-') str++;
-    while(*str == ' ') str++;
+    while(*str != '-' || *str == ' ') str++;
     int check_after = check_priority(*str);
     if (check_before != check_after) 
         status = 1; // no
@@ -107,20 +101,3 @@ int check_priority(char k) {
     else if (k > 47 && k < 58 || k == 'x') check = 5;
     return check;
 }
-
-
-// запятая - че с ней делать,,,,,,
-    // if (*str == ',') {
-    //     char for_compare = 0;
-    //     if (peek(stack) > 0)
-    //         for_compare = pop(stack);
-    //     while (peek(stack) > 0 && for_compare != '(') {
-    //         *str_output++ = for_compare;
-    //         *str_output++ = ' ';
-    //         for_compare = pop(stack);
-    //     }
-    // } else {
-    // printf(" str look like: %c %s\n", *str, str);
-                        // if (peek(stack) == 0 && current_symbol == '(')
-        //     error = ARITHM_ERROR;
-        // else 
