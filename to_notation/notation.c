@@ -30,6 +30,7 @@ void notation(char *str, char *str_output, Stack *stack) {
                 break;
             case 5:
                 str_output = add_numbers(str, str_output);
+                while(*str != ' ') str++;
                 break;
             case 2:  
             case 3:

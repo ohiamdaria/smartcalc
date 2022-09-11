@@ -1,5 +1,11 @@
 #include "calculate.h"
 
+// int main() {
+//     char str[256] = "75.12456314";
+//     printf("%.8lf\n", parser_numbers(&str[0]));
+//     return 0;
+// }
+
 double calc(char *s, double number) {
     double d =  0.0l;;
     double otvet = 0.0l;
@@ -8,8 +14,9 @@ double calc(char *s, double number) {
     while(*s != '\0') {
         while(check_priority(*s) == 5 || *s == ' ') {
             if (check_priority(*s) == 5 && *s != 'x') {
-                d = *s - '0';
+                d = parser_numbers(s);
                 pushn(&num, d);
+                while(*s != ' ') ++s;
             } else if (*s == 'x')
                 pushn(&num, number);
             s++;
@@ -80,6 +87,5 @@ double calc(char *s, double number) {
         }
         s++;
     }
-    printf("otvet: %.6lf\n", otvet);
     return otvet;
 }

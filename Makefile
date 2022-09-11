@@ -1,19 +1,20 @@
 CC	=	gcc
 CFLAGS	= -Wall -Werror -Wextra -std=c11 -pedantic
-LIB_NAME = calculate.a
+LIB_CALC_NAME = calculate.a
+LIB_NOT_NAME = notation.a
 
 INC:=$(shell find . -maxdepth 1 -name "*.h")
 SRC:=$(shell find . -maxdepth 1 -name "*.c")
-OBJS:=$(SRC:from_notation/%.c=%.o)
+OBJS_CALC:=$(SRC:from_notation/%.c=%.o)
 
-all: $(LIB_NAME)
+all: $(LIB_CALC_NAME)
 
-$(OBJS): %.o:%.c from_notation/$(SRC) from_notation/$(INC)
+$(OBJS_CALC): %.o:%.c from_notation/$(SRC) from_notation/$(INC)
 	$(CC) $(CFLAGS) -o $@ -c $< -g
 
-$(LIB_NAME): 	$(OBJS)
-	ar	-vrcs	$(LIB_NAME)	$(OBJS)
-	ranlib	$(LIB_NAME)
+$(LIB_CALC_NAME): 	$(OBJS_CALC)
+	ar	-vrcs	$(LIB_CALC_NAME)	$(OBJS_CALC)
+	ranlib	$(LIB_NLIB_CALC_NAME)
 
 clean:
 	rm	-rf	*.o	*.out *.gcno *.gcna	*.html *.gcda *.css	*.exe
