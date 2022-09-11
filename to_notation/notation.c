@@ -1,5 +1,19 @@
 #include "notation.h"
 
+
+char *from_str_to_notation(char *str) {
+    Stack stack;
+    init_stack(&stack);
+
+    char *str_output = NULL;
+    str_output = (char *)calloc(256, sizeof(char));
+    notation(str, str_output, &stack);
+    printf("str: %s\n", str_output);
+
+    return str_output;
+}
+
+
 void notation(char *str, char *str_output, Stack *stack) {
     int error = OK;
     for(;*str != '\0';str++) {

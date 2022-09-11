@@ -2,8 +2,10 @@
 #define NOTATION_H_
 
 #include "../s21_smartcalc.h"
+#include "../from_notation/calculate.h"
 
 // for notation
+char *from_str_to_notation(char *str);
 void notation(char *str, char *str_output, Stack *stack);
 // helpers
 char *change_functions_in_str(char *str);
