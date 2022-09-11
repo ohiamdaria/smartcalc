@@ -27,7 +27,7 @@
 
 
 int main() {
-    char s[256] = "1 4 9 / x - i x g 8 + i * -";
+    char s[256] = "6 2 ^ 2 ^";
     double rez = 0.0l;
     rez = calc(&s[0], 5);
     printf("%.2lf", rez);

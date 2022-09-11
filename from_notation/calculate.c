@@ -29,10 +29,16 @@ double calc(char *s, double number) {
                 otvet = popn(&num) * popn(&num);
                 pushn(&num, otvet);
                 break;
-            case '/': ;
+            case '/': ; // null
                 double d3 = popn(&num);
                 double d4 = popn(&num);
                 otvet = d4 / d3;
+                pushn(&num, otvet);
+                break;
+            case '^': ;
+                double d5 = popn(&num);
+                double d6 = popn(&num);
+                otvet = pow(d6, d5);
                 pushn(&num, otvet);
                 break;
             case 'i': // sin
@@ -59,11 +65,11 @@ double calc(char *s, double number) {
                 otvet = atan(popn(&num));
                 pushn(&num, otvet);
                 break;
-            case 'g':
+            case 'g': 
                 otvet = log(popn(&num));
                 pushn(&num, otvet);
                 break;  
-            case 'q':
+            case 'q': // отриц числа
                 otvet = sqrt(popn(&num));
                 pushn(&num, otvet);
                 break;
@@ -72,7 +78,6 @@ double calc(char *s, double number) {
                 pushn(&num, otvet);
                 break;  
         }
-        printf("otvet: %.6lf\n", otvet);
         s++;
     }
     printf("otvet: %.6lf\n", otvet);
