@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>330</height>
+    <width>1116</width>
+    <height>737</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>781</width>
-      <height>311</height>
+      <x>20</x>
+      <y>20</y>
+      <width>1061</width>
+      <height>687</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -34,13 +34,6 @@
       <widget class="QPushButton" name="push_1">
        <property name="text">
         <string>1</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QPushButton" name="push_sin">
-       <property name="text">
-        <string>sin</string>
        </property>
       </widget>
      </item>
@@ -311,13 +304,6 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="2">
-      <widget class="QPushButton" name="push_tan">
-       <property name="text">
-        <string>tan</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="0" colspan="6">
       <widget class="QLineEdit" name="Display"/>
      </item>
@@ -325,6 +311,26 @@
       <widget class="QPushButton" name="push_clear">
        <property name="text">
         <string>&lt;-</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QPushButton" name="push_tan">
+       <property name="text">
+        <string>tan</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>100</width>
+         <height>200</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QPushButton" name="push_sin">
+       <property name="text">
+        <string>sin</string>
        </property>
       </widget>
      </item>

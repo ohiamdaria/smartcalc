@@ -27,7 +27,7 @@
 
 
 int main() {
-    char s[514] = "2.2+3";
+    char s[514] = "2.2+sin(3)";
     printf("%.6lf", smart_calc(&s[0], 0.0));
     return 0;
 }

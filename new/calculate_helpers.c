@@ -27,18 +27,6 @@ void printn(Stack_number *st) {
     printf("\n");
 }
 
-
-// int check_priority(char k) {
-//     int check = -1;
-//     if (k == '(' || k == ')') check = 0;
-//     else if (k == '+' || k == '-') check = 3;
-//     else if (k == '*' || k == '/' || k == 'm') check = 2;
-//     else if (k == '^') check = 4;
-//     else if (k > 96 && k < 120) check = 1;
-//     else if (k > 47 && k < 58 || k == 'x') check = 5;
-//     return check;
-// }
-
 double parser_numbers(char *str) {
     double whole_part = 0.0l;
     double fract_part = 0.0l;

@@ -115,8 +115,7 @@ double calc(char *s, double number) {
                 pushn(&num, otvet);
                 break;
             case '-': ;
-                double d1 = popn(&num);
-                double d2 = popn(&num);
+                double d1 = popn(&num), d2 = popn(&num);
                 otvet = d2 - d1;
                 pushn(&num, otvet);
                 break;
@@ -125,14 +124,12 @@ double calc(char *s, double number) {
                 pushn(&num, otvet);
                 break;
             case '/': ; // null
-                double d3 = popn(&num);
-                double d4 = popn(&num);
+                double d3 = popn(&num), d4 = popn(&num);
                 otvet = d4 / d3;
                 pushn(&num, otvet);
                 break;
             case '^': ;
-                double d5 = popn(&num);
-                double d6 = popn(&num);
+                double d5 = popn(&num),  d6 = popn(&num);
                 otvet = pow(d6, d5);
                 pushn(&num, otvet);
                 break;
@@ -281,6 +278,10 @@ char *add_space_to_str(char *str) {
             while((check_priority(*str) == 5 || *str == '.') && (*str != '\0'))
                 str_space[i++] = *str++;
             str_space[i++] = ' ';
+        } else if (check_priority(*str) == 1) {
+            while((check_priority(*str) == 1 && (*str != '\0')))
+                str_space[i++] = *str++;
+            str_space[i++] = ' ';
         } else {
             str_space[i++] = *str++;
             str_space[i++] = ' ';
@@ -297,10 +298,7 @@ char *from_str_to_notation(char *str) {
 
     char *str_output = NULL;
     str_output = (char *)calloc(514, sizeof(char));
-    char *str_space = NULL;
-    str_space = (char *)calloc(514, sizeof(char));
-    str = add_space_to_str(str);
-    notation(str, str_output, &stack);
+    notation(add_space_to_str(str), str_output, &stack);
 
     return str_output;
 }
@@ -311,5 +309,6 @@ double smart_calc(char *str, double number) {
     char *str_output = from_str_to_notation(str);
     double rez = 0.0l;
     rez = calc(str_output, x);
+    free(str_output);
     return rez;
 }
