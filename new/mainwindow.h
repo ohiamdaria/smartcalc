@@ -7,6 +7,8 @@ extern "C" {
 }
 
 #include <QMainWindow>
+#include <QVector>
+#include <QTimer>
 
 namespace Ui {
 class MainWindow;
@@ -85,10 +87,20 @@ private slots:
 
     void on_push_eq_clicked();
 
-    void on_push_space_clicked();
+    void on_push_X_clicked();
+
+    void TimerSlot();
+
+    void on_push_dot_clicked();
 
 private:
     Ui::MainWindow *ui;
+    double xBegin, xEnd, h, X;
+    int N;
+
+    QVector<double> x, y;
+    QTimer *timer;
+    int time;
 };
 
 #endif // MAINWINDOW_H

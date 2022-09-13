@@ -71,7 +71,15 @@ void MainWindow::on_push_mod_clicked() { clicked_text_add("mod"); }
 
 void MainWindow::on_push_pi_clicked() { clicked_text_add("pi"); }
 
-void MainWindow::on_push_e_clicked() { clicked_text_add("e"); }
+void MainWindow::on_push_e_clicked() {
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(TimerSlot()));
+    ui->widget->clearGraphs();
+    timer->start(20);
+    X = xBegin;
+    x.clear();
+    y.clear();
+}
 
 void MainWindow::on_push_ln_clicked() { clicked_text_add("ln"); }
 
@@ -85,15 +93,106 @@ void MainWindow::on_push_log_clicked() { clicked_text_add("log"); }
 void MainWindow::on_push_eq_clicked() {
     QString input = ui->Display->text();
     char c_input[512] = {0};
-    strncpy(c_input, qPrintable(input), 255);
 
-    double result = smart_calc(c_input, 0.0);
-    QString result_string = QString::number(result);
 
-    ui->Display->clear();
-    ui->Display->setText(result_string);
+    h = 3.14;
+    xBegin = -100;
+    xEnd = 100 + h;
+
+    ui->widget->xAxis->setRange(-100, 100);
+    ui->widget->yAxis->setRange(-100, 100);
+
+     N = (xEnd - xBegin)/h + 2;
+      for (X = xBegin; X < N; X += h) {
+          strncpy(c_input, qPrintable(input), 255);
+          double result = smart_calc(c_input, X);
+          x.push_back(X);
+          y.push_back(result);
+      }
+
+       ui->widget->addGraph();
+       ui->widget->graph(0)->addData(x,y);
+       ui->widget->replot();
+
+//    double result = smart_calc(c_input, X);
+//    QString result_string = QString::number(result);
+
+//    ui->Display->clear();
+//    ui->Display->setText(result_string);
+
 }
 
 
-void MainWindow::on_push_space_clicked() { clicked_text_add(" "); }
+void MainWindow::on_push_X_clicked() { clicked_text_add("x"); }
+
+void MainWindow::TimerSlot()
+{
+    QString input = ui->Display->text();
+    char c_input[512] = {0};
+
+    if (time <= 20 * N) {
+        if (X <= xEnd) {
+            strncpy(c_input, qPrintable(input), 255);
+            double result = smart_calc(c_input, X);
+            x.push_back(X);
+            y.push_back(result);
+            X += h;
+        }
+        time += 20;
+    } else {
+        time = 0;
+        timer->stop();
+    }
+
+    ui->widget->addGraph();
+    ui->widget->graph(0)->addData(x,y);
+    ui->widget->replot();
+
+}
+
+//void MainWindow::on_push_eq_clicked() {
+//    QString input = ui->Display->text();
+//    char c_input[512] = {0};
+//    strncpy(c_input, qPrintable(input), 255);
+
+
+//     // QString result_string = QString::number(result);
+
+//     h = 0.1;
+//     xBegin = -3;
+//     xEnd = 3 + h;
+
+//     ui->widget->xAxis->setRange(-4, 4);
+//     ui->widget->yAxis->setRange(0, 9);
+
+//     X = xBegin;
+//     N = (xEnd - xBegin)/h + 2;
+
+//     for (X = xBegin; X < N; X += h) {
+//         x.push_back(X);
+//         y.push_back(smart_calc(c_input, X));
+//     }
+
+//     ui->widget->addGraph();
+//     ui->widget->graph(0)->addData(x,y);
+//     ui->widget->replot();
+
+//    // ui->Display->clear();
+//    // ui->Display->setText(result_string);
+
+//    timer = new QTimer(this);
+//    connect(timer, SIGNAL(timeout()), this, SLOT(TimerSlot()));
+//    ui->widget->clearGraphs();
+//    timer->start(20);
+//    X = xBegin;
+//    x.clear();
+//    y.clear();
+//}
+
+void MainWindow::on_push_dot_clicked()
+{
+    clicked_text_add(".");
+}
+
+
 

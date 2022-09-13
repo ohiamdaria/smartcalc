@@ -95,7 +95,7 @@ double parser_numbers(char *str) {
 
 
 double calc(char *s, double number) {
-    double d =  0.0l;;
+    double d = 0.0l;;
     double otvet = 0.0l;
     Stack_number num;
     init_stackn(&num);
@@ -298,17 +298,15 @@ char *from_str_to_notation(char *str) {
 
     char *str_output = NULL;
     str_output = (char *)calloc(514, sizeof(char));
-    notation(add_space_to_str(str), str_output, &stack);
+    str = add_space_to_str(str);
+    notation(str, str_output, &stack);
 
     return str_output;
 }
 
 double smart_calc(char *str, double number) {
     double x = number;
-    printf("str: %s\n", str);
     char *str_output = from_str_to_notation(str);
-    double rez = 0.0l;
-    rez = calc(str_output, x);
-    free(str_output);
+    double rez = calc(str_output, x);
     return rez;
 }
