@@ -66,33 +66,26 @@ int check_priority(char k) {
 }
 
 double parser_numbers(char *str) {
-    double whole_part = 0.0l;
-    double fract_part = 0.0l;
+    double whole_part = 0.0l, fract_part = 0.0l;
     char wp[256] = "!", *whole_part_str = &wp[1];
     while(*str != '.' && *str != ' ')
         *whole_part_str++ = *str++;
     whole_part_str--;
 
-    if (*str == '.') {
-        str++;
+    if (*str++ == '.') {
         int j = -1;
-        while(*str != ' ') {
-            int get_number = *str++ - '0';
-            fract_part += get_number * pow(10, j--);
-        }
+        while(*str != ' ')
+            fract_part += (int )(*str++ - '0') * pow(10, j--);
     }
 
     int i = 0;
     while(*whole_part_str != '!') {
-        int get_number = *whole_part_str - '0';
-        whole_part += get_number * pow(10, i++);
+        whole_part += (int) (*whole_part_str - '0') * pow(10, i++);
         whole_part_str--;
     }
-    whole_part += fract_part;
 
-    return whole_part;
+    return (whole_part + fract_part);
 }
-
 
 double calc(char *s, double number) {
     double d = 0.0l;;
@@ -109,66 +102,27 @@ double calc(char *s, double number) {
                 pushn(&num, number);
             s++;
         }
-        switch(*s) {
-            case '+':
-                otvet = popn(&num) + popn(&num);
-                pushn(&num, otvet);
-                break;
-            case '-': ;
-                double d1 = popn(&num), d2 = popn(&num);
-                otvet = d2 - d1;
-                pushn(&num, otvet);
-                break;
-            case '*':
-                otvet = popn(&num) * popn(&num);
-                pushn(&num, otvet);
-                break;
-            case '/': ; // null
-                double d3 = popn(&num), d4 = popn(&num);
-                otvet = d4 / d3;
-                pushn(&num, otvet);
-                break;
-            case '^': ;
-                double d5 = popn(&num),  d6 = popn(&num);
-                otvet = pow(d6, d5);
-                pushn(&num, otvet);
-                break;
-            case 'i': // sin
-                otvet = sin(popn(&num));
-                pushn(&num, otvet);
-                break;
-            case 'o': // cos
-                otvet = cos(popn(&num));
-                pushn(&num, otvet);
-                break;
-            case 'a':
-                otvet = tan(popn(&num));
-                pushn(&num, otvet);
-                break;
-            case 's':
-                otvet = asin(popn(&num));
-                pushn(&num, otvet);
-                break;
-            case 'c':
-                otvet = acos(popn(&num));
-                pushn(&num, otvet);
-                break;
-            case 't':
-                otvet = atan(popn(&num));
-                pushn(&num, otvet);
-                break;
-            case 'g': 
-                otvet = log(popn(&num));
-                pushn(&num, otvet);
-                break;  
-            case 'q': // отриц числа
-                otvet = sqrt(popn(&num));
-                pushn(&num, otvet);
-                break;
-            case 'n': // отриц числа 
-                otvet = ln(popn(&num));
-                pushn(&num, otvet);
-                break;  
+        if (check_priority(*s) > 0 && check_priority(*s) < 4) {
+            if (*s == '+') { otvet = popn(&num) + popn(&num);
+            } else if (*s == '-') { otvet = -(popn(&num) - popn(&num));
+            } else if (*s == '*') { otvet = popn(&num) * popn(&num);
+            } else if (*s == '/') {
+                    double d3 = popn(&num), d4 = popn(&num);
+                    otvet = d4 / d3;
+            } else if (*s == '^') {
+                    double d5 = popn(&num),  d6 = popn(&num);
+                    otvet = pow(d6, d5);
+            } else if (*s == 'i') { otvet = sin(popn(&num));
+            } else if (*s == 'o') { otvet = cos(popn(&num));
+            } else if (*s == 'a') { otvet = tan(popn(&num));
+            } else if (*s == 's') { otvet = asin(popn(&num));
+            } else if (*s == 'c') { otvet = acos(popn(&num));
+            } else if (*s == 't') { otvet = atan(popn(&num));
+            } else if (*s == 'g') { otvet = log(popn(&num));
+            } else if (*s == 'q') { otvet = sqrt(popn(&num));
+            } else if (*s == 'n') { otvet = ln(popn(&num)); 
+            }
+            pushn(&num, otvet);
         }
         s++;
     }
@@ -245,26 +199,15 @@ void notation(char *str, char *str_output, Stack *stack) {
         int check = check_priority(*str);
         if (*str == 'm' || check == 1)
             str = change_functions_in_str(str);
-        switch(check) {
-            case 0:
-            case 1:
-                if (*str == ')')
-                     str_output = add_from_stack(str, str_output, stack, 1);
-                else
-                    push(stack, *str);
-                break;
-            case 5:
-                str_output = add_numbers(str, str_output);
-                while(*str != ' ') str++;
-                break;
-            case 2:
-            case 3:
-            case 4: ;
-                str_output = add_from_stack(str, str_output, stack, check);   // не робит для этих случаев :(
-                break;
-            default:
-                continue;
-                break;
+        if (check == 0 || check == 1) {
+            if (*str == ')') str_output = add_from_stack(str, str_output, stack, 1);
+            else
+                push(stack, *str);
+        } else if (check == 2|| check == 3 || check == 4) {
+            str_output = add_from_stack(str, str_output, stack, check);
+        } else if (check == 5) {
+            str_output = add_numbers(str, str_output);
+            while(*str != ' ') str++;
         }
     }
     while(peek(stack) > 0) *str_output++ = pop(stack);
@@ -277,15 +220,13 @@ char *add_space_to_str(char *str) {
         if (check_priority(*str) == 5) {
             while((check_priority(*str) == 5 || *str == '.') && (*str != '\0'))
                 str_space[i++] = *str++;
-            str_space[i++] = ' ';
         } else if (check_priority(*str) == 1) {
             while((check_priority(*str) == 1 && (*str != '\0')))
                 str_space[i++] = *str++;
-            str_space[i++] = ' ';
         } else {
             str_space[i++] = *str++;
-            str_space[i++] = ' ';
         }
+        str_space[i++] = ' ';
     }
     str_space[i++] = ')';
     strcpy(str, str_space);
@@ -296,17 +237,14 @@ char *from_str_to_notation(char *str) {
     Stack stack;
     init_stack(&stack);
 
-    char *str_output = NULL;
-    str_output = (char *)calloc(514, sizeof(char));
-    str = add_space_to_str(str);
-    notation(str, str_output, &stack);
+    char *str_output = (char *)calloc(514, sizeof(char));
+    notation(add_space_to_str(str), str_output, &stack);
 
     return str_output;
 }
 
 double smart_calc(char *str, double number) {
-    double x = number;
-    char *str_output = from_str_to_notation(str);
-    double rez = calc(str_output, x);
+    char *strcopy = str;
+    double rez = calc(from_str_to_notation(strcopy), number);
     return rez;
 }

@@ -9,18 +9,21 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    ../second_window/seqond_window.cpp \
     main.cpp \
     mainwindow.cpp \
     calculate.c \
     qcustomplot.cpp
 
 HEADERS += \
+    ../second_window/seqond_window.h \
     mainwindow.h \
     qcustomplot.h \
     s21_smartcalc.h \
     calculate.h
 
 FORMS += \
+    ../second_window/seqond_window.ui \
     mainwindow.ui
 
 # Default rules for deployment.

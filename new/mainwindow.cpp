@@ -5,6 +5,8 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
+    seqond_window = new class seqond_window;
+    seqond_window->show();
 }
 
 MainWindow::~MainWindow() {
@@ -71,15 +73,7 @@ void MainWindow::on_push_mod_clicked() { clicked_text_add("mod"); }
 
 void MainWindow::on_push_pi_clicked() { clicked_text_add("pi"); }
 
-void MainWindow::on_push_e_clicked() {
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(TimerSlot()));
-    ui->widget->clearGraphs();
-    timer->start(20);
-    X = xBegin;
-    x.clear();
-    y.clear();
-}
+void MainWindow::on_push_e_clicked() { clicked_text_add("e"); }
 
 void MainWindow::on_push_ln_clicked() { clicked_text_add("ln"); }
 
@@ -94,13 +88,23 @@ void MainWindow::on_push_eq_clicked() {
     QString input = ui->Display->text();
     char c_input[512] = {0};
 
+    strncpy(c_input, qPrintable(input), 255);
+    if (!strcmp(c_input, "")) {
+        ui->Display->setText("error");
+    } else if (graph) {
 
-    h = 3.14;
-    xBegin = -100;
-    xEnd = 100 + h;
+    QString xB = ui->x_Begin->text();
+    xBegin = xB.toDouble();
+    QString yB = ui->y_Begin->text();
+    yBegin = yB.toDouble();
+    QString add_h = ui->add_h->text();
+    h = add_h.toDouble();
 
-    ui->widget->xAxis->setRange(-100, 100);
-    ui->widget->yAxis->setRange(-100, 100);
+    xEnd = -xBegin + h;
+    yEnd = -yBegin + h;
+
+    ui->widget->xAxis->setRange(xBegin, xEnd);
+    ui->widget->yAxis->setRange(yBegin, yEnd);
 
      N = (xEnd - xBegin)/h + 2;
       for (X = xBegin; X < N; X += h) {
@@ -114,19 +118,39 @@ void MainWindow::on_push_eq_clicked() {
        ui->widget->graph(0)->addData(x,y);
        ui->widget->replot();
 
-//    double result = smart_calc(c_input, X);
-//    QString result_string = QString::number(result);
+       timer = new QTimer(this);
+       connect(timer, SIGNAL(timeout()), this, SLOT(TimerSlot()));
+       ui->widget->clearGraphs();
+       timer->start(20);
+       X = xBegin;
+       x.clear();
+       y.clear();
 
-//    ui->Display->clear();
-//    ui->Display->setText(result_string);
+       ui->widget->setInteraction(QCP::iRangeZoom, true);
+       ui->widget->setInteraction(QCP::iRangeDrag, true);
+      } else if (!graph) {
+            QString add_x = ui->add_x->text();
+            char c_add_x[256] = "";
+            strncpy(c_add_x, qPrintable(add_x), 255);
+            if (!strcmp(c_add_x, ""))
+                        ui->add_x->setText("error");
+            else {
+                X = add_x.toDouble();
 
+                double result = smart_calc(c_input, X);
+                QString result_string = QString::number(result);
+
+                ui->Display->clear();
+                ui->Display->setText(result_string);
+            }
+       }
 }
+
 
 
 void MainWindow::on_push_X_clicked() { clicked_text_add("x"); }
 
-void MainWindow::TimerSlot()
-{
+void MainWindow::TimerSlot() {
     QString input = ui->Display->text();
     char c_input[512] = {0};
 
@@ -150,49 +174,11 @@ void MainWindow::TimerSlot()
 
 }
 
-//void MainWindow::on_push_eq_clicked() {
-//    QString input = ui->Display->text();
-//    char c_input[512] = {0};
-//    strncpy(c_input, qPrintable(input), 255);
+void MainWindow::on_push_dot_clicked() { clicked_text_add("."); }
+
+void MainWindow::on_push_clear_2_clicked() { ui->Display->clear(); }
 
 
-//     // QString result_string = QString::number(result);
-
-//     h = 0.1;
-//     xBegin = -3;
-//     xEnd = 3 + h;
-
-//     ui->widget->xAxis->setRange(-4, 4);
-//     ui->widget->yAxis->setRange(0, 9);
-
-//     X = xBegin;
-//     N = (xEnd - xBegin)/h + 2;
-
-//     for (X = xBegin; X < N; X += h) {
-//         x.push_back(X);
-//         y.push_back(smart_calc(c_input, X));
-//     }
-
-//     ui->widget->addGraph();
-//     ui->widget->graph(0)->addData(x,y);
-//     ui->widget->replot();
-
-//    // ui->Display->clear();
-//    // ui->Display->setText(result_string);
-
-//    timer = new QTimer(this);
-//    connect(timer, SIGNAL(timeout()), this, SLOT(TimerSlot()));
-//    ui->widget->clearGraphs();
-//    timer->start(20);
-//    X = xBegin;
-//    x.clear();
-//    y.clear();
-//}
-
-void MainWindow::on_push_dot_clicked()
-{
-    clicked_text_add(".");
-}
-
+void MainWindow::on_graph_clicked(bool checked) { if (checked) graph = 1; }
 
 

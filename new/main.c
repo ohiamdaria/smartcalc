@@ -1,13 +1,13 @@
 #include "calculate.h"
 
 int main() {
-    char str[256] = "( sin ( 2 + 3 * x ) )";
+    char str[256] = "( sin ( 3 + 5.123456 ) * 7 - cos ( 4 / 9 - 5 ) )";
     double x = 1.11;
 
     double rez = 0.0l;
     rez = smart_calc(str, x);
     printf("my: %.8lf\n", rez);
-    printf("lib %.8lf\n", ( sin ( 2 + 3 * x ) ));
+    printf("lib %.8lf\n", ( sin ( 3 + 5.123456 ) * 7 - cos ( (double)4 / (double)9 - 5 ) ) );
     return 0;
 }
 

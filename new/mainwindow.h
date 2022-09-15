@@ -9,6 +9,7 @@ extern "C" {
 #include <QMainWindow>
 #include <QVector>
 #include <QTimer>
+#include <seqond_window.h>
 
 namespace Ui {
 class MainWindow;
@@ -93,14 +94,20 @@ private slots:
 
     void on_push_dot_clicked();
 
+    void on_push_clear_2_clicked();
+
+    void on_graph_clicked(bool checked);
+
 private:
     Ui::MainWindow *ui;
-    double xBegin, xEnd, h, X;
-    int N;
+    double xBegin, xEnd, yBegin, yEnd, h, X;
+    int N, graph = 0;
 
     QVector<double> x, y;
     QTimer *timer;
     int time;
+
+    seqond_window *seqond_window;
 };
 
 #endif // MAINWINDOW_H
