@@ -121,6 +121,7 @@ double calc(char *s, double number) {
             } else if (*s == 'g') { otvet = log(popn(&num));
             } else if (*s == 'q') { otvet = sqrt(popn(&num));
             } else if (*s == 'n') { otvet = ln(popn(&num)); 
+            } else if (*s == 'm') {
             }
             pushn(&num, otvet);
         }
@@ -130,12 +131,14 @@ double calc(char *s, double number) {
 }
 
 char *change_functions_in_str(char *str) {
-    if (*str == 'l') {
-        *str++ = ' ';
-        if (*str == 'o')
+    if (*str != 'm') {
+        if (*str == 'l') {
             *str++ = ' ';
-    } else {
-        *str++ = ' ';
+            if (*str == 'o')
+                *str++ = ' ';
+        } else {
+            *str++ = ' ';
+    }
         str++;
     while(*str != ' ')
         *str++ = ' ';

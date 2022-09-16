@@ -98,6 +98,12 @@ private slots:
 
     void on_graph_clicked(bool checked);
 
+   void Animation();
+
+   void if_graph_exist();
+
+   void if_graph_not_exist();
+
 private:
     Ui::MainWindow *ui;
     double xBegin, xEnd, yBegin, yEnd, h, X;
@@ -107,7 +113,6 @@ private:
     QTimer *timer;
     int time;
 
-    seqond_window *seqond_window;
 };
 
 #endif // MAINWINDOW_H
