@@ -183,18 +183,18 @@ char *add_numbers(char *str, char *str_output) {
     return str_output;
 }
 
-int check_unary_minus(char *str) {
-    int status = 0; // yes
-    str--;
-    while(*str == ' ') str--;
-    int check_before = check_priority(*str);
-    str++;
-    while(*str != '-' || *str == ' ') str++;
-    int check_after = check_priority(*str);
-    if (check_before != check_after)
-        status = 1; // no
-    return status;
-}
+// int check_unary_minus(char *str) {
+//     int status = 0; // yes
+//     str--;
+//     while(*str == ' ') str--;
+//     int check_before = check_priority(*str);
+//     str++;
+//     while(*str != '-' || *str == ' ') str++;
+//     int check_after = check_priority(*str);
+//     if (check_before != check_after)
+//         status = 1; // no
+//     return status;
+// }
 
 
 void notation(char *str, char *str_output, Stack *stack) {
@@ -235,13 +235,38 @@ char *add_space_to_str(char *str) {
     strcpy(str, str_space);
     return str;
 }
+char *add_null_to_str(char *str) {
+    char str_null[514] = "";
+    int i = 0;
+    while(*str != '\0') {
+        if (*str == '-' && check_unary_minus(str))
+            str_null[i++] = '0';
+        str_null[i++] = *str++;
+    }
+    strcpy(str, str_null);
+    return str;
+}
 
+int check_unary_minus(char *str) {
+    int status = 0; // no
+    str--;
+    while(*str == ' ') str--;
+    char check_before = *str;
+    str++;
+    while(*str != '-' || *str == ' ') str++;
+    char check_after = *str;
+    if (check_priority(check_after) != 5 && check_priority(check_before) != 5 && check_before != ')')
+        status = 1; // yes
+    return status;
+}
 char *from_str_to_notation(char *str) {
     Stack stack;
     init_stack(&stack);
 
     char *str_output = (char *)calloc(514, sizeof(char));
-    notation(add_space_to_str(str), str_output, &stack);
+
+    printf("%s\n", add_space_to_str(add_null_to_str(str)));
+    notation(add_space_to_str(add_null_to_str(str)), str_output, &stack);
 
     return str_output;
 }

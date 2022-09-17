@@ -100,18 +100,25 @@ private slots:
 
    void Animation();
 
+   void StopAnimation();
+
    void if_graph_exist();
 
    void if_graph_not_exist();
 
+   void on_push_run_clicked();
+
+   void on_push_stop_clicked();
+
 private:
     Ui::MainWindow *ui;
     double xBegin, xEnd, yBegin, yEnd, h, X;
-    int N, graph = 0;
+    int N, graph = 0, count = 0;
 
     QVector<double> x, y;
     QTimer *timer;
     int time;
+    bool flag = true;
 
 };
 

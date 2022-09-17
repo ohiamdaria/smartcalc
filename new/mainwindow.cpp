@@ -5,6 +5,7 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
+    ui->push_run->setText("START");
 }
 
 MainWindow::~MainWindow() {
@@ -130,8 +131,10 @@ void MainWindow::on_push_dot_clicked() { clicked_text_add("."); }
 
 void MainWindow::on_push_clear_2_clicked() {
     ui->Display->clear();
-    if (graph)
-        ui->widget->clearGraphs();
+    if (graph) {
+        ui->widget->graph(0)->data()->clear();
+        ui->widget->replot();
+    }
 }
 
 
@@ -147,7 +150,12 @@ void MainWindow::Animation() {
            y.clear();
 }
 
+void MainWindow::StopAnimation() {
+    timer->stop();
+}
+
 void MainWindow::if_graph_exist() {
+    ui->widget->clearGraphs();
     QString input = ui->Display->text();
     char c_input[512] = {0};
 
@@ -164,6 +172,8 @@ void MainWindow::if_graph_exist() {
     yEnd = -yBegin + h;
 
     ui->widget->addGraph();
+    ui->widget->xAxis->setRange(xBegin, xEnd);
+    ui->widget->yAxis->setRange(yBegin, yEnd);
 //    QLinearGradient background;
 //    background.setColorAt(0, QColor(30, 30, 30));
 //    ui->widget->setBackground(background);
@@ -184,12 +194,9 @@ void MainWindow::if_graph_exist() {
 //    QPen Pen;
 //    Pen.setColor(QColor(Qt::red));
 //    Pen.setWidthF(2);
-//    ui->widget->graph(0)->setPen(QPen(Qt::blue)); // line color blue for first graph
-//    ui->widget->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20))); // first graph will be filled with translucent blue
-//    ui->widget->addGraph();
-
-    ui->widget->xAxis->setRange(xBegin, xEnd);
-    ui->widget->yAxis->setRange(yBegin, yEnd);
+    ui->widget->graph(0)->setPen(QPen(Qt::blue)); // line color blue for first graph
+    ui->widget->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20))); // first graph will be filled with translucent blue
+    ui->widget->addGraph();
 
     N = (xEnd - xBegin)/h + 2;
       for (X = xBegin; X < N; X += h) {
@@ -206,7 +213,6 @@ void MainWindow::if_graph_exist() {
     ui->widget->graph(0)->addData(x,y);
     ui->widget->replot();
 
-     Animation();
     ui->widget->setInteraction(QCP::iRangeZoom, true);
     ui->widget->setInteraction(QCP::iRangeDrag, true);
 }
@@ -231,4 +237,27 @@ void MainWindow::if_graph_not_exist() {
     }
 }
 
+
+
+void MainWindow::on_push_run_clicked() {
+    if (count != 0) {
+        flag = !flag;
+        if (flag) {
+            ui->push_run->setText("START");
+            timer->stop();
+        } else {
+            ui->push_run->setText("STOP");
+            timer->start(1);
+        }
+    } else {
+        Animation();
+        count++;
+    }
+}
+
+
+void MainWindow::on_push_stop_clicked() {
+    ui->widget->graph(0)->data()->clear();
+    ui->widget->replot();
+}
 

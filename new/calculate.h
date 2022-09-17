@@ -35,6 +35,6 @@ char pop(Stack *st);
 void push(Stack *st, int data);
 int peek(Stack* head);
 void print(Stack *st);
-
+char * add_null_to_str(char *str);
 
 #endif // CALCULATE_H_
