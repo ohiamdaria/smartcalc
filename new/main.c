@@ -1,8 +1,8 @@
 #include "calculate.h"
 
 int main() {
-    char str[256] = "0 - 1 + 5";
-    double x = 1.11;
+    char str[256] = "667.546 m 492.21";
+    // double x = 1.11;
     // printf("str: %s\n", str);
     char *str_out;
     // str_out = add_space_to_str(str);
@@ -10,9 +10,9 @@ int main() {
     // str_out = add_null_to_str(str);
     // printf("str: %s\n", str_out);
     double rez = 0.0l;
-    rez = smart_calc(str, x);
+    rez = smart_calc(str, 0.0);
     printf("my: %.8lf\n", rez);
-    printf("lib %.8lf\n", ( -1*(-2-3.2-0)-1) );
+    printf("lib %.8lf\n", fmod(667.546, 492.21));
     return 0;
 }
 
