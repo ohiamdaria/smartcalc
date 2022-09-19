@@ -123,7 +123,6 @@ double calc(char *s, double number) {
             } else if (*s == 'n') { otvet = ln(popn(&num)); 
             } else if (*s == 'm') { 
                     double d7 = popn(&num),  d8 = popn(&num);
-                    printf("here %.6f %.6f", d7, d8);
                     otvet = fmod(d8, d7);
             }
             pushn(&num, otvet);
