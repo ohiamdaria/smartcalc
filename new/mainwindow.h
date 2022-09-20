@@ -2,14 +2,12 @@
 #define MAINWINDOW_H
 
 extern "C" {
-#include "s21_smartcalc.h"
-#include "calculate.h"
+#include "s21_calculate.h"
 }
 
 #include <QMainWindow>
 #include <QVector>
 #include <QTimer>
-#include <seqond_window.h>
 
 namespace Ui {
 class MainWindow;
@@ -94,7 +92,7 @@ private slots:
 
     void on_push_dot_clicked();
 
-    void on_push_clear_2_clicked();
+//    void on_push_clear_2_clicked();
 
     void on_graph_clicked(bool checked);
 

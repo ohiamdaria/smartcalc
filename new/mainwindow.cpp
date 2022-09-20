@@ -21,7 +21,11 @@ void MainWindow::on_push_clear_clicked() {
     QString text = ui->Display->text();
      text.chop(1);
      if (text.isEmpty()) { text = ""; }
-     ui->Display->setText(text);     
+     ui->Display->setText(text);
+     if (graph) {
+         ui->widget->graph(0)->data()->clear();
+         ui->widget->replot();
+     }
 }
 
 void MainWindow::on_push_1_clicked() { clicked_text_add("1"); }
@@ -81,7 +85,8 @@ void MainWindow::on_push_right_clicked() { clicked_text_add("("); }
 void MainWindow::on_push_left_clicked() { clicked_text_add(")"); }
 
 void MainWindow::on_push_log_clicked() { clicked_text_add("log"); }
-
+void MainWindow::on_push_X_clicked() { clicked_text_add("x"); }
+void MainWindow::on_push_dot_clicked() { clicked_text_add("."); }
 
 void MainWindow::on_push_eq_clicked() {
     ui->widget->clearGraphs();
@@ -100,8 +105,7 @@ void MainWindow::on_push_eq_clicked() {
 }
 
 
-
-void MainWindow::on_push_X_clicked() { clicked_text_add("x"); }
+void MainWindow::on_graph_clicked(bool checked) { if (checked) graph = 1; }
 
 void MainWindow::TimerSlot() {
     ui->widget->clearGraphs();
@@ -127,27 +131,14 @@ void MainWindow::TimerSlot() {
     ui->widget->replot();
 }
 
-void MainWindow::on_push_dot_clicked() { clicked_text_add("."); }
-
-void MainWindow::on_push_clear_2_clicked() {
-    ui->Display->clear();
-    if (graph) {
-        ui->widget->graph(0)->data()->clear();
-        ui->widget->replot();
-    }
-}
-
-
-void MainWindow::on_graph_clicked(bool checked) { if (checked) graph = 1; }
-
 void MainWindow::Animation() {
-           timer = new QTimer(this);
-           connect(timer, SIGNAL(timeout()), this, SLOT(TimerSlot()));
-           ui->widget->clearGraphs();
-           timer->start(20);
-           X = xBegin;
-           x.clear();
-           y.clear();
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(TimerSlot()));
+    ui->widget->clearGraphs();
+    timer->start(20);
+    X = xBegin;
+    x.clear();
+    y.clear();
 }
 
 void MainWindow::StopAnimation() {
@@ -161,54 +152,31 @@ void MainWindow::if_graph_exist() {
 
     strncpy(c_input, qPrintable(input), 255);
 
-    QString xB = ui->x_Begin->text();
-    xBegin = xB.toDouble();
-    QString yB = ui->y_Begin->text();
-    yBegin = yB.toDouble();
-    QString add_h = ui->add_h->text();
-    h = add_h.toDouble();
-
-    xEnd = -xBegin + h;
-    yEnd = -yBegin + h;
+    xBegin = ui->x_Begin->text().toDouble();
+    yBegin = ui->y_Begin->text().toDouble();
+    h = ui->add_h->text().toDouble();
 
     ui->widget->addGraph();
+    QPen DotPen;
+    DotPen.setWidthF(2);
+    ui->widget->graph(0)->setPen(DotPen);
+     ui->widget->graph(0)->setLineStyle(QCPGraph::lsNone);
+    ui->widget->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 1));
+
+
+    ui->widget->graph(0)->setName("Sine envelope");
+
     ui->widget->xAxis->setRange(xBegin, xEnd);
     ui->widget->yAxis->setRange(yBegin, yEnd);
-//    QLinearGradient background;
-//    background.setColorAt(0, QColor(30, 30, 30));
-//    ui->widget->setBackground(background);
-
-//    QLinearGradient axisBackground;
-//    axisBackground.setColorAt(0, QColor(30, 30, 30));
-//    ui->widget->axisRect()->setBackground(axisBackground);
-
-//    ui->widget->xAxis->setTickLabelColor(Qt::white);
-//    ui->widget->yAxis->setTickLabelColor(Qt::white);
-//    ui->widget->xAxis->setBasePen(QPen(Qt::white, 2));
-//    ui->widget->yAxis->setBasePen(QPen(Qt::white, 2));
-//    ui->widget->xAxis->setTickPen(QPen(Qt::white, 2));
-//    ui->widget->yAxis->setTickPen(QPen(Qt::white, 2));
-//    ui->widget->xAxis->setSubTickPen(QPen(Qt::white, 2));
-//    ui->widget->yAxis->setSubTickPen(QPen(Qt::white, 2));
-
-//    QPen Pen;
-//    Pen.setColor(QColor(Qt::red));
-//    Pen.setWidthF(2);
-    ui->widget->graph(0)->setPen(QPen(Qt::blue)); // line color blue for first graph
-    ui->widget->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20))); // first graph will be filled with translucent blue
     ui->widget->addGraph();
 
-    N = (xEnd - xBegin)/h + 2;
-      for (X = xBegin; X < N; X += h) {
-          strncpy(c_input, qPrintable(input), 255);
-          double result = smart_calc(c_input, X);
-
-          if (result != NAN && result != INFINITY && result != -INFINITY) {
-              x.push_back(X);
-              y.push_back(result);
-          }
-
-      }
+    N = (-xBegin + h - xBegin)/h + 2;
+    for (X = xBegin; X < N; X += h) {
+      strncpy(c_input, qPrintable(input), 255);
+      double result = smart_calc(c_input, X);
+      x.push_back(X);
+      y.push_back(result);
+    }
 
     ui->widget->graph(0)->addData(x,y);
     ui->widget->replot();
@@ -222,22 +190,12 @@ void MainWindow::if_graph_not_exist() {
     char c_input[512] = {0};
     strncpy(c_input, qPrintable(input), 255);
 
-    QString add_x = ui->add_x->text();
-    char c_add_x[256] = "";
-    strncpy(c_add_x, qPrintable(add_x), 255);
-
-    if (!strcmp(c_add_x, ""))
-                ui->add_x->setText("error");
-    else {
-        X = add_x.toDouble();
-        double result = smart_calc(c_input, X);
-        QString result_string = QString::number(result);
-        ui->Display->clear();
-        ui->Display->setText(result_string);
-    }
+    X = ui->add_x->text().toDouble();
+    double result = smart_calc(c_input, X);
+    QString result_string = QString::number(result);
+    ui->Display->clear();
+    ui->Display->setText(result_string);
 }
-
-
 
 void MainWindow::on_push_run_clicked() {
     if (count != 0) {
@@ -254,7 +212,6 @@ void MainWindow::on_push_run_clicked() {
         count++;
     }
 }
-
 
 void MainWindow::on_push_stop_clicked() {
     ui->widget->graph(0)->data()->clear();

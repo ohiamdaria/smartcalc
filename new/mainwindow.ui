@@ -6,22 +6,38 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>882</width>
+    <width>672</width>
     <height>777</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+	color: #000000;
+	background-color: #DCDCDC;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
+}</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QCustomPlot" name="widget" native="true">
     <property name="geometry">
      <rect>
-      <x>38</x>
-      <y>330</y>
-      <width>801</width>
+      <x>50</x>
+      <y>320</y>
+      <width>571</width>
       <height>321</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QCustomPlot {
+	border: 3px solid black;
+    border-radius: 2px;
+    padding: 1px;
+}</string>
     </property>
    </widget>
    <widget class="QPushButton" name="push_pow">
@@ -35,25 +51,12 @@
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-</string>
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
+}</string>
     </property>
     <property name="text">
      <string>pow</string>
@@ -73,22 +76,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -109,22 +101,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -145,22 +126,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -181,22 +151,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -217,22 +176,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -253,22 +201,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -289,24 +226,12 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-</string>
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
+}</string>
     </property>
     <property name="text">
      <string>log</string>
@@ -326,22 +251,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -362,22 +276,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -398,22 +301,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -434,22 +326,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -476,22 +357,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -512,22 +382,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -548,22 +407,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -584,22 +432,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -620,22 +457,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #E6E6FA;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -656,22 +482,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #E6E6FA;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -692,22 +507,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #E6E6FA;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -732,96 +536,63 @@ QToolButton:pressed, QPushButton:pressed {
        <colorrole role="WindowText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>74</red>
-          <green>45</green>
-          <blue>59</blue>
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
          </color>
         </brush>
        </colorrole>
        <colorrole role="Button">
-        <brush brushstyle="LinearGradientPattern">
-         <gradient startx="0.000000000000000" starty="0.000000000000000" endx="0.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
-          <gradientstop position="0.000000000000000">
-           <color alpha="255">
-            <red>254</red>
-            <green>254</green>
-            <blue>254</blue>
-           </color>
-          </gradientstop>
-          <gradientstop position="1.000000000000000">
-           <color alpha="255">
-            <red>255</red>
-            <green>194</green>
-            <blue>222</blue>
-           </color>
-          </gradientstop>
-         </gradient>
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>230</red>
+          <green>230</green>
+          <blue>250</blue>
+         </color>
         </brush>
        </colorrole>
        <colorrole role="Text">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>74</red>
-          <green>45</green>
-          <blue>59</blue>
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
          </color>
         </brush>
        </colorrole>
        <colorrole role="ButtonText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>74</red>
-          <green>45</green>
-          <blue>59</blue>
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
          </color>
         </brush>
        </colorrole>
        <colorrole role="Base">
-        <brush brushstyle="LinearGradientPattern">
-         <gradient startx="0.000000000000000" starty="0.000000000000000" endx="0.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
-          <gradientstop position="0.000000000000000">
-           <color alpha="255">
-            <red>254</red>
-            <green>254</green>
-            <blue>254</blue>
-           </color>
-          </gradientstop>
-          <gradientstop position="1.000000000000000">
-           <color alpha="255">
-            <red>255</red>
-            <green>194</green>
-            <blue>222</blue>
-           </color>
-          </gradientstop>
-         </gradient>
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>230</red>
+          <green>230</green>
+          <blue>250</blue>
+         </color>
         </brush>
        </colorrole>
        <colorrole role="Window">
-        <brush brushstyle="LinearGradientPattern">
-         <gradient startx="0.000000000000000" starty="0.000000000000000" endx="0.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
-          <gradientstop position="0.000000000000000">
-           <color alpha="255">
-            <red>254</red>
-            <green>254</green>
-            <blue>254</blue>
-           </color>
-          </gradientstop>
-          <gradientstop position="1.000000000000000">
-           <color alpha="255">
-            <red>255</red>
-            <green>194</green>
-            <blue>222</blue>
-           </color>
-          </gradientstop>
-         </gradient>
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>230</red>
+          <green>230</green>
+          <blue>250</blue>
+         </color>
         </brush>
        </colorrole>
        <colorrole role="PlaceholderText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>74</red>
-          <green>45</green>
-          <blue>59</blue>
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
          </color>
         </brush>
        </colorrole>
@@ -830,96 +601,63 @@ QToolButton:pressed, QPushButton:pressed {
        <colorrole role="WindowText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>74</red>
-          <green>45</green>
-          <blue>59</blue>
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
          </color>
         </brush>
        </colorrole>
        <colorrole role="Button">
-        <brush brushstyle="LinearGradientPattern">
-         <gradient startx="0.000000000000000" starty="0.000000000000000" endx="0.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
-          <gradientstop position="0.000000000000000">
-           <color alpha="255">
-            <red>254</red>
-            <green>254</green>
-            <blue>254</blue>
-           </color>
-          </gradientstop>
-          <gradientstop position="1.000000000000000">
-           <color alpha="255">
-            <red>255</red>
-            <green>194</green>
-            <blue>222</blue>
-           </color>
-          </gradientstop>
-         </gradient>
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>230</red>
+          <green>230</green>
+          <blue>250</blue>
+         </color>
         </brush>
        </colorrole>
        <colorrole role="Text">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>74</red>
-          <green>45</green>
-          <blue>59</blue>
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
          </color>
         </brush>
        </colorrole>
        <colorrole role="ButtonText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>74</red>
-          <green>45</green>
-          <blue>59</blue>
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
          </color>
         </brush>
        </colorrole>
        <colorrole role="Base">
-        <brush brushstyle="LinearGradientPattern">
-         <gradient startx="0.000000000000000" starty="0.000000000000000" endx="0.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
-          <gradientstop position="0.000000000000000">
-           <color alpha="255">
-            <red>254</red>
-            <green>254</green>
-            <blue>254</blue>
-           </color>
-          </gradientstop>
-          <gradientstop position="1.000000000000000">
-           <color alpha="255">
-            <red>255</red>
-            <green>194</green>
-            <blue>222</blue>
-           </color>
-          </gradientstop>
-         </gradient>
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>230</red>
+          <green>230</green>
+          <blue>250</blue>
+         </color>
         </brush>
        </colorrole>
        <colorrole role="Window">
-        <brush brushstyle="LinearGradientPattern">
-         <gradient startx="0.000000000000000" starty="0.000000000000000" endx="0.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
-          <gradientstop position="0.000000000000000">
-           <color alpha="255">
-            <red>254</red>
-            <green>254</green>
-            <blue>254</blue>
-           </color>
-          </gradientstop>
-          <gradientstop position="1.000000000000000">
-           <color alpha="255">
-            <red>255</red>
-            <green>194</green>
-            <blue>222</blue>
-           </color>
-          </gradientstop>
-         </gradient>
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>230</red>
+          <green>230</green>
+          <blue>250</blue>
+         </color>
         </brush>
        </colorrole>
        <colorrole role="PlaceholderText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>74</red>
-          <green>45</green>
-          <blue>59</blue>
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
          </color>
         </brush>
        </colorrole>
@@ -928,96 +666,63 @@ QToolButton:pressed, QPushButton:pressed {
        <colorrole role="WindowText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>74</red>
-          <green>45</green>
-          <blue>59</blue>
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
          </color>
         </brush>
        </colorrole>
        <colorrole role="Button">
-        <brush brushstyle="LinearGradientPattern">
-         <gradient startx="0.000000000000000" starty="0.000000000000000" endx="0.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
-          <gradientstop position="0.000000000000000">
-           <color alpha="255">
-            <red>254</red>
-            <green>254</green>
-            <blue>254</blue>
-           </color>
-          </gradientstop>
-          <gradientstop position="1.000000000000000">
-           <color alpha="255">
-            <red>255</red>
-            <green>194</green>
-            <blue>222</blue>
-           </color>
-          </gradientstop>
-         </gradient>
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>230</red>
+          <green>230</green>
+          <blue>250</blue>
+         </color>
         </brush>
        </colorrole>
        <colorrole role="Text">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>74</red>
-          <green>45</green>
-          <blue>59</blue>
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
          </color>
         </brush>
        </colorrole>
        <colorrole role="ButtonText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>74</red>
-          <green>45</green>
-          <blue>59</blue>
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
          </color>
         </brush>
        </colorrole>
        <colorrole role="Base">
-        <brush brushstyle="LinearGradientPattern">
-         <gradient startx="0.000000000000000" starty="0.000000000000000" endx="0.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
-          <gradientstop position="0.000000000000000">
-           <color alpha="255">
-            <red>254</red>
-            <green>254</green>
-            <blue>254</blue>
-           </color>
-          </gradientstop>
-          <gradientstop position="1.000000000000000">
-           <color alpha="255">
-            <red>255</red>
-            <green>194</green>
-            <blue>222</blue>
-           </color>
-          </gradientstop>
-         </gradient>
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>230</red>
+          <green>230</green>
+          <blue>250</blue>
+         </color>
         </brush>
        </colorrole>
        <colorrole role="Window">
-        <brush brushstyle="LinearGradientPattern">
-         <gradient startx="0.000000000000000" starty="0.000000000000000" endx="0.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
-          <gradientstop position="0.000000000000000">
-           <color alpha="255">
-            <red>254</red>
-            <green>254</green>
-            <blue>254</blue>
-           </color>
-          </gradientstop>
-          <gradientstop position="1.000000000000000">
-           <color alpha="255">
-            <red>255</red>
-            <green>194</green>
-            <blue>222</blue>
-           </color>
-          </gradientstop>
-         </gradient>
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>230</red>
+          <green>230</green>
+          <blue>250</blue>
+         </color>
         </brush>
        </colorrole>
        <colorrole role="PlaceholderText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>74</red>
-          <green>45</green>
-          <blue>59</blue>
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
          </color>
         </brush>
        </colorrole>
@@ -1032,22 +737,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #E6E6FA;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -1068,22 +762,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -1104,22 +787,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #E6E6FA;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -1140,22 +812,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #E6E6FA;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -1176,22 +837,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #E6E6FA;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -1212,22 +862,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -1248,22 +887,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -1284,22 +912,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #E6E6FA;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -1320,22 +937,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #E6E6FA;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -1356,22 +962,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #E6E6FA;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -1390,6 +985,15 @@ QToolButton:pressed, QPushButton:pressed {
       <height>41</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	color: #000000;
+	background-color: #778899;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
+}</string>
+    </property>
     <property name="text">
      <string>=</string>
     </property>
@@ -1400,32 +1004,20 @@ QToolButton:pressed, QPushButton:pressed {
    <widget class="QPushButton" name="push_clear">
     <property name="geometry">
      <rect>
-      <x>531</x>
-      <y>33</y>
+      <x>530</x>
+      <y>30</y>
       <width>51</width>
       <height>41</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-</string>
+	color: #000000;
+	background-color: #778899;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
+}</string>
     </property>
     <property name="text">
      <string>&lt;-</string>
@@ -1445,22 +1037,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -1481,22 +1062,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -1517,22 +1087,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -1553,22 +1112,11 @@ QToolButton:pressed, QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
+	color: #000000;
+	background-color: #D8BFD8;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
 }</string>
     </property>
     <property name="text">
@@ -1582,31 +1130,19 @@ QToolButton:pressed, QPushButton:pressed {
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>40</y>
+      <y>30</y>
       <width>301</width>
-      <height>31</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton {
-	color: rgba(74, 45, 59, 255);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(254, 254, 254, 255), stop:1 rgba(255, 194, 222, 255));
-	border: 2px solid rgba(74, 45, 59, 255);
-    border-radius: 5px;
-    padding: 2px;
-}
-QToolButton:checked, QPushButton:checked {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-
-QToolButton:pressed, QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(57, 181, 74, 255), stop:1 rgba(7, 150, 70, 255));
-    border-color: rgba(0, 146, 69, 255);
-    border-style: inset;
-}
-</string>
+     <string notr="true">QLineEdit {
+	color: #000000;
+	background-color: #F8F8FF;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
+}</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="add_x">
@@ -1617,6 +1153,15 @@ QToolButton:pressed, QPushButton:pressed {
       <width>91</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit {
+	color: #000000;
+	background-color: #F8F8FF;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
+}</string>
     </property>
     <property name="text">
      <string>0.0</string>
@@ -1631,6 +1176,15 @@ QToolButton:pressed, QPushButton:pressed {
       <height>41</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+	color: #000000;
+	background-color: #778899;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
+}</string>
+    </property>
     <property name="text">
      <string>X:</string>
     </property>
@@ -1643,6 +1197,15 @@ QToolButton:pressed, QPushButton:pressed {
       <width>141</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QRadioButton {
+	color: #000000;
+	background-color: #778899;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
+}</string>
     </property>
     <property name="text">
      <string>Graph</string>
@@ -1657,6 +1220,15 @@ QToolButton:pressed, QPushButton:pressed {
       <height>41</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+	color: #000000;
+	background-color: #778899;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
+}</string>
+    </property>
     <property name="text">
      <string>xBegin</string>
     </property>
@@ -1669,6 +1241,15 @@ QToolButton:pressed, QPushButton:pressed {
       <width>91</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit {
+	color: #000000;
+	background-color: #F8F8FF;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
+}</string>
     </property>
     <property name="text">
      <string>-100</string>
@@ -1683,6 +1264,15 @@ QToolButton:pressed, QPushButton:pressed {
       <height>41</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit {
+	color: #000000;
+	background-color: #F8F8FF;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
+}</string>
+    </property>
     <property name="text">
      <string>-100</string>
     </property>
@@ -1695,6 +1285,15 @@ QToolButton:pressed, QPushButton:pressed {
       <width>51</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+	color: #000000;
+	background-color: #778899;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
+}</string>
     </property>
     <property name="text">
      <string>yBegin</string>
@@ -1709,6 +1308,15 @@ QToolButton:pressed, QPushButton:pressed {
       <height>41</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit {
+	color: #000000;
+	background-color: #F8F8FF;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
+}</string>
+    </property>
     <property name="text">
      <string>0.1</string>
     </property>
@@ -1722,6 +1330,15 @@ QToolButton:pressed, QPushButton:pressed {
       <height>41</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+	color: #000000;
+	background-color: #778899;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
+}</string>
+    </property>
     <property name="text">
      <string>h</string>
     </property>
@@ -1731,9 +1348,18 @@ QToolButton:pressed, QPushButton:pressed {
      <rect>
       <x>80</x>
       <y>690</y>
-      <width>321</width>
-      <height>61</height>
+      <width>221</width>
+      <height>51</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	color: #000000;
+	background-color: #778899;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
+}</string>
     </property>
     <property name="text">
      <string/>
@@ -1742,11 +1368,20 @@ QToolButton:pressed, QPushButton:pressed {
    <widget class="QPushButton" name="push_stop">
     <property name="geometry">
      <rect>
-      <x>460</x>
+      <x>370</x>
       <y>690</y>
-      <width>331</width>
-      <height>61</height>
+      <width>221</width>
+      <height>51</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	color: #000000;
+	background-color: #778899;
+	border: 1px solid black;
+    border-radius: 2px;
+    padding: 1px;
+}</string>
     </property>
     <property name="text">
      <string>CLEAR</string>
