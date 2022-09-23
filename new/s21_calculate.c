@@ -57,8 +57,8 @@ void printn(Stack_number *st) {
 int check_priority(char k) {
     int check = -1;
     if (k == '(' || k == ')') check = 0;
-    else if (k == '+' || k == '-') check = 3;
-    else if (k == '*' || k == '/' || k == 'm') check = 2;
+    else if (k == '+' || k == '-') check = 4;
+    else if (k == '*' || k == '/' || k == 'm') check = 3;
     else if (k == '^') check = 2;
     else if (k > 96 && k < 120) check = 1;
     else if ((k > 47 && k < 58) || k == 'x') check = 5;
@@ -102,7 +102,7 @@ double calc(char *s, double number) {
                 pushn(&num, number);
             s++;
         }
-        if (check_priority(*s) > 0 && check_priority(*s) < 4) {
+        if (check_priority(*s) > 0 && check_priority(*s) < 5) {
             if (*s == '+') { otvet = popn(&num) + popn(&num);
             } else if (*s == '-') { otvet = -(popn(&num) - popn(&num));
             } else if (*s == '*') { otvet = popn(&num) * popn(&num);
@@ -221,18 +221,18 @@ char *add_space_to_str(char *str) {
             while((check_priority(*str) == 1 && (*str != '\0')))
                 str_space[i++] = *str++;
         } else if (*str == 'm') {
-            while(*str != ' ')
-                str_space[i++] = *str++;
+            str_space[i++] = *str++;
         } else {
             str_space[i++] = *str++;
         }
         str_space[i++] = ' ';
     }
     strcpy(str, str_space);
+    printf("%s\n", str);
     return str;
 }
 char *add_null_to_str(char *str) {
-    char str_null[514] = "";
+    char str_null[1024] = "";
     int i = 0;
     while(*str != '\0') {
         if (*str == '-' && check_unary_minus(str))
