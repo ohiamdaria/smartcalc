@@ -146,6 +146,12 @@ char *change_functions_in_str(char *str) {
         *str++ = ' ';
     while(str && *str == ' ')
         str--;
+    } else {
+        str++;
+        while(*str != ' ')
+            *str++ = ' ';
+        while(str && *str == ' ')
+            str--;
     }
     return str;
 }
@@ -205,8 +211,8 @@ void notation(char *str, char *str_output, Stack *stack) {
 }
 
 char *add_space_to_str(char *str) {
-    int i = 2;
-    char str_space[514] = "( ";
+    int i = 0;
+    char str_space[514] = "";
     while(*str != '\0') {
         if (check_priority(*str) == 5) {
             while((check_priority(*str) == 5 || *str == '.') && (*str != '\0'))
@@ -214,12 +220,14 @@ char *add_space_to_str(char *str) {
         } else if (check_priority(*str) == 1) {
             while((check_priority(*str) == 1 && (*str != '\0')))
                 str_space[i++] = *str++;
+        } else if (*str == 'm') {
+            while(*str != ' ')
+                str_space[i++] = *str++;
         } else {
             str_space[i++] = *str++;
         }
         str_space[i++] = ' ';
     }
-    str_space[i++] = ')';
     strcpy(str, str_space);
     return str;
 }
@@ -234,18 +242,26 @@ char *add_null_to_str(char *str) {
         str_null[i++] = *str++;
     }
     strcpy(str, str_null);
+    printf("new %s\n", str);
     return str;
 }
 
 int check_unary_minus(char *str) {
     int status = 0; // no
+    printf("%s\n", str);
     str--;
     while(*str == ' ') str--;
     char check_before = *str;
+    printf("check before: %c\n", check_before);
     str++;
     while(*str != '-' || *str == ' ') str++;
-    if (check_before == '(' || !check_before)
+    char check_after = *str;
+//    printf("check after: %c\n", check_after);
+    if (check_before == '(' && check_after == ')'|| !check_before)
         status = 1; // yes
+    else if (check_before == '(')
+      status = 1;
+    printf("statuss: %d\n", status);
     return status;
 }
 
@@ -256,9 +272,23 @@ int check_unary_plus(char *str) {
     char check_before = *str;
     str++;
     while(*str != '+' || *str == ' ') str++;
+    // char check_after = *str;
     if (check_before == '(' || !check_before)
         status = 1; // yes
     return status;
+}
+
+char *delete_space_str(char *str) {
+    char str_output[1024] = "(";
+    int i = 1;
+    while(*str != '\0') {
+        if (*str != ' ')
+            str_output[i++] = *str;
+        str++;
+    }
+    str_output[i++] = ')';
+    strcpy(str, str_output);
+    return str;
 }
 
 char *from_str_to_notation(char *str) {
@@ -266,7 +296,8 @@ char *from_str_to_notation(char *str) {
     init_stack(&stack);
 
     char *str_output = (char *)calloc(514, sizeof(char));
-    notation(add_space_to_str(add_null_to_str(str)), str_output, &stack);
+    char *strcopy = delete_space_str(str);
+    notation(add_space_to_str(add_null_to_str(strcopy)), str_output, &stack);
 
     return str_output;
 }

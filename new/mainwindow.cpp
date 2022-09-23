@@ -18,14 +18,18 @@ void MainWindow::clicked_text_add(QString toAdd) {
 }
 
 void MainWindow::on_push_clear_clicked() {
-    QString text = ui->Display->text();
+     QString text = ui->Display->text();
      text.chop(1);
      if (text.isEmpty()) { text = ""; }
      ui->Display->setText(text);
-     if (graph) {
+         time = 0;
+         timer->stop();
+         x.clear();
+         y.clear();
+         flag = true;
+         count = 0;
          ui->widget->graph(0)->data()->clear();
          ui->widget->replot();
-     }
 }
 
 void MainWindow::on_push_1_clicked() { clicked_text_add("1"); }

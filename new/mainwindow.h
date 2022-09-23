@@ -92,8 +92,6 @@ private slots:
 
     void on_push_dot_clicked();
 
-//    void on_push_clear_2_clicked();
-
     void on_graph_clicked(bool checked);
 
    void Animation();
