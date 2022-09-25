@@ -22,14 +22,6 @@ void MainWindow::on_push_clear_clicked() {
      text.chop(1);
      if (text.isEmpty()) { text = ""; }
      ui->Display->setText(text);
-         time = 0;
-         timer->stop();
-         x.clear();
-         y.clear();
-         flag = true;
-         count = 0;
-         ui->widget->graph(0)->data()->clear();
-         ui->widget->replot();
 }
 
 void MainWindow::on_push_1_clicked() { clicked_text_add("1"); }
@@ -109,15 +101,26 @@ void MainWindow::on_push_eq_clicked() {
 }
 
 
-void MainWindow::on_graph_clicked(bool checked) { if (checked) graph = 1; }
+void MainWindow::on_graph_clicked(bool checked) {
+    if (checked) graph = 1;
+    else
+        graph = 0;
+}
 
 void MainWindow::TimerSlot() {
     ui->widget->clearGraphs();
     QString input = ui->Display->text();
     char c_input[512] = {0};
 
+    ui->widget->addGraph();
+    QPen DotPen;
+    DotPen.setWidthF(2);
+    ui->widget->graph(0)->setPen(DotPen);
+    ui->widget->graph(0)->setLineStyle(QCPGraph::lsNone);
+    ui->widget->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 1));
+
     if (time <= 20 * N) {
-        if (X <= xEnd) {
+        if (X <= -xBegin) {
             strncpy(c_input, qPrintable(input), 255);
             double result = smart_calc(c_input, X);
             x.push_back(X);
@@ -139,7 +142,7 @@ void MainWindow::Animation() {
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(TimerSlot()));
     ui->widget->clearGraphs();
-    timer->start(20);
+    // timer->start(20);
     X = xBegin;
     x.clear();
     y.clear();
@@ -164,9 +167,8 @@ void MainWindow::if_graph_exist() {
     QPen DotPen;
     DotPen.setWidthF(2);
     ui->widget->graph(0)->setPen(DotPen);
-     ui->widget->graph(0)->setLineStyle(QCPGraph::lsNone);
+    ui->widget->graph(0)->setLineStyle(QCPGraph::lsNone);
     ui->widget->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 1));
-
 
     ui->widget->graph(0)->setName("Sine envelope");
 
@@ -202,22 +204,27 @@ void MainWindow::if_graph_not_exist() {
 }
 
 void MainWindow::on_push_run_clicked() {
-    if (count != 0) {
         flag = !flag;
         if (flag) {
             ui->push_run->setText("START");
             timer->stop();
         } else {
+            if (count == 0) {
+                Animation();
+                count++;
+            }
             ui->push_run->setText("STOP");
             timer->start(1);
         }
-    } else {
-        Animation();
-        count++;
-    }
 }
 
 void MainWindow::on_push_stop_clicked() {
+    time = 0;
+    timer->stop();
+    x.clear();
+    y.clear();
+    flag = true;
+    count = 0;
     ui->widget->graph(0)->data()->clear();
     ui->widget->replot();
 }
