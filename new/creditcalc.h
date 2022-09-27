@@ -15,14 +15,11 @@ public:
     creditcalc(QWidget *parent = nullptr);
     ~creditcalc();
 
-signals:
-    void firstWindow();
 
 private slots:
     void on_push_calc_clicked();
     void on_type_an_clicked();
     void on_type_diff_clicked();
-    void on_pushButton_clicked();
 
 private:
     Ui::creditcalc *ui;

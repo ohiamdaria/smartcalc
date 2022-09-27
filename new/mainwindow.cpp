@@ -6,6 +6,10 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
     ui->push_run->setText("START");
+    sWindow = new creditcalc();
+    connect(sWindow, &creditcalc::firstWindow, this, &MainWindow::show);
+    dWindow = new depositcalc();
+    connect(dWindow, &depositcalc::firstWindow, this, &MainWindow::show);
 }
 
 MainWindow::~MainWindow() {
@@ -227,5 +231,17 @@ void MainWindow::on_push_stop_clicked() {
     count = 0;
     ui->widget->graph(0)->data()->clear();
     ui->widget->replot();
+}
+
+
+void MainWindow::on_credit_button_clicked() {
+    sWindow->show();
+    this->close();
+}
+
+
+void MainWindow::on_deposit_button_clicked() {
+    dWindow->show();
+    this->close();
 }
 

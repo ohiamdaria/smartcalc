@@ -53,8 +53,6 @@ void creditcalc::on_push_calc_clicked() {
 
             qDebug()<<QString::number(overpayment, 'g', 7);
         }
-//        ui->every_month_edit->setText("...");
-//        ui->every_month_edit->setText(QString::number(overpayment, 'g', 7));
         ui->overpayment_edit->clear();
         ui->overpayment_edit->setText(QString::number(overpayment_all - sum, 'g', 7));
         ui->result_edit->clear();
@@ -66,12 +64,4 @@ void creditcalc::on_push_calc_clicked() {
 void creditcalc::on_type_an_clicked() { type = 1; }
 
 void creditcalc::on_type_diff_clicked() { type = 2; }
-
-
-void creditcalc::on_pushButton_clicked()
-{
-    this->close();
-    emit firstWindow();
-}
-
 

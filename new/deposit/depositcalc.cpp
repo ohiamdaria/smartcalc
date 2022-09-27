@@ -8,10 +8,10 @@ depositcalc::depositcalc(QWidget *parent)
     , ui(new Ui::depositcalc)
 {
     ui->setupUi(this);
-    connect(ui->addDeposits_button, &QPushButton::clicked,
-                    this, depositcalc::on_addButton_clicked);
-    connect(ui->addWidget_button, &QPushButton::clicked,
-                    this, depositcalc::on_addButton_clicked);
+    connect(ui->addDeposit_button, &QPushButton::clicked,
+                    this, depositcalc::on_addDeposits_button_clicked);
+    connect(ui->addWithdrawal_button, &QPushButton::clicked,
+                    this, depositcalc::on_addWithdrawals_button_clicked);
 }
 
 depositcalc::~depositcalc() { delete ui; }
@@ -27,7 +27,7 @@ void depositcalc::on_deleteButton_clicked() {
 }
 
 void depositcalc::get_deposits() {
-    for(size_t i = 0; i < count; i++) {
+    for(size_t i = 0; i < countDeposits; i++) {
         double sum = SumLineDeposits[i]->text().toDouble();
         qDebug()<<QString::number(sum);
         qDebug()<<DateLineDeposits[i]->date().toString("dd.MM.yyyy");
@@ -36,7 +36,7 @@ void depositcalc::get_deposits() {
 }
 
 void depositcalc::get_withdrawals() {
-    for(size_t i = 0; i < count; i++) {
+    for(size_t i = 0; i < countWithdrawals; i++) {
         double sum = SumLineWithdrawals[i]->text().toDouble();
         qDebug()<<QString::number(sum);
         qDebug()<<DateLineWithdrawals[i]->date().toString("dd.MM.yyyy");
@@ -49,7 +49,7 @@ void depositcalc::on_pushButton_clicked() {
     get_withdrawals();
 }
 
-void depositcalc::addButtons() {
+void depositcalc::on_addWithdrawals_button_clicked() {
     QGridLayout *layout = new QGridLayout;
     QLineEdit* edit = new QLineEdit(this);
     QDateEdit* date = new QDateEdit(this);
@@ -64,12 +64,8 @@ void depositcalc::addButtons() {
     layout->addWidget(date, 0, 1);
     layout->addWidget(edit, 0, 2);
     layout->addWidget(deletebutton, 0, 3);
-}
-
-
-void depositcalc::on_addWithdrawals_button_clicked() {
     countWithdrawals++;
-    ui->widgets_frame->addLayout(layout);
+    ui->widgets_frame2->addLayout(layout);
     SumLineWithdrawals.push_back(edit);
     DateLineWithdrawals.push_back(date);
     BoxLineWithdrawals.push_back(box);
@@ -81,12 +77,34 @@ void depositcalc::on_addWithdrawals_button_clicked() {
 
 void depositcalc::on_addDeposits_button_clicked()
 {
-     ui->widgets_frame->addLayout(layout);
-     SumLineDeposits.push_back(edit);
-     DateLineDeposits.push_back(date);
-     BoxLineDeposits.push_back(box);
-     QObject::connect(
-                 deletebutton, &QPushButton::clicked,
-                 this, depositcalc::on_deleteButton_clicked);
+    QGridLayout *layout = new QGridLayout;
+    QLineEdit* edit = new QLineEdit(this);
+    QDateEdit* date = new QDateEdit(this);
+    QPushButton* deletebutton = new QPushButton(this);
+    QComboBox* box = new QComboBox(this);
+    box->addItem("none");
+    box->addItem("one-time");
+    box->addItem("once a month");
+    box->addItem("once a quarter");
+    box->addItem("once a year");
+    layout->addWidget(box, 0, 0);
+    layout->addWidget(date, 0, 1);
+    layout->addWidget(edit, 0, 2);
+    layout->addWidget(deletebutton, 0, 3);
+    countDeposits++;
+    ui->widgets_frame->addLayout(layout);
+    SumLineDeposits.push_back(edit);
+    DateLineDeposits.push_back(date);
+    BoxLineDeposits.push_back(box);
+    QObject::connect(
+             deletebutton, &QPushButton::clicked,
+             this, depositcalc::on_deleteButton_clicked);
+}
+
+
+void depositcalc::on_pushButton_2_clicked()
+{
+    this->close();
+    emit firstWindow();
 }
 

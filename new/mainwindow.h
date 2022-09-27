@@ -8,6 +8,8 @@ extern "C" {
 #include <QMainWindow>
 #include <QVector>
 #include <QTimer>
+#include "creditcalc/creditcalc.h"
+#include "deposit/depositcalc.h"
 
 namespace Ui {
 class MainWindow;
@@ -106,6 +108,10 @@ private slots:
 
    void on_push_stop_clicked();
 
+   void on_credit_button_clicked();
+
+   void on_deposit_button_clicked();
+
 private:
     Ui::MainWindow *ui;
     double xBegin, xEnd, yBegin, yEnd, h, X;
@@ -115,6 +121,8 @@ private:
     QTimer *timer;
     int time;
     bool flag = true;
+    creditcalc* sWindow;
+    depositcalc* dWindow;
 
 };
 
