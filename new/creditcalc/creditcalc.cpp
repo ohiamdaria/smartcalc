@@ -68,10 +68,4 @@ void creditcalc::on_type_an_clicked() { type = 1; }
 void creditcalc::on_type_diff_clicked() { type = 2; }
 
 
-void creditcalc::on_pushButton_clicked()
-{
-    this->close();
-    emit firstWindow();
-}
-
 

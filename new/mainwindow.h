@@ -108,14 +108,26 @@ private slots:
 
    void on_push_stop_clicked();
 
-   void on_credit_button_clicked();
+//   void on_credit_button_clicked();
 
-   void on_deposit_button_clicked();
+//   void on_deposit_button_clicked();
+
+   void on_push_calc_clicked();
+
+   void on_type_an_clicked();
+
+   void on_type_diff_clicked();
 
 private:
     Ui::MainWindow *ui;
     double xBegin, xEnd, yBegin, yEnd, h, X;
     int N, graph = 0, count = 0;
+
+    //credit
+    double sum, prozent;
+    int month, year, type = 1;
+
+    double result, overpayment;
 
     QVector<double> x, y;
     QTimer *timer;

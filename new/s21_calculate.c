@@ -170,15 +170,17 @@ char *add_from_stack(char *str, char *str_output, Stack *stack, int cases) {
         while(peek(stack) > 0 && current_symbol != '(') {
             if (cases < check_priority(current_symbol) && cases != 1)
                 break;
-            str_output = add_current_symbol(str_output, current_symbol);
-            current_symbol = pop(stack);
+            // else if (check_priority(current_symbol) > cases) {
+                str_output = add_current_symbol(str_output, current_symbol);
+                current_symbol = pop(stack);
+            // }
         }
         if (cases == 1) {
             if (current_symbol > 96 && current_symbol < 120)
                 str_output = add_current_symbol(str_output, current_symbol);
         } else if (cases > 1 && cases < 5) {
-            push(stack, current_symbol);
-            push(stack, *str);
+                push(stack, current_symbol);
+                push(stack, *str);
         }
     }
     return str_output;
@@ -228,18 +230,20 @@ char *add_space_to_str(char *str) {
         str_space[i++] = ' ';
     }
     strcpy(str, str_space);
-    printf("%s\n", str);
     return str;
 }
 char *add_null_to_str(char *str) {
     char str_null[1024] = "";
     int i = 0;
     while(*str != '\0') {
-        if (*str == '-' && check_unary_minus(str))
+        if (*str == '-' && check_unary_minus(str) == 1)
             str_null[i++] = '0';
-        else if (*str == '+' && check_unary_plus(str))
+        else if (*str == '+' && check_unary_plus(str) == 1)
             str_null[i++] = '0';
-        str_null[i++] = *str++;
+        if (*str == '+' && check_unary_plus(str) == 2)
+            str++;
+        else
+            str_null[i++] = *str++;
     }
     strcpy(str, str_null);
     printf("new %s\n", str);
@@ -248,20 +252,18 @@ char *add_null_to_str(char *str) {
 
 int check_unary_minus(char *str) {
     int status = 0; // no
-    printf("%s\n", str);
     str--;
     while(*str == ' ') str--;
     char check_before = *str;
-    printf("check before: %c\n", check_before);
     str++;
     while(*str != '-' || *str == ' ') str++;
     char check_after = *str;
-//    printf("check after: %c\n", check_after);
     if (check_before == '(' && check_after == ')'|| !check_before)
         status = 1; // yes
     else if (check_before == '(')
       status = 1;
-    printf("statuss: %d\n", status);
+    else if ((check_priority(check_before) == 3 || check_priority(check_before) == 4))
+        status = 1;
     return status;
 }
 
@@ -272,9 +274,15 @@ int check_unary_plus(char *str) {
     char check_before = *str;
     str++;
     while(*str != '+' || *str == ' ') str++;
-    // char check_after = *str;
-    if (check_before == '(' || !check_before)
+    char check_after = *str;
+    if (check_before == '-')
+        status = 2;
+    else if (check_before == '(' && check_after == ')'|| !check_before)
         status = 1; // yes
+    else if (check_before == '(')
+      status = 1;
+    else if (check_priority(check_before) == 3 || check_priority(check_before) == 4)
+        status = 1;
     return status;
 }
 

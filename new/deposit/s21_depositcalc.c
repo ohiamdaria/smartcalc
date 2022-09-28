@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <math.h>
 
-
 // сумма вклада
 // срок
 // начало срока
@@ -12,28 +11,23 @@
 // пополнения
 // снятия
 
+int know_days_or_months_or_years(char *begin_of_term, int i) { 
+    int number = 0;
+    while (*begin_of_term != '.') {
+        number = (*begin_of_term - '0') * pow(10, i) + number;
+        begin_of_term++;
+        i--;
+    }
+    begin_of_term++;
+    return 
+}
 
 int to_days_from_months(int term, int days, char *begin_of_term) {
-    int day_number = 0, month_number = 0, year_number = 0, i = 1;
-    while (*begin_of_term != '.') {
-        day_number = (*begin_of_term - '0') * pow(10, i) + day_number;
-        begin_of_term++;
-        i--;
-    }
-    begin_of_term++;
-    i = 1;
-    while (*begin_of_term != '.') {
-        month_number = (*begin_of_term - '0') * pow(10, i) + month_number;
-        begin_of_term++;
-        i--;
-    }
-    begin_of_term++;
-    i = 3;
-    while (*begin_of_term != '\0') {
-        year_number = (*begin_of_term - '0') * pow(10, i) + year_number;
-        begin_of_term++;
-        i--;
-    }
+    int day_number = know_days_or_months_or_years(begin_of_term, 1);
+    int month_number = know_days_or_months_or_years(begin_of_term, 1);
+    int year_number = know_days_or_months_or_years(begin_of_term, 3);
+
+    printf()
     int result_days = 0;
     if (term == 2) {
         while(days > 0) {
@@ -60,6 +54,17 @@ int to_days_from_months(int term, int days, char *begin_of_term) {
             days--;
         }
     }
+    if (term == 3) {
+        while (days > 0) {
+            int add_days = 0;
+            year_number++;
+            if (fmod(year_number, 4) > 0.0) add_days = 365;
+            else
+                add_days = 366;
+            result_days += add_days;
+            days--; 
+        }
+    }
     return result_days;
 }
 
@@ -69,45 +74,68 @@ int count_term(int term, int days, char *begin_of_term) {
         return to_days_from_months(term, days, begin_of_term);
 }
 
-double depositcalc(double sum, int term, int days, char *begin_of_term, double tax_rate, double interest_rate, int frequency_of_payments) {
-    days = count_term(term, days, "28.09.2022");
-    printf("days: %d\n", days);
+double nalog(double interest_rate, double result) {
+    double neoblagaem_part = pow(10, 6) * 7.5 / 100;
+    double sum = result - neoblagaem_part;
+    return sum > 0.0 ? sum * 0.13 : 0.0;
+}
+
+double depositcalc(double sum, int term, int days_ot_months_or_years, char *begin_of_term, double tax_rate, double interest_rate, int frequency_of_payments, int capital) {
+    double days = count_term(term, days_ot_months_or_years, "10.10.2022");
+    printf("days: %d\n", days_ot_months_or_years);
     double result = ((double)sum * interest_rate * days / (double) 365) / (double)100;
-    long double result2 = 0.0;
+    double result2 = 0.0;
     days = 12;
-    int month_number = 9, year_number = 2022;
-    while(days > 0) {
-            int add_days = 0;           
-            if (month_number > 12) {
-                month_number = 1;
-                year_number++;
-            }
-            if (month_number == 1) add_days = 31;
-            else if (month_number == 2 && fmod(year_number, 4) > 0.0) add_days = 28;
-            else if (month_number == 2 && !fmod(year_number, 4)) add_days = 29;
-            else if (month_number == 3) add_days = 31;
-            else if (month_number == 4) add_days = 30;
-            else if (month_number == 5) add_days = 31;
-            else if (month_number == 6) add_days = 30;
-            else if (month_number == 7) add_days = 31;
-            else if (month_number == 8) add_days = 31;
-            else if (month_number == 9) add_days = 30;
-            else if (month_number == 10) add_days = 31;
-            else if (month_number == 11) add_days = 30;
-            else if (month_number == 12) add_days = 31;
-            long double result4 = ((long double)sum * interest_rate * add_days / (long double) 365) / (long double)100;
-            result2 += result4;
-            month_number++;
-            printf("res: %.6Lf\n", result4);
-            days--;
+    int month_number = 10, year_number = 2022;
+    double sum_clear = sum;
+    double nalog_all = 0.0;
+    if (frequency_of_payments == 2) {
+        while(days_ot_months_or_years > 0) {
+                int add_days = 0;           
+                if (month_number > 12) {
+                    month_number = 1;
+                    year_number++;
+                }
+                if (month_number == 1) add_days = 31;
+                else if (month_number == 2 && fmod(year_number, 4) > 0.0) add_days = 28;
+                else if (month_number == 2 && !fmod(year_number, 4)) add_days = 29;
+                else if (month_number == 3) add_days = 31;
+                else if (month_number == 4) add_days = 30;
+                else if (month_number == 5) add_days = 31;
+                else if (month_number == 6) add_days = 30;
+                else if (month_number == 7) add_days = 31;
+                else if (month_number == 8) add_days = 31;
+                else if (month_number == 9) add_days = 30;
+                else if (month_number == 10) add_days = 31;
+                else if (month_number == 11) add_days = 30;
+                else if (month_number == 12) add_days = 31;
+
+                if (frequency_of_payments == 1 || frequency_of_payments == 2) {
+                    if (month_number == 1) add_days = 32;
+                    else if (month_number == 12) add_days = 30;
+                }
+                double result4 = ((double)sum * interest_rate * add_days / (double) 365) / (double)100;
+                if (month_number == 1) {
+                    double nalog1 = nalog(result2, interest_rate, result2);
+                    printf("!!!!nalog: %.6f\n", nalog1);
+                    result2 = 0;
+                }
+                result2 += result4;
+                sum += result4;
+                month_number++;
+                days_ot_months_or_years--;
+        }
     }
+    double nalog1 = nalog(sum, interest_rate, result2);
+    printf("nalog: %.6f\n", nalog1);
+    nalog(sum_clear, interest_rate, result);
     printf("%.6f", result);
-    printf("%.10Lf", result2);
+    printf("%.10f", result2);
     return 0; 
 }
 
 int main() {
-    double sum = 60000, tax_rate = 0.0, interest_rate = 6.7;
-    int term = 2, days = 12, frequence_of_payments = 0;
-    depositcalc(sum, term, days, "10.05.2000", tax_rate, interest_rate, frequence_of_payments);
+    double sum = 5000000, tax_rate = 0.0, interest_rate = 6.7;
+    int term = 2, days = 12, frequence_of_payments = 2;
+    depositcalc(sum, term, days, "10.05.2000", tax_rate, interest_rate, frequence_of_payments, 1);
 }

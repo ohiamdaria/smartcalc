@@ -26,13 +26,13 @@ private slots:
     // void on_comboBox_activated(int index);
     // void on_addButton_clicked();    // SLOT-handler pressing add button
     void on_deleteButton_clicked(); // SLOT-handler pressing the delete button
-    void on_pushButton_clicked();
+void on_pushButton_clicked();
     void get_deposits();
     void get_withdrawals();
     void on_addDeposits_button_clicked();
     void on_addWithdrawals_button_clicked();
 
-    void on_pushButton_2_clicked();
+//    void on_pushButton_2_clicked();
 
 private:
     Ui::depositcalc *ui;

@@ -8,22 +8,17 @@ depositcalc::depositcalc(QWidget *parent)
     , ui(new Ui::depositcalc)
 {
     ui->setupUi(this);
-    connect(ui->addDeposit_button, &QPushButton::clicked,
-                    this, depositcalc::on_addDeposits_button_clicked);
-    connect(ui->addWithdrawal_button, &QPushButton::clicked,
-                    this, depositcalc::on_addWithdrawals_button_clicked);
 }
 
 depositcalc::~depositcalc() { delete ui; }
 
 void depositcalc::on_deleteButton_clicked() {
-    QPushButton* deletebutton = qobject_cast<QPushButton*>(sender());
-    QLineEdit* edit = qobject_cast<QLineEdit*>(sender());
-    QDateEdit* date = qobject_cast<QDateEdit*>(sender());
-
-    delete edit;
-    delete date;
-    delete deletebutton;
+    QGridLayout* layout = qobject_cast<QGridLayout*>(sender());
+    QLayoutItem* item;
+    item = layout->takeAt(0);
+    delete item->widget();
+    delete item;
+    delete layout;
 }
 
 void depositcalc::get_deposits() {
@@ -101,10 +96,4 @@ void depositcalc::on_addDeposits_button_clicked()
              this, depositcalc::on_deleteButton_clicked);
 }
 
-
-void depositcalc::on_pushButton_2_clicked()
-{
-    this->close();
-    emit firstWindow();
-}
 
