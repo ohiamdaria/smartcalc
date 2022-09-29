@@ -30,46 +30,101 @@ int to_months_from_days(int month_number, int year_number, int days);
 int to_months_from_years(int year_number, int years);
 int to_months(int term, int days, char *begin_of_term);
 int count_months(int term, int days, char *begin_of_term);
+int count_days_between_dates(int days, char *begin_of_term);
+int count_days_from_months(int month_number, int year_number);
 
-int main() {
-    char *begin_of_term = "28.09.2022";
-    double sum = 350000, tax_rate = 0.0, interest_rate = 4.7;
-    int term = 2, dmy = 9, frequence_of_pay = 2, interest_capital = 1;
-    // printf("%d\n", to_months_from_days(28, 2000, 890));
-    // to_days(term, dmy, begin_of_term);
-    depositcalc(sum, term, dmy, begin_of_term, interest_rate, frequence_of_pay, interest_capital);
-    
+typedef struct {
+    double sum;
+    int day_begin, month_begin, year_begin;
+    int frequency_of_pay;
+    int capital;
+    double nalog;
+    double result;
+    int term_in_days;
+    int year4;
+} deposit;
+
+void init_stack(deposit *dep) {
+    dep->sum = 0.0;
+    dep->day_begin = 0;
+    dep->month_begin = 0;
+    dep->year_begin = 0;
+    dep->frequency_of_pay = 0;
+    dep->capital = 0;
+    dep->nalog = 0.0;
+    dep->result = 0.0;
+    dep->term_in_days = 0;
+    dep->year4 = 0;
 }
 
-double depositcalc(double sum, int term, int dmy, char *begin_of_term, double interest_rate, int frequency_of_pay, int capital) {
-    int days_months_years = dmy;
+int main() {
+    char *begin_of_term = "05.04.2000";
+    double sum = 350000, tax_rate = 0.0, interest_rate = 4.7;
+    int term = 2, dmy = 9, frequence_of_pay = 2, interest_capital = 1;
+    printf("%d\n", count_days_between_dates(24, begin_of_term));
+    // depositcalc(sum, term, dmy, begin_of_term, interest_rate, frequence_of_pay, interest_capital);
+    return 0;
+}
+
+void calculate_hard(int days_months_years, int L, double interest_rate, double tax_rate, deposit *dep) {
+    dep->result = dep->sum;
+    int day_for_tax = count_days_between_dates(dep), days = dep->term_in_days;
+    if (!dep->capital) {
+        dep->result += dep->sum * pow((1 + interest_rate / (double) (100 * L)), day_for_tax);
+    } else {
+        dep->result += dep->result * pow((1 + interest_rate / (double) (100 * L)), days_months_years);
+    }
+}
+
+void from_str_to_date(deposit *dep, char *begin_of_term) {
+    dep->day_begin = know_days_or_months_or_years(begin_of_term, 1);
+    dep->month_begin = know_days_or_months_or_years(begin_of_term += 3, 1);
+    dep->year_begin = know_days_or_months_or_years(begin_of_term += 3, 3);
+}
+ооо
+int count_days_between_dates(deposit *dep) {
+    int result_days = 0, i = 1;
+    while (i < dep->day_begin) {
+        result_days += count_days_from_months(i, dep->year_begin);
+        i++;
+    }
+    result_days += dep->day_begin;
+    if (dep->month_begin < 3 && !fmod(dep->year_begin, 4)) {
+        result_days--;
+    }
+    if (!fmod(dep->year_begin, 4)) result_days = 366 - result_days;
+    else
+        result_days = 365 - result_days;
+    return result_days;
+}
+
+double depositcalc(double sum, int term, int dmy, char *begin_of_term, double interest_rate, double tax_rate, int frequency_of_pay, int capital) {
+    deposit dep;
+    init_stack(&dep);
+    dep.sum = sum;
+    dep.frequency_of_pay = frequency_of_pay;
+    dep.capital = capital;
+    from_str_to_date(&dep, begin_of_term);
+
+    int days_months_years = to_days(term, dmy, &dep);
+    dep.term_in_days = days_months_years;
     double result_simple = simple_proz(sum, interest_rate, days_months_years);
     double result_hard = sum;
+
     if (frequency_of_pay == 1) {
-        days_months_years = to_days(term, dmy, begin_of_term); // if freq of pay is everyday
-        if (!capital)
-            result_hard = sum * pow((1 + interest_rate / (double) (100 * 365)), days_months_years);
-        else
-            while(days_months_years >= 0) {
-                double day_result = result_hard * pow((1 + interest_rate / (double) (100 * 365)), 1) - result_hard;
-                result_hard += day_result;
-                days_months_years--;
-            }
+        days_months_years = to_days(term, dmy, &dep); // if freq of pay is everyday
+        calculate_hard(days_months_years, 365, interest_rate, tax_rate, &dep);
+    } else if (frequency_of_pay == 2) {
+        days_months_years = count_months(term, dmy, begin_of_term);
+        calculate_hard(days_months_years, 12, interest_rate, &dep);
     }
-    if (frequency_of_pay == 2) {
-        days_months_years = count_months(term, dmy, begin_of_term) - 1;
-        if (!capital)
-            result_hard = sum * pow((1 + interest_rate / (double) (100 * 12)), days_months_years);
-        else {
-            while(days_months_years >= 0) {
-                result_hard = result_hard * (1 + interest_rate / (double) (100.000 * 12.000));
-                days_months_years--;
-            }
-        }
-    }
-    printf("%d\n", days_months_years);
-    printf("%.6f\n", result_hard);
-    return 0.0;
+    // } else if (frequency_of_pay == 3) {
+    //     days_months_years = count_years(term, dmy, begin_of_term);
+    //     result_hard = calculate_hard(capital, days_months_years, 1, interest_rate, sum);
+    // } else {
+    //     result_hard = result_simple;
+    // }
+    return result_hard;
 }
 
 int know_days_or_months_or_years(char *begin_of_term, int i) { 
@@ -128,12 +183,10 @@ int to_days_from_years(int year_number, int years) {
     return result_days;
 }
 
-int to_days(int term, int days, char *begin_of_term) {
-    int month_number = know_days_or_months_or_years(begin_of_term += 3, 1);
-    int year_number = know_days_or_months_or_years(begin_of_term += 3, 3);
+int to_days(int term, int days, deposit *dep) {
     int result_days = 0;
-    if (term == 2) result_days = to_days_from_months(month_number, year_number, days);
-    if (term == 3) result_days = to_days_from_years(year_number, days);
+    if (term == 2) result_days = to_days_from_months(dep->month_begin, dep->year_begin, days);
+    if (term == 3) result_days = to_days_from_years(dep->year_begin, days);
     return result_days;
 }
 
@@ -156,20 +209,13 @@ int to_months_from_days(int month_number, int year_number, int days) {
 }
 
 int to_months_from_years(int year_number, int years) {
-    int result_months = 0;
-    while (years > 0) {
-        result_months += 12;
-        years--; 
-    }
-    return result_months;
+    return years * 12;
 }
 
-int to_months(int term, int days, char *begin_of_term) {
-    int month_number = know_days_or_months_or_years(begin_of_term += 3, 1);
-    int year_number = know_days_or_months_or_years(begin_of_term += 3, 3);
+int to_months(int term, int days, deposit *dep) {
     int result_months = 0;
-    if (term == 1) result_months = to_months_from_days(month_number, year_number, days);
-    if (term == 3) result_months = to_months_from_years(year_number, days);
+    if (term == 1) result_months = to_months_from_days(dep->month_begin, dep->year_begin, days);
+    if (term == 3) result_months = to_months_from_years(dep->year_begin, days);
     return result_months;
 }
 
@@ -179,4 +225,9 @@ int count_months(int term, int days, char *begin_of_term) {
 
 double simple_proz(double sum, double interest_rate, double days) {
     return ((double)sum * interest_rate * days / (double) 365) / (double)100;
+}
+
+double nalog (double interest_rate, double tax_rate, deposit *dep) {
+    double neoblagaem_part = 1e+6 * 7.5 / 100;
+    return dep->result - neoblagaem_part > 0.0 ? dep->result - neoblagaem_part * 0.13 : 0.0;
 }
