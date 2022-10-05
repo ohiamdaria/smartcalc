@@ -105,23 +105,13 @@ private slots:
 
    void on_push_stop_clicked();
 
-//   void on_credit_button_clicked();
-
-//   void on_deposit_button_clicked();
-
    void on_push_calc_clicked();
 
    void on_type_an_clicked();
 
    void on_type_diff_clicked();
 
-   void on_deleteButton_clicked();
-
-   void get_deposits();
-
-   void get_withdrawals();
-
-   void on_pushButton_clicked();
+   void clean_edit();
 
 private:
     Ui::MainWindow *ui;
@@ -139,10 +129,6 @@ private:
     int time;
     bool flag = true;
 
-    int countWithdrawals = 0, countDeposits = 0;
-    QVector<QLineEdit*> SumLineDeposits, SumLineWithdrawals;
-    QVector<QDateEdit*> DateLineDeposits, DateLineWithdrawals;
-    QVector<QComboBox*> BoxLineDeposits, BoxLineWithdrawals;
 
 };
 

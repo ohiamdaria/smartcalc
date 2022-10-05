@@ -226,85 +226,28 @@ void MainWindow::on_push_stop_clicked() {
     ui->widget->replot();
 }
 
+void MainWindow::clean_edit()
+{
+    ui->every_month_edit->clear();
+    ui->overpayment_edit->clear();
+    ui->result_edit->clear();
+}
 
 void MainWindow::on_push_calc_clicked()
 {
-        sum = ui->sum_edit->text().toDouble();
-        prozent = ui->proz_edit->text().toDouble();
-        year = ui->time_year_edit->text().toDouble();
-        month = ui->time_month_edit->text().toDouble();
-        month += year * 12;
-        double p = (double) prozent / ((double) 100 * (double) 12);
-        if (type == 1) {
-            overpayment = sum * (p / (1 - (double) 1 / pow(1 + p, month)));
-            ui->every_month_label->clear();
-            ui->every_month_label->setText(" Ежемесячный платеж");
-            ui->every_month_edit->clear();
-            ui->every_month_edit->setText(QString::number(overpayment, 'g', 7));
-            ui->overpayment_edit->clear();
-            ui->overpayment_edit->setText(QString::number(overpayment * month - sum, 'g', 7));
-            ui->result_edit->clear();
-            ui->result_edit->setText(QString::number(overpayment * month, 'g', 7));
-        } else {
-            double sn = sum;
-            double b = (double) sum / (double) month;
-            double P = sn * p;
-            overpayment = b + P;
-            double overpayment_all = overpayment;
-            qDebug()<<QString::number(overpayment, 'g', 7);
-            ui->every_month_label->clear();
-            ui->every_month_label->setText(" Первый месячный платеж");
-            ui->every_month_edit->clear();
-            ui->every_month_edit->setText(QString::number(overpayment, 'g', 7));
-            while(sn - b > 0) {
-                sn -= b;
-                P = sn * p;
-                overpayment = b + P;
-                overpayment_all += overpayment;
-            }
-            ui->overpayment_edit->clear();
-            ui->overpayment_edit->setText(QString::number(overpayment_all - sum, 'g', 7));
-            ui->result_edit->clear();
-            ui->result_edit->setText(QString::number(overpayment_all, 'g', 7));
-        }
-    }
+    clean_edit();
+    credit_t credit;
+    init_credit(&credit);
+    creditcalc(&credit, ui->sum_edit->text().toDouble(), ui->proz_edit->text().toDouble(),
+                ui->time_year_edit->text().toDouble(), ui->time_month_edit->text().toDouble(),
+                type);
+    
+    ui->every_month_edit->setText(QString::number(credit.overpayment, 'g', 7));
+    ui->overpayment_edit->setText(QString::number(credit.overpayment_edit, 'g', 7));
+    ui->result_edit->setText(QString::number(credit.result_edit, 'g', 7));
+}
 
 
 void MainWindow::on_type_an_clicked() { type = 1; }
 
 void MainWindow::on_type_diff_clicked() { type = 2;}
-
-void MainWindow::on_deleteButton_clicked() {
-    QGridLayout* layout = qobject_cast<QGridLayout*>(sender());
-    QLayoutItem* item;
-    item = layout->takeAt(0);
-    delete item->widget();
-    delete item;
-    delete layout;
-}
-
-void MainWindow::get_deposits() {
-    for(size_t i = 0; i < countDeposits; i++) {
-        double sum = SumLineDeposits[i]->text().toDouble();
-        qDebug()<<QString::number(sum);
-        qDebug()<<DateLineDeposits[i]->date().toString("dd.MM.yyyy");
-        qDebug()<<BoxLineDeposits[i]->currentText();
-    }
-}
-
-void MainWindow::get_withdrawals() {
-    for(size_t i = 0; i < countWithdrawals; i++) {
-        double sum = SumLineWithdrawals[i]->text().toDouble();
-        qDebug()<<QString::number(sum);
-        qDebug()<<DateLineWithdrawals[i]->date().toString("dd.MM.yyyy");
-        qDebug()<<BoxLineWithdrawals[i]->currentText();
-    }
-}
-
-void MainWindow::on_pushButton_clicked() {
-    get_deposits();
-    get_withdrawals();
-}
-
-
-

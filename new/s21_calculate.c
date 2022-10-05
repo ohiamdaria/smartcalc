@@ -315,3 +315,44 @@ double smart_calc(char *str, double number) {
     double rez = calc(from_str_to_notation(strcopy), number);
     return rez;
 }
+
+void init_credit(credit_t *credit) {
+    credit->sum = 0.0;
+    credit->prozent = 0.0;
+    credit->year = 0;
+    credit->month = 0;
+    credit->overpayment = 0.0;
+    credit->overpayment_edit = 0.0;
+    credit->result_edit = 0.0;
+}
+
+double creditcalc(credit_t *credit, double sum, double prozent, int year, int month, int type) {
+    credit->sum = sum;
+    credit->prozent = prozent;
+    credit->year = year;
+    credit->month = month;
+    month += year * 12;
+    double p = (double) prozent / ((double) 100 * (double) 12);
+    if (type == 1) {
+        double overpayment = sum * (p / (1 - (double) 1 / pow(1 + p, month)));
+        credit->overpayment = overpayment;
+        credit->overpayment_edit = overpayment * month - sum;
+        credit->result_edit = overpayment * month;
+    } else {
+        double sn = sum;
+        double b = (double) sum / (double) month;
+        double P = sn * p;
+        double overpayment = b + P;
+        double overpayment_all = overpayment;
+        credit->overpayment = overpayment;
+        while(sn - b > 0) {
+            sn -= b;
+            P = sn * p;
+            overpayment = b + P;
+            overpayment_all += overpayment;
+        }
+        credit->overpayment_edit = overpayment_all - sum;
+        credit->result_edit = overpayment_all;
+    }
+    return 0.0;
+}

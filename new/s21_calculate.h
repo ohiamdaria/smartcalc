@@ -9,6 +9,16 @@
 #include <stdlib.h>
 
 typedef struct {
+    double sum;
+    double prozent;
+    int year;
+    int month;
+    double overpayment;
+    double overpayment_edit;
+    double result_edit;
+} credit_t;
+
+typedef struct {
     char a[256];      // данные
     unsigned int n; // сколько элементов хранится в стеке
     size_t size;
@@ -55,5 +65,7 @@ void push(Stack *st, int data);
 int peek(Stack* head);
 void print(Stack *st);
 char * add_null_to_str(char *str);
+void init_credit(credit_t *credit);
+double creditcalc(credit_t *credit, double sum, double prozent, int year, int month, int type);
 
 #endif // CALCULATE_H_
