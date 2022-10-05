@@ -8,8 +8,9 @@ extern "C" {
 #include <QMainWindow>
 #include <QVector>
 #include <QTimer>
-#include "creditcalc/creditcalc.h"
-#include "deposit/depositcalc.h"
+#include <QLineEdit>
+#include <QDateEdit>
+#include <QComboBox>
 
 namespace Ui {
 class MainWindow;
@@ -145,8 +146,6 @@ private:
     QTimer *timer;
     int time;
     bool flag = true;
-    creditcalc* sWindow;
-    depositcalc* dWindow;
 
     int countWithdrawals = 0, countDeposits = 0;
     QVector<QLineEdit*> SumLineDeposits, SumLineWithdrawals;

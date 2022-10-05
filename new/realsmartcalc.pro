@@ -9,23 +9,17 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    creditcalc/creditcalc.cpp \
-    deposit/depositcalc.cpp \
     main.cpp \
     mainwindow.cpp \
     qcustomplot.cpp \
     s21_calculate.c
 
 HEADERS += \
-    creditcalc/creditcalc.h \
-    deposit/depositcalc.h \
     mainwindow.h \
     qcustomplot.h \
     s21_calculate.h
 
 FORMS += \
-    creditcalc/creditcalc.ui \
-    deposit/depositcalc.ui \
     mainwindow.ui
 
 # Default rules for deployment.

@@ -332,9 +332,6 @@ void MainWindow::on_addDeposit_button_clicked()
     SumLineDeposits.push_back(edit);
     DateLineDeposits.push_back(date);
     BoxLineDeposits.push_back(box);
-    QObject::connect(
-             deletebutton, &QPushButton::clicked,
-             this, MainWindow::on_deleteButton_clicked);
 }
 
 
@@ -359,8 +356,5 @@ void MainWindow::on_addWithdrawal_button_clicked()
     SumLineWithdrawals.push_back(edit);
     DateLineWithdrawals.push_back(date);
     BoxLineWithdrawals.push_back(box);
-    QObject::connect(
-                deletebutton, &QPushButton::clicked,
-                this, MainWindow::on_deleteButton_clicked);
 }
 
