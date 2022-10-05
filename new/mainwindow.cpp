@@ -278,3 +278,89 @@ void MainWindow::on_type_an_clicked() { type = 1; }
 
 void MainWindow::on_type_diff_clicked() { type = 2;}
 
+void MainWindow::on_deleteButton_clicked() {
+    QGridLayout* layout = qobject_cast<QGridLayout*>(sender());
+    QLayoutItem* item;
+    item = layout->takeAt(0);
+    delete item->widget();
+    delete item;
+    delete layout;
+}
+
+void MainWindow::get_deposits() {
+    for(size_t i = 0; i < countDeposits; i++) {
+        double sum = SumLineDeposits[i]->text().toDouble();
+        qDebug()<<QString::number(sum);
+        qDebug()<<DateLineDeposits[i]->date().toString("dd.MM.yyyy");
+        qDebug()<<BoxLineDeposits[i]->currentText();
+    }
+}
+
+void MainWindow::get_withdrawals() {
+    for(size_t i = 0; i < countWithdrawals; i++) {
+        double sum = SumLineWithdrawals[i]->text().toDouble();
+        qDebug()<<QString::number(sum);
+        qDebug()<<DateLineWithdrawals[i]->date().toString("dd.MM.yyyy");
+        qDebug()<<BoxLineWithdrawals[i]->currentText();
+    }
+}
+
+void MainWindow::on_pushButton_clicked() {
+    get_deposits();
+    get_withdrawals();
+}
+
+
+void MainWindow::on_addDeposit_button_clicked()
+{
+    QGridLayout *layout = new QGridLayout;
+    QLineEdit* edit = new QLineEdit(this);
+    QDateEdit* date = new QDateEdit(this);
+    QPushButton* deletebutton = new QPushButton(this);
+    QComboBox* box = new QComboBox(this);
+    box->addItem("none");
+    box->addItem("one-time");
+    box->addItem("once a month");
+    box->addItem("once a quarter");
+    box->addItem("once a year");
+    layout->addWidget(box, 0, 0);
+    layout->addWidget(date, 0, 1);
+    layout->addWidget(edit, 0, 2);
+    layout->addWidget(deletebutton, 0, 3);
+    countDeposits++;
+    ui->widgets_frame->addLayout(layout);
+    SumLineDeposits.push_back(edit);
+    DateLineDeposits.push_back(date);
+    BoxLineDeposits.push_back(box);
+    QObject::connect(
+             deletebutton, &QPushButton::clicked,
+             this, MainWindow::on_deleteButton_clicked);
+}
+
+
+void MainWindow::on_addWithdrawal_button_clicked()
+{
+    QGridLayout *layout = new QGridLayout;
+    QLineEdit* edit = new QLineEdit(this);
+    QDateEdit* date = new QDateEdit(this);
+    QPushButton* deletebutton = new QPushButton(this);
+    QComboBox* box = new QComboBox(this);
+    box->addItem("none");
+    box->addItem("one-time");
+    box->addItem("once a month");
+    box->addItem("once a quarter");
+    box->addItem("once a year");
+    layout->addWidget(box, 0, 0);
+    layout->addWidget(date, 0, 1);
+    layout->addWidget(edit, 0, 2);
+    layout->addWidget(deletebutton, 0, 3);
+    countWithdrawals++;
+    ui->widgets_frame2->addLayout(layout);
+    SumLineWithdrawals.push_back(edit);
+    DateLineWithdrawals.push_back(date);
+    BoxLineWithdrawals.push_back(box);
+    QObject::connect(
+                deletebutton, &QPushButton::clicked,
+                this, MainWindow::on_deleteButton_clicked);
+}
+

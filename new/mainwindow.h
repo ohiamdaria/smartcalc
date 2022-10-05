@@ -118,6 +118,18 @@ private slots:
 
    void on_type_diff_clicked();
 
+   void on_deleteButton_clicked();
+
+   void get_deposits();
+
+   void get_withdrawals();
+
+   void on_pushButton_clicked();
+
+   void on_addDeposit_button_clicked();
+
+   void on_addWithdrawal_button_clicked();
+
 private:
     Ui::MainWindow *ui;
     double xBegin, xEnd, yBegin, yEnd, h, X;
@@ -135,6 +147,11 @@ private:
     bool flag = true;
     creditcalc* sWindow;
     depositcalc* dWindow;
+
+    int countWithdrawals = 0, countDeposits = 0;
+    QVector<QLineEdit*> SumLineDeposits, SumLineWithdrawals;
+    QVector<QDateEdit*> DateLineDeposits, DateLineWithdrawals;
+    QVector<QComboBox*> BoxLineDeposits, BoxLineWithdrawals;
 
 };
 
