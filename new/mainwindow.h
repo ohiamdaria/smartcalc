@@ -71,10 +71,6 @@ private slots:
 
     void on_push_mod_clicked();
 
-    void on_push_pi_clicked();
-
-    void on_push_e_clicked();
-
     void on_push_ln_clicked();
 
     void on_push_right_clicked();
@@ -126,10 +122,6 @@ private slots:
    void get_withdrawals();
 
    void on_pushButton_clicked();
-
-   void on_addDeposit_button_clicked();
-
-   void on_addWithdrawal_button_clicked();
 
 private:
     Ui::MainWindow *ui;

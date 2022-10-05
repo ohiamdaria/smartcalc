@@ -70,10 +70,6 @@ void MainWindow::on_push_pow_clicked() { clicked_text_add("^"); }
 
 void MainWindow::on_push_mod_clicked() { clicked_text_add("mod"); }
 
-void MainWindow::on_push_pi_clicked() { clicked_text_add("pi"); }
-
-void MainWindow::on_push_e_clicked() { clicked_text_add("e"); }
-
 void MainWindow::on_push_ln_clicked() { clicked_text_add("ln"); }
 
 void MainWindow::on_push_right_clicked() { clicked_text_add("("); }
@@ -311,50 +307,4 @@ void MainWindow::on_pushButton_clicked() {
 }
 
 
-void MainWindow::on_addDeposit_button_clicked()
-{
-    QGridLayout *layout = new QGridLayout;
-    QLineEdit* edit = new QLineEdit(this);
-    QDateEdit* date = new QDateEdit(this);
-    QPushButton* deletebutton = new QPushButton(this);
-    QComboBox* box = new QComboBox(this);
-    box->addItem("none");
-    box->addItem("one-time");
-    box->addItem("once a month");
-    box->addItem("once a quarter");
-    box->addItem("once a year");
-    layout->addWidget(box, 0, 0);
-    layout->addWidget(date, 0, 1);
-    layout->addWidget(edit, 0, 2);
-    layout->addWidget(deletebutton, 0, 3);
-    countDeposits++;
-    ui->widgets_frame->addLayout(layout);
-    SumLineDeposits.push_back(edit);
-    DateLineDeposits.push_back(date);
-    BoxLineDeposits.push_back(box);
-}
-
-
-void MainWindow::on_addWithdrawal_button_clicked()
-{
-    QGridLayout *layout = new QGridLayout;
-    QLineEdit* edit = new QLineEdit(this);
-    QDateEdit* date = new QDateEdit(this);
-    QPushButton* deletebutton = new QPushButton(this);
-    QComboBox* box = new QComboBox(this);
-    box->addItem("none");
-    box->addItem("one-time");
-    box->addItem("once a month");
-    box->addItem("once a quarter");
-    box->addItem("once a year");
-    layout->addWidget(box, 0, 0);
-    layout->addWidget(date, 0, 1);
-    layout->addWidget(edit, 0, 2);
-    layout->addWidget(deletebutton, 0, 3);
-    countWithdrawals++;
-    ui->widgets_frame2->addLayout(layout);
-    SumLineWithdrawals.push_back(edit);
-    DateLineWithdrawals.push_back(date);
-    BoxLineWithdrawals.push_back(box);
-}
 
