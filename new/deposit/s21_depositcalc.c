@@ -73,11 +73,11 @@ int count_term(int term, int days, char *begin_of_term) {
         return to_days_from_months(term, days, begin_of_term);
 }
 
-// double nalog(double interest_rate, double result) {
-//     double neoblagaem_part = pow(10, 6) * 7.5 / 100;
-//     double sum = result - neoblagaem_part;
-//     return sum > 0.0 ? sum * 0.13 : 0.0;
-// }
+double nalog(double interest_rate, double result) {
+    double neoblagaem_part = pow(10, 6) * 7.5 / 100;
+    double sum = result - neoblagaem_part;
+    return sum > 0.0 ? sum * 0.13 : 0.0;
+}
 
 double depositcalc(double sum, int term, int days_ot_months_or_years, char *begin_of_term, double tax_rate, double interest_rate, int frequency_of_payments, int capital) {
     double days = count_term(term, days_ot_months_or_years, "10.10.2022");
