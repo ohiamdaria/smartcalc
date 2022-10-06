@@ -258,7 +258,7 @@ int check_unary_minus(char *str) {
     str++;
     while(*str != '-' || *str == ' ') str++;
     char check_after = *str;
-    if (check_before == '(' && check_after == ')'|| !check_before)
+    if ((check_before == '(' && check_after == ')') || !check_before)
         status = 1; // yes
     else if (check_before == '(')
       status = 1;
@@ -277,7 +277,7 @@ int check_unary_plus(char *str) {
     char check_after = *str;
     if (check_before == '-')
         status = 2;
-    else if (check_before == '(' && check_after == ')'|| !check_before)
+    else if ((check_before == '(' && check_after == ')') || !check_before)
         status = 1; // yes
     else if (check_before == '(')
       status = 1;

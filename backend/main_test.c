@@ -1,4 +1,4 @@
-#include "tests.h"
+#include "tests_src/tests.h"
 
 int main(void) {
     srand(time(0));

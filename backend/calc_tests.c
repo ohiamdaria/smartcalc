@@ -1,4 +1,4 @@
-#include "tests.h"
+#include "tests_src/s21_tests.h"
 
 #define ln(x) log(x)
 
@@ -15,7 +15,7 @@ START_TEST(test_2) {
     char str[1024] = "tan(6.08123 / log(5.6321 + 345 * (-5.2345) * (-13.111))) / ln(45.32 / (+99.1334)) ^ (  +2)";
     double result = 0.0l, check_result = pow(tan(6.08123 / log(5.6321 + 345 * (-5.2345) * (-13.111))) / ln(45.32 / (+99.1334)), 2);
     result = smart_calc(&str[0], 0.0);
-    ck_assert_double_eq_tol(result, check_result, 1e-7);
+    ck_assert_double_eq_tol(result, check_result, 1e-07);
 }
 END_TEST
 
@@ -42,14 +42,14 @@ START_TEST(test_x_1) {
     double result = 0.0l, check_result = pow(tan(6.08123 / log(5.6321 + 345 * (-5.2345) * (-13.111))) / ln(45.32 / (+99.1334)), 2),
     x = 5.2345;
     result = smart_calc(&str[0], x);
-    ck_assert_double_eq_tol(result, check_result, 1e-7);
+    ck_assert_double_eq_tol(result, check_result, 1e-5);
 }
 END_TEST
 
 
 Suite *suite_smartcalc(void) {
-    Suite *s = suite_create("suite_smartcalc");
-    TCase *tc = tcase_create("suite_smartcalc");
+    Suite *s = suite_create("suite_s21_smartcalc");
+    TCase *tc = tcase_create("s21_smartcalc");
 
     tcase_add_test(tc, test_1);
     tcase_add_test(tc, test_2);
@@ -59,4 +59,37 @@ Suite *suite_smartcalc(void) {
 
     suite_add_tcase(s, tc);
     return s;
+}
+
+int main(void) {
+    srand(time(0));
+    run_tests();
+
+    return 0;
+}
+
+void run_testcase(Suite *testcase) {
+    static int counter_testcase = 1;
+
+    if (counter_testcase > 1)
+        putchar('\n');
+    printf("%s%d%s", "CURRENT TEST: ", counter_testcase, "\n");
+    counter_testcase++;
+
+    SRunner *sr = srunner_create(testcase);
+
+    srunner_set_fork_status(sr, CK_NOFORK);
+    srunner_run_all(sr, CK_NORMAL);
+
+    srunner_free(sr);
+}
+
+void run_tests(void) {
+    Suite *list_cases[] = {suite_smartcalc(),
+                           NULL};
+
+    for (Suite **current_testcase = list_cases; *current_testcase != NULL;
+         current_testcase++) {
+        run_testcase(*current_testcase);
+    }
 }
