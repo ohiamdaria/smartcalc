@@ -20,7 +20,7 @@ GCOV_OBJ  := $(addprefix $(GCOV_OBJ_DIR)/, $(patsubst %.c, %.o, $(CALC_SRC)))
 CALC_TEST := calc_tests.c
 CALC_LIB	:= s21_cmartcalc.a
 
-all: test 
+all: $(CALC_LIB) 
 
 test: $(CALC_LIB) $(TEST_OBJ_DIR)/main.o $(TEST_OBJ)
 	$(CC) $(LFLAGS) $(TEST_OBJ_DIR)/main.o $(CALC_LIB) -o test

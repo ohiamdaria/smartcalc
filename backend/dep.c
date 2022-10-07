@@ -1,22 +1,38 @@
-#include "../s21_calculate.c"
+#include "s21_calculate.c"
 
 typedef struct {
-    double sum;
-    int type_of_term;
-    int term;
-    double interest_rate;
-    double tax_rate;
-    int frequency_of_payments;
-    int capital;
-    double result;
+  double sum;
+  int type_of_term;
+  int term;
+  double interest_rate;
+  double tax_rate;
+  int frequency_of_payments;
+  int capital;
+  double result;
 } deposit_t;
 
 typedef struct {
-    int day_begin;
-    int month_begin;
-    int year_begin;
+  int day_begin;
+  int month_begin;
+  int year_begin;
 } dates_t;
 
+void init_deposit(deposit_t *deposit) {
+  deposit->sum = 0.0;
+  deposit->type_of_term = 0;
+  deposit->term = 0;
+  deposit->interest_rate = 0.0;
+  deposit->tax_rate = 0.0;
+  deposit->frequency_of_payments = 0;
+  deposit->capital = 0;
+  deposit->result = 0.0;
+}
+
+void init_deposit_dates(dates_t *date) {
+  date->day_begin = 0;
+  date->month_begin = 0;
+  date->year_begin = 0;
+}
 
 int know_days_or_months_or_years(char *begin_of_term, int i) { 
     int number = 0;

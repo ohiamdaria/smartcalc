@@ -30,12 +30,18 @@ typedef struct {
     size_t size;
 } Stack_number;
 
+typedef struct {
+    double x;
+    double result;
+    int code;
+} data_task_t;
+
 #define OK 0
-#define ARITHM_ERROR 1
+#define ERROR 1
 
 //calc
-double smart_calc(char *str, double number);
-double calc(char *s, double number);
+void smart_calc(char *str, data_task_t *data);
+double calc(char *s, data_task_t *data);
 double parser_numbers(char *str);
 
 // working with stack(numbers)
@@ -49,7 +55,7 @@ void printn(Stack_number *st);
 // for notation
 void notation(char *str, char *str_output, Stack *stack);
 char *add_space_to_str(char *str);
-char *from_str_to_notation(char *str);
+char *from_str_to_notation(char *str, data_task_t *data);
 // helpers
 char *change_functions_in_str(char *str);
 char *add_current_symbol(char *str_output, char current_symbol);
@@ -67,5 +73,10 @@ void print(Stack *st);
 char * add_null_to_str(char *str);
 void init_credit(credit_t *credit);
 double creditcalc(credit_t *credit, double sum, double prozent, int year, int month, int type);
+//find error func
+void init_input(data_task_t *data);
+void catch_a_beach(char *str, data_task_t *data);
+int count_braces(char *str);
+
 
 #endif // CALCULATE_H_

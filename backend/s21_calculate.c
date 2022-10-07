@@ -87,9 +87,8 @@ double parser_numbers(char *str) {
     return (whole_part + fract_part);
 }
 
-double calc(char *s, double number) {
-    double d = 0.0l;;
-    double otvet = 0.0l;
+double calc(char *s, data_task_t *data) {
+    double d = 0.0l, otvet = 0.0l;
     Stack_number num;
     init_stackn(&num);
     while(*s != '\0' && (s)) {
@@ -99,7 +98,7 @@ double calc(char *s, double number) {
                 pushn(&num, d);
                 while(*s != ' ') ++s;
             } else if (*s == 'x')
-                pushn(&num, number);
+                pushn(&num, data->x);
             s++;
         }
         if (check_priority(*s) > 0 && check_priority(*s) < 5) {
@@ -220,10 +219,11 @@ char *add_space_to_str(char *str) {
             while((check_priority(*str) == 5 || *str == '.') && (*str != '\0'))
                 str_space[i++] = *str++;
         } else if (check_priority(*str) == 1) {
-            while((check_priority(*str) == 1 && (*str != '\0')))
+            while(check_priority(*str) == 1 && (*str != '\0'))
                 str_space[i++] = *str++;
         } else if (*str == 'm') {
-            str_space[i++] = *str++;
+            for(int j = 0; j < 3; j++)
+                str_space[i++] = *str++;
         } else {
             str_space[i++] = *str++;
         }
@@ -240,13 +240,12 @@ char *add_null_to_str(char *str) {
             str_null[i++] = '0';
         else if (*str == '+' && check_unary_plus(str) == 1)
             str_null[i++] = '0';
-        if (*str == '+' && check_unary_plus(str) == 2)
-            str++;
-        else
+        // if (*str == '+' && check_unary_plus(str) == 2)
+        //     str++;
+        // else
             str_null[i++] = *str++;
     }
     strcpy(str, str_null);
-    printf("new %s\n", str);
     return str;
 }
 
@@ -262,8 +261,8 @@ int check_unary_minus(char *str) {
         status = 1; // yes
     else if (check_before == '(')
       status = 1;
-    else if ((check_priority(check_before) == 3 || check_priority(check_before) == 4))
-        status = 1;
+    // else if ((check_priority(check_before) == 3 || check_priority(check_before) == 4))
+    //     status = 1;
     return status;
 }
 
@@ -281,8 +280,8 @@ int check_unary_plus(char *str) {
         status = 1; // yes
     else if (check_before == '(')
       status = 1;
-    else if (check_priority(check_before) == 3 || check_priority(check_before) == 4)
-        status = 1;
+    // else if (check_priority(check_before) == 3 || check_priority(check_before) == 4)
+    //     status = 1;
     return status;
 }
 
@@ -299,21 +298,48 @@ char *delete_space_str(char *str) {
     return str;
 }
 
-char *from_str_to_notation(char *str) {
+int count_braces(char *str) {
+    char str_check[1024] = "";
+    strcpy(str_check, str);
+
+    int count_left = 0, count_right = 0, i = 0;
+    while(str_check[i] != '\0') {
+        if (str_check[i] == '(') count_left++;
+        if (str_check[i] == ')') count_right++;
+        i++;
+    }
+
+    return (count_left == count_right) ? OK : ERROR;
+}
+
+void catch_a_beach(char *str, data_task_t *data) {
+    data->code = count_braces(str);
+    data->code = strlen(str) < 256 ? OK : ERROR;
+}
+
+char *from_str_to_notation(char *str, data_task_t *data) {
     Stack stack;
     init_stack(&stack);
-
-    char *str_output = (char *)calloc(514, sizeof(char));
-    char *strcopy = delete_space_str(str);
-    notation(add_space_to_str(add_null_to_str(strcopy)), str_output, &stack);
-
+    catch_a_beach(str, data); // find errors :3
+    char *str_output = NULL;
+    if (!data->code) {
+        str_output = (char *)calloc(1024, sizeof(char));
+        char *strcopy = delete_space_str(str);
+        notation(add_space_to_str(add_null_to_str(strcopy)), str_output, &stack);
+    }
     return str_output;
 }
 
-double smart_calc(char *str, double number) {
-    char *strcopy = str;
-    double rez = calc(from_str_to_notation(strcopy), number);
-    return rez;
+void init_input(data_task_t *data) {
+    data->x = 0.0;
+    data->result = 0.0;
+    data->code = OK;
+}
+
+void smart_calc(char *str, data_task_t *data) {
+    char *strcopy = from_str_to_notation(str, data);
+    if (!data->code)
+        data->result = calc(strcopy, data);
 }
 
 void init_credit(credit_t *credit) {
