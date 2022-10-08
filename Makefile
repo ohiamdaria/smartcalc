@@ -9,25 +9,29 @@ OBJ_DIR     := obj
 TEST_SRC_DIR:= tests_src
 TEST_OBJ_DIR:= tests_obj
 GCOV_OBJ_DIR:= gcov_res
+CALC_DIR		:= ./backend
 
 TEST_SRC  := $(shell find $(TEST_SRC_DIR) -maxdepth 1 -name "*.c")
-CALC_SRC  := $(wildcard s21*.c)
+search_wildcards := $(addsuffix /s21_*.c,$(CALC_DIR)) 
+CALC_SRC  := $(wildcard $(search_wildcards))
 
 TEST_OBJ  := $(addprefix $(TEST_OBJ_DIR)/, $(notdir $(TEST_SRC:.c=.o)))
-CALC_OBJ  := $(addprefix $(OBJ_DIR)/, $(patsubst %.c, %.o, $(CALC_SRC)))
+CALC_OBJ  := $(patsubst %.c, %.o, $(CALC_SRC))
 GCOV_OBJ  := $(addprefix $(GCOV_OBJ_DIR)/, $(patsubst %.c, %.o, $(CALC_SRC)))
+QMAKEFILE := RealMakefile
+CALC_TEST := $(CALC_DIR)/calc_test.c
 
-CALC_TEST := calc_test.c
+CALC_LIB	:= s21_smartcalc.a 
 
-all: s21_smartcalc.a 
+all: $(CALC_LIB) 
 
-test: s21_smartcalc.a  $(TEST_OBJ_DIR)/main.o $(TEST_OBJ)
-	$(CC) $(LFLAGS) $(TEST_OBJ) $(TEST_OBJ_DIR)/main.o s21_smartcalc.a  -o test
+test: $(CALC_LIB)  $(TEST_OBJ_DIR)/main.o $(TEST_OBJ)
+	$(CC) $(LFLAGS) $(TEST_OBJ) $(TEST_OBJ_DIR)/main.o $(CALC_LIB)  -o test
 	- ./test
 
-s21_smartcalc.a: $(CALC_OBJ)
-	ar rc s21_smartcalc.a $(CALC_OBJ)
-	ranlib 	s21_smartcalc.a
+$(CALC_LIB): $(CALC_OBJ)
+	ar rc $(CALC_LIB) $(CALC_OBJ)
+	ranlib 	$(CALC_LIB)
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(OBJ_DIR)
@@ -43,7 +47,7 @@ $(TEST_OBJ_DIR)/%.o: $(TEST_SRC_DIR)/%.c
 
 
 gcov_report: $(TEST_OBJ_DIR)/main.o $(GCOV_OBJ) $(MATRIX_SRC)
-	ar rc s21_smartcalc.a $(GCOV_OBJ)
+	ar rc $(CALC_LIB) $(GCOV_OBJ)
 	ranlib 	s21_smartcalc.a
 	$(CC) $(LFLAGS) --coverage $(TEST_OBJ) $(TEST_OBJ_DIR)/main.o s21_smartcalc.a -o test
 	- ./test
@@ -64,7 +68,7 @@ clean: clean_bin
 	rm -f *.gcno 
 	rm -f coverage.info
 	rm -f test
-	rm -f s21_matrix.a
+	rm -f s21_smartcalc.a
 	rm -rf obj
 	rm -rf tests_obj
 	rm -rf gcov_res
