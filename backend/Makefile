@@ -17,18 +17,17 @@ TEST_OBJ  := $(addprefix $(TEST_OBJ_DIR)/, $(notdir $(TEST_SRC:.c=.o)))
 CALC_OBJ  := $(addprefix $(OBJ_DIR)/, $(patsubst %.c, %.o, $(CALC_SRC)))
 GCOV_OBJ  := $(addprefix $(GCOV_OBJ_DIR)/, $(patsubst %.c, %.o, $(CALC_SRC)))
 
-CALC_TEST := calc_tests.c
-CALC_LIB	:= s21_cmartcalc.a
+CALC_TEST := calc_test.c
 
-all: $(CALC_LIB) 
+all: s21_smartcalc.a 
 
-test: $(CALC_LIB) $(TEST_OBJ_DIR)/main.o $(TEST_OBJ)
-	$(CC) $(LFLAGS) $(TEST_OBJ_DIR)/main.o $(CALC_LIB) -o test
+test: s21_smartcalc.a  $(TEST_OBJ_DIR)/main.o $(TEST_OBJ)
+	$(CC) $(LFLAGS) $(TEST_OBJ) $(TEST_OBJ_DIR)/main.o s21_smartcalc.a  -o test
 	- ./test
 
-$(CALC_LIB): $(CALC_OBJ)
-	ar rc $(CALC_LIB) $(CALC_OBJ)
-	ranlib 	$(CALC_LIB)
+s21_smartcalc.a: $(CALC_OBJ)
+	ar rc s21_smartcalc.a $(CALC_OBJ)
+	ranlib 	s21_smartcalc.a
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(OBJ_DIR)
@@ -43,31 +42,33 @@ $(TEST_OBJ_DIR)/%.o: $(TEST_SRC_DIR)/%.c
 	$(CC) $(INC_CHECK) -c $^ -o $@
 
 
-gcov_report: $(TEST_OBJ_DIR)/main.o $(GCOV_OBJ) $(CALC_SRC)
-	ar rc $(CALC_LIB) $(GCOV_OBJ)
-	ranlib 	$(CALC_LIB)
-	$(CC) $(LFLAGS) --coverage $(TEST_OBJ) $(TEST_OBJ_DIR)/main.o $(CALC_LIB) -o test
+gcov_report: $(TEST_OBJ_DIR)/main.o $(GCOV_OBJ) $(MATRIX_SRC)
+	ar rc s21_smartcalc.a $(GCOV_OBJ)
+	ranlib 	s21_smartcalc.a
+	$(CC) $(LFLAGS) --coverage $(TEST_OBJ) $(TEST_OBJ_DIR)/main.o s21_smartcalc.a -o test
 	- ./test
-	./../materials/lcov/bin/lcov -f -c --directory . -o ./coverage.info 
-	./../materials/lcov/bin/genhtml coverage.info --output-directory=res
-	#rm -f *.gcda *.gcov *.o *.gcno
-	open res/index.html
+	gcovr	-r	.	--html	--html-details	-o	coverage_report.html
+	rm	-rf	*.o	*.out	*.gcno	*.gcna	*gcda
+	open	./coverage_report.html
+
 
 $(GCOV_OBJ_DIR)/%.o: %.c
 	@mkdir -p $(GCOV_OBJ_DIR)
 	$(CC) $(CFLAGS) $(TEST_FLAGS) $^ -o $@
 
 
-.PHONY: clean clean_lib clean_bin
-clean:	clean_lib	clean_bin	
+.PHONY: clean_lib
+clean: clean_bin
 	rm -f *.gcda 
 	rm -f *.gcov 
 	rm -f *.gcno 
 	rm -f coverage.info
 	rm -f test
-
-clean_lib:
-	rm -f $(CALC_LIB)
+	rm -f s21_matrix.a
+	rm -rf obj
+	rm -rf tests_obj
+	rm -rf gcov_res
+	rm	-rf	*.o	*.out *.gcno *.gcna	*.html *.gcda *.css	*.exe
 
 clean_bin: 
 	rm -f $(CALC_OBJ) 
@@ -75,11 +76,3 @@ clean_bin:
 	rm -f $(GCOV_OBJ) 
 
 rebuild: clean clean_lib clean_bin all
-
-# cpplint: ${CALC_SRC} ${TEST_SRC} *.h
-# ifeq ("","$(wildcard ./CPPLINT.cfg)")
-# 	@cp -f ../materials/linters/CPPLINT.cfg ./CPPLINT.cfg
-# endif
-# 	@!(python3 ../materials/linters/cpplint.py --extensions=c $^ | grep -q :)
-# 	@rm -f CPPLINT.cfg
-# 	@!(grep -r '<math.h>' s21*)

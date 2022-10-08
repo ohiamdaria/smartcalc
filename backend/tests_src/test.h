@@ -1,5 +1,5 @@
-#ifndef TEST
-#define TEST
+#ifndef SRC_TESTS_SRC_TEST_H
+#define SRC_TESTS_SRC_TEST_H
 
 #include "../s21_calculate.h"
 #include <check.h>
@@ -12,4 +12,4 @@ void run_tests(void);
 void run_testcase(Suite *testcase);
 
 double get_rand(double min, double max);
-#endif  //  TEST
+#endif  //  SRC_TESTS_SRC_TEST_H

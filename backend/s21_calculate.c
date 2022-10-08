@@ -21,11 +21,11 @@ int peek(Stack* head) {
     return head->n;
 }
 
-void print(Stack *st) {
-    for (unsigned int i = 0; i < st->n; i++)
-        printf("%c ", st->a[i]);
-    printf("\n");
-}
+// void print(Stack *st) {
+//     for (unsigned int i = 0; i < st->n; i++)
+//         printf("%c ", st->a[i]);
+//     printf("\n");
+// }
 
 void init_stackn(Stack_number *st) {
     st->n = 0.0l;
@@ -40,18 +40,6 @@ double popn(Stack_number *st) {  //вытащить последний эл-т �
 void pushn(Stack_number *st, double data) {
     st->a[st->n] = data;
     st->n++;
-}
-
-int peekn(Stack_number* head) {
-    if (head == NULL)
-        return 0;
-    return head->n;
-}
-
-void printn(Stack_number *st) {
-    for (unsigned int i = 0; i < st->n; i++)
-        printf("i: %d int: %.6lf ", i, st->a[i]);
-    printf("\n");
 }
 
 int check_priority(char k) {
@@ -313,8 +301,8 @@ int count_braces(char *str) {
 }
 
 void catch_a_beach(char *str, data_task_t *data) {
-    data->code = count_braces(str);
-    data->code = strlen(str) < 256 ? OK : ERROR;
+  data->code = (strlen(str) == 0 ? ERROR : OK) ||
+  count_braces(str) || (strlen(str) < 256 ? OK : ERROR);
 }
 
 char *from_str_to_notation(char *str, data_task_t *data) {
@@ -326,6 +314,7 @@ char *from_str_to_notation(char *str, data_task_t *data) {
         str_output = (char *)calloc(1024, sizeof(char));
         char *strcopy = delete_space_str(str);
         notation(add_space_to_str(add_null_to_str(strcopy)), str_output, &stack);
+        // free(strcopy);
     }
     return str_output;
 }
@@ -338,47 +327,48 @@ void init_input(data_task_t *data) {
 
 void smart_calc(char *str, data_task_t *data) {
     char *strcopy = from_str_to_notation(str, data);
-    if (!data->code)
+    if (!data->code) {
         data->result = calc(strcopy, data);
-}
-
-void init_credit(credit_t *credit) {
-    credit->sum = 0.0;
-    credit->prozent = 0.0;
-    credit->year = 0;
-    credit->month = 0;
-    credit->overpayment = 0.0;
-    credit->overpayment_edit = 0.0;
-    credit->result_edit = 0.0;
-}
-
-double creditcalc(credit_t *credit, double sum, double prozent, int year, int month, int type) {
-    credit->sum = sum;
-    credit->prozent = prozent;
-    credit->year = year;
-    credit->month = month;
-    month += year * 12;
-    double p = (double) prozent / ((double) 100 * (double) 12);
-    if (type == 1) {
-        double overpayment = sum * (p / (1 - (double) 1 / pow(1 + p, month)));
-        credit->overpayment = overpayment;
-        credit->overpayment_edit = overpayment * month - sum;
-        credit->result_edit = overpayment * month;
-    } else {
-        double sn = sum;
-        double b = (double) sum / (double) month;
-        double P = sn * p;
-        double overpayment = b + P;
-        double overpayment_all = overpayment;
-        credit->overpayment = overpayment;
-        while(sn - b > 0) {
-            sn -= b;
-            P = sn * p;
-            overpayment = b + P;
-            overpayment_all += overpayment;
-        }
-        credit->overpayment_edit = overpayment_all - sum;
-        credit->result_edit = overpayment_all;
     }
-    return 0.0;
 }
+
+// void init_credit(credit_t *credit) {
+//     credit->sum = 0.0;
+//     credit->prozent = 0.0;
+//     credit->year = 0;
+//     credit->month = 0;
+//     credit->overpayment = 0.0;
+//     credit->overpayment_edit = 0.0;
+//     credit->result_edit = 0.0;
+// }
+
+// double creditcalc(credit_t *credit, double sum, double prozent, int year, int month, int type) {
+//     credit->sum = sum;
+//     credit->prozent = prozent;
+//     credit->year = year;
+//     credit->month = month;
+//     month += year * 12;
+//     double p = (double) prozent / ((double) 100 * (double) 12);
+//     if (type == 1) {
+//         double overpayment = sum * (p / (1 - (double) 1 / pow(1 + p, month)));
+//         credit->overpayment = overpayment;
+//         credit->overpayment_edit = overpayment * month - sum;
+//         credit->result_edit = overpayment * month;
+//     } else {
+//         double sn = sum;
+//         double b = (double) sum / (double) month;
+//         double P = sn * p;
+//         double overpayment = b + P;
+//         double overpayment_all = overpayment;
+//         credit->overpayment = overpayment;
+//         while(sn - b > 0) {
+//             sn -= b;
+//             P = sn * p;
+//             overpayment = b + P;
+//             overpayment_all += overpayment;
+//         }
+//         credit->overpayment_edit = overpayment_all - sum;
+//         credit->result_edit = overpayment_all;
+//     }
+//     return 0.0;
+// }

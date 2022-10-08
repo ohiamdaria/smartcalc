@@ -1,4 +1,4 @@
-#include "tests_src/s21_tests.h"
+#include "test.h"
 
 #define ln(x) log(x)
 
@@ -59,7 +59,7 @@ END_TEST
 START_TEST(test_x_2) {
     data_task_t data;
     init_input(&data);
-    char str[1024] = "555.666 mod 3.456 + ( ( ( atan(0.9876/x) + (-asin(0.222)  )  )  * cos((x * 3) ^ (  0.7889 ) ) - 2222.2 / ( -777.7 ) )";
+    char str[1024] = "555.666 mod 3.456 + ( ( atan(0.9876/x) + (-asin(0.222)  )  )  * cos((x * 3) ^ (  0.7889 ) ) - 2222.2 / ( -777.7 ) )";
     data.x = 17.239;
     double check_result = fmod(555.666, 3.456) + ((atan(0.9876/17.239) + (-asin(0.222))) * cos(pow(17.239 * 3, 0.7889)) - 2222.2 / (-777.7));
     smart_calc(&str[0], &data);
@@ -94,11 +94,38 @@ END_TEST
 START_TEST(test_x_5) {
     data_task_t data;
     init_input(&data);
-    char str[1024] = "-(-87.543*sin(0.999+tan(55.5)-2.234))-50.66*(acos(0.234)/atan(0.55)))";
-    data.x = 17.239;
-    double result = 0.0l, check_result = -(-87.543*sin(0.999+tan(55.5)-2.234))-50.66*(acos(0.234)/atan(0.55));
+    char str[1024] = "-(-87.543*sin(0.999+tan(x)-2.234))-50.66*(acos(0.234)/atan(0.55))";
+    data.x = 55.5;
+    double check_result = -(-87.543*sin(0.999+tan(55.5)-2.234))-50.66*(acos(0.234)/atan(0.55));
     smart_calc(&str[0], &data);
     ck_assert_double_eq_tol(data.result, check_result, 1e-7);
+}
+END_TEST
+
+START_TEST(test_error_1) {
+    data_task_t data;
+    init_input(&data);
+    char str[1024] = "-(-87.543*(sin(0.999+tan(55.5)))-2.234)-50.66*(acos(0.234)/atan(0.55)))";
+    smart_calc(&str[0], &data);
+    ck_assert_int_eq(data.code, ERROR);
+}
+END_TEST
+
+START_TEST(test_error_2) {
+    data_task_t data;
+    init_input(&data);
+    char str[1024] = "-(-87.543*sin(0.999+tan(55.5)-2.234))-50.66*(acos(0.234)/atan(0.55)))-(-87.543*sin(0.999+tan(55.5)-2.234))-50.66*(acos(0.234)/atan(0.55)))-(-87.543*sin(0.999+tan(55.5)-2.234))-50.66*(acos(0.234)/atan(0.55)))-(-87.543*sin(0.999+tan(55.5)-2.234))-50.66*(acos(0.234)/atan(0.55)))";
+    smart_calc(&str[0], &data);
+    ck_assert_int_eq(data.code, ERROR);
+}
+END_TEST
+
+START_TEST(test_error_3) {
+    data_task_t data;
+    init_input(&data);
+    char str[1024] = "-((-87.543*sin(0.999+tan(55.5)-2.234))-50.66*(acos(0.234)/atan(0.55)))-(-87.543*sin(0.999+tan(55.5)-2.234))-50.66*(acos(0.234)/atan(0.55)))-(-87.543*sin(0.999+tan(55.5)-2.234))-50.66*(acos(0.234)/atan(0.55)))-(-87.543*sin(0.999+tan(55.5)-2.234))-50.66*(acos(0.234)/atan(0.55)))";
+    smart_calc(&str[0], &data);
+    ck_assert_int_eq(data.code, ERROR);
 }
 END_TEST
 
@@ -128,41 +155,11 @@ Suite *suite_smartcalc(void) {
     tcase_add_test(tc, test_x_3);
     tcase_add_test(tc, test_x_4);
     tcase_add_test(tc, test_x_5);
+    tcase_add_test(tc, test_error_1);
+    tcase_add_test(tc, test_error_2);
+    tcase_add_test(tc, test_error_3);
     // tcase_add_test(tc, test_nan);
 
     suite_add_tcase(s, tc);
     return s;
-}
-
-int main(void) {
-    srand(time(0));
-    run_tests();
-
-    return 0;
-}
-
-void run_testcase(Suite *testcase) {
-    static int counter_testcase = 1;
-
-    if (counter_testcase > 1)
-        putchar('\n');
-    printf("%s%d%s", "CURRENT TEST: ", counter_testcase, "\n");
-    counter_testcase++;
-
-    SRunner *sr = srunner_create(testcase);
-
-    srunner_set_fork_status(sr, CK_NOFORK);
-    srunner_run_all(sr, CK_NORMAL);
-
-    srunner_free(sr);
-}
-
-void run_tests(void) {
-    Suite *list_cases[] = {suite_smartcalc(),
-                           NULL};
-
-    for (Suite **current_testcase = list_cases; *current_testcase != NULL;
-         current_testcase++) {
-        run_testcase(*current_testcase);
-    }
 }
