@@ -88,6 +88,7 @@ char pop(Stack *st);
 void push(Stack *st, int data);
 int peek(Stack* head);
 void print(Stack *st);
+void deleteStack(Stack *st);
 char * add_null_to_str(char *str);
 void init_credit(credit_t *credit);
 double creditcalc(credit_t *credit, double sum, double prozent, int year, int month, int type);

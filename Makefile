@@ -22,8 +22,16 @@ QMAKEFILE := RealMakefile
 CALC_TEST := $(CALC_DIR)/calc_test.c
 
 CALC_LIB	:= s21_smartcalc.a 
+QMAKEFILE	:=	RealMakefile
 
-all: $(CALC_LIB) 
+all: $(OBJ_DIR)
+	$(MAKE) -f $(QMAKEFILE)
+
+%: $(OBJ_DIR)
+	@$(MAKE) -f $(QMAKEFILE) $@
+
+$(OBJ_DIR):
+	mkdir $(OBJ_DIR)
 
 test: $(CALC_LIB)  $(TEST_OBJ_DIR)/main.o $(TEST_OBJ)
 	$(CC) $(LFLAGS) $(TEST_OBJ) $(TEST_OBJ_DIR)/main.o $(CALC_LIB)  -o test
@@ -60,6 +68,21 @@ $(GCOV_OBJ_DIR)/%.o: %.c
 	@mkdir -p $(GCOV_OBJ_DIR)
 	$(CC) $(CFLAGS) $(TEST_FLAGS) $^ -o $@
 
+dist:
+	cat $(QMAKEFILE) | sed 's/--parents/-p/g' > /tmp/`basename $(QMAKEFILE)`
+	mv -f /tmp/`basename $(QMAKEFILE)` $(QMAKEFILE)
+	$(MAKE) -f $(QMAKEFILE) dist
+
+dvi:
+	latex -output-directory=./docs ./docs/docs.tex ./docs/brief.dvi
+	pdflatex -output-directory=./docs ./docs/docs.tex ./docs/brief.pdf
+
+install:
+	-mkdir build
+	qmake -project -r ./build realsmartcalc.app/Contents/MacOS/realsmartcalc
+
+run:
+	open realsmartcalc.app/Contents/MacOS/realsmartcalc
 
 .PHONY: clean_lib
 clean: clean_bin
@@ -73,6 +96,7 @@ clean: clean_bin
 	rm -rf tests_obj
 	rm -rf gcov_res
 	rm	-rf	*.o	*.out *.gcno *.gcna	*.html *.gcda *.css	*.exe
+
 
 clean_bin: 
 	rm -f $(CALC_OBJ) 

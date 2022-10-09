@@ -195,7 +195,7 @@ void notation(char *str, char *str_output, Stack *stack) {
 
 char *add_space_to_str(char *str) {
     int i = 0;
-    char str_space[514] = "";
+    char str_space[1024] = "";
     while(*str != '\0') {
         if (check_priority(*str) == 5) {
             while((check_priority(*str) == 5 || *str == '.') && (*str != '\0'))
@@ -275,6 +275,7 @@ char *delete_space_str(char *str) {
             str_output[i++] = *str;
         str++;
     }
+
     str_output[i++] = ')';
     strcpy(str, str_output);
     return str;
