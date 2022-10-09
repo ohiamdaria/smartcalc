@@ -40,29 +40,34 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>671</width>
-      <height>711</height>
+      <width>650</width>
+      <height>710</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>671</width>
-      <height>711</height>
+      <width>650</width>
+      <height>710</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>671</width>
-      <height>711</height>
+      <width>650</width>
+      <height>710</height>
      </size>
     </property>
     <property name="styleSheet">
      <string notr="true">QTabWidget {
 	color: #E6E6FA;
+	text: #999999;
+}
+
+QLabel {
+	color: black;
 }</string>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="Calculator">
      <property name="styleSheet">
@@ -1456,7 +1461,7 @@ QPushButton {
 }
 
 QLineEdit {
-	color: #000000;
+	color: #999999;
 	background-color: #FFFFFF;
 	border: 1px solid black;
     border-radius: 2px;
@@ -1470,7 +1475,7 @@ QLineEdit {
       <property name="geometry">
        <rect>
         <x>80</x>
-        <y>30</y>
+        <y>50</y>
         <width>503</width>
         <height>251</height>
        </rect>
@@ -1479,14 +1484,14 @@ QLineEdit {
        <item row="3" column="0">
         <widget class="QLabel" name="type_label">
          <property name="text">
-          <string>Тип ежемесячных платежей</string>
+          <string>Type of Payment</string>
          </property>
         </widget>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="time_label">
          <property name="text">
-          <string>Срок кредита</string>
+          <string>Loan Term</string>
          </property>
         </widget>
        </item>
@@ -1494,15 +1499,25 @@ QLineEdit {
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
           <widget class="QRadioButton" name="type_an">
+           <property name="styleSheet">
+            <string notr="true">QRadioButton {
+	color: black;
+}</string>
+           </property>
            <property name="text">
-            <string>Аннуитентный</string>
+            <string>Annuity</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QRadioButton" name="type_diff">
+           <property name="styleSheet">
+            <string notr="true">QRadioButton {
+	color: black;
+}</string>
+           </property>
            <property name="text">
-            <string>Дифференцированный</string>
+            <string>Differentiated</string>
            </property>
           </widget>
          </item>
@@ -1511,14 +1526,14 @@ QLineEdit {
        <item row="2" column="0">
         <widget class="QLabel" name="proz_label">
          <property name="text">
-          <string>Процентная ставка</string>
+          <string>Interest Rate</string>
          </property>
         </widget>
        </item>
        <item row="0" column="0">
         <widget class="QLabel" name="sum_label">
          <property name="text">
-          <string>Сумма кредита</string>
+          <string>Loan Amount</string>
          </property>
         </widget>
        </item>
@@ -1534,7 +1549,7 @@ QLineEdit {
          <item>
           <widget class="QLabel" name="time_year_line">
            <property name="text">
-            <string>лет</string>
+            <string>years</string>
            </property>
           </widget>
          </item>
@@ -1548,7 +1563,7 @@ QLineEdit {
          <item>
           <widget class="QLabel" name="time_month_line">
            <property name="text">
-            <string>месяцев</string>
+            <string>months</string>
            </property>
           </widget>
          </item>
@@ -1566,7 +1581,7 @@ QLineEdit {
          <item>
           <widget class="QLabel" name="rub_line">
            <property name="text">
-            <string>руб.</string>
+            <string>rub</string>
            </property>
           </widget>
          </item>
@@ -1596,7 +1611,7 @@ QLineEdit {
       <property name="geometry">
        <rect>
         <x>110</x>
-        <y>310</y>
+        <y>330</y>
         <width>441</width>
         <height>71</height>
        </rect>
@@ -1609,9 +1624,9 @@ QLineEdit {
       <property name="geometry">
        <rect>
         <x>80</x>
-        <y>410</y>
-        <width>511</width>
-        <height>171</height>
+        <y>430</y>
+        <width>501</width>
+        <height>181</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
@@ -1632,7 +1647,7 @@ QLineEdit {
        <item row="0" column="0">
         <widget class="QLabel" name="every_month_label">
          <property name="text">
-          <string> Ежемесячный платеж:          </string>
+          <string>Payment Every Month</string>
          </property>
         </widget>
        </item>
@@ -1646,14 +1661,14 @@ QLineEdit {
        <item row="2" column="0">
         <widget class="QLabel" name="result_label">
          <property name="text">
-          <string> Общая выплата:</string>
+          <string>Total Amount</string>
          </property>
         </widget>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="overpayment_label">
          <property name="text">
-          <string> Переплата по кредиту:</string>
+          <string>Total of Payments</string>
          </property>
         </widget>
        </item>
@@ -1711,100 +1726,74 @@ QDateEdit {
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="3" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QComboBox" name="comboBox_2">
-           <item>
-            <property name="text">
-             <string>fixed</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>depends on the amount</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>depends on the term</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="lineEdit_3"/>
-         </item>
-        </layout>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="lineEdit"/>
-       </item>
        <item row="1" column="0">
         <widget class="QLabel" name="time_label_2">
          <property name="text">
-          <string>Срок размещения</string>
+          <string>Term</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="sum_deposit">
+         <property name="text">
+          <string>0.0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="tax_rate">
+         <property name="text">
+          <string>0.0</string>
          </property>
         </widget>
        </item>
        <item row="5" column="0">
         <widget class="QLabel" name="period_label">
          <property name="text">
-          <string>Периодичность выплат</string>
+          <string>Frequency of Payments</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
-        <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item row="3" column="0">
+        <widget class="QLabel" name="proz_label_2">
+         <property name="text">
+          <string>Interest Rate</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="sum_label_2">
+         <property name="text">
+          <string>Deposit Amount, rub</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="nalog_label">
+         <property name="text">
+          <string>Tax Rate</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
-          <widget class="QComboBox" name="comboBox_3">
-           <item>
-            <property name="text">
-             <string>every day</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>once a month</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>once a quarter</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>once a year</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>at the end of the term</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="radioButton">
+          <widget class="QLineEdit" name="interest_rate">
            <property name="text">
-            <string>Капитализация процентов</string>
+            <string>0.0</string>
            </property>
           </widget>
          </item>
         </layout>
        </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="nalog_label">
-         <property name="text">
-          <string>Налоговая ставка</string>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="1">
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
-          <widget class="QLineEdit" name="lineEdit_2"/>
+          <widget class="QLineEdit" name="term_deposit">
+           <property name="text">
+            <string>0</string>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QComboBox" name="comboBox">
@@ -1827,82 +1816,58 @@ QDateEdit {
          </item>
         </layout>
        </item>
-       <item row="2" column="1">
-        <widget class="QDateEdit" name="dateEdit_6"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="proz_label_2">
-         <property name="text">
-          <string>Процентная ставка</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLineEdit" name="lineEdit_6"/>
-       </item>
        <item row="2" column="0">
         <widget class="QLabel" name="begin_data_label">
          <property name="text">
-          <string>Начало срока</string>
+          <string>Begin of Term</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="sum_label_2">
-         <property name="text">
-          <string>Сумма вклада, руб.</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <layout class="QVBoxLayout" name="widgets_frame"/>
-       </item>
-       <item row="6" column="0">
-        <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item row="5" column="1">
+        <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QLabel" name="replenishment_label">
-           <property name="text">
-            <string>Пополнения</string>
-           </property>
+          <widget class="QComboBox" name="frequency_of_pay">
+           <item>
+            <property name="text">
+             <string>every day</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>once a month</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>at the end of the term</string>
+            </property>
+           </item>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="addDeposit_button">
+          <widget class="QRadioButton" name="capital">
+           <property name="styleSheet">
+            <string notr="true">QRadioButton {
+	color: black;
+}</string>
+           </property>
            <property name="text">
-            <string>Add</string>
+            <string>Interest Capitalization</string>
            </property>
           </widget>
          </item>
         </layout>
        </item>
-       <item row="8" column="0">
-        <layout class="QVBoxLayout" name="verticalLayout_4">
-         <item>
-          <widget class="QLabel" name="label_7">
-           <property name="text">
-            <string>Снятия</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="addWithdrawal_button">
-           <property name="text">
-            <string>Add</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="8" column="1">
-        <layout class="QVBoxLayout" name="widgets_frame2"/>
+       <item row="2" column="1">
+        <widget class="QDateEdit" name="data_begin_term"/>
        </item>
       </layout>
      </widget>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="push_deposit">
       <property name="geometry">
        <rect>
         <x>280</x>
-        <y>450</y>
+        <y>620</y>
         <width>93</width>
         <height>29</height>
        </rect>
@@ -1910,6 +1875,61 @@ QDateEdit {
       <property name="text">
        <string>Рассчитать</string>
       </property>
+     </widget>
+     <widget class="QWidget" name="gridLayoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>470</y>
+        <width>491</width>
+        <height>98</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="oversum">
+         <property name="text">
+          <string>0.0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="tax_sum">
+         <property name="text">
+          <string>0.0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="deposit_sum">
+         <property name="text">
+          <string>0.0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Result Amount                </string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Tax Amount</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Aggregate
+Interest Amount</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </widget>

@@ -116,11 +116,12 @@ void MainWindow::TimerSlot() {
     ui->widget->graph(0)->setPen(DotPen);
     ui->widget->graph(0)->setLineStyle(QCPGraph::lsNone);
     ui->widget->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 1));
-    data_task_t data;
-    init_input(&data);
+
     if (time <= 20 * N) {
         if (X <= -xBegin) {
             strncpy(c_input, qPrintable(input), 255);
+            data_task_t data;
+            init_input(&data);
             data.x = X;
             smart_calc(c_input, &data);
             x.push_back(X);
@@ -174,11 +175,13 @@ void MainWindow::if_graph_exist() {
     ui->widget->xAxis->setRange(xBegin, xEnd);
     ui->widget->yAxis->setRange(yBegin, yEnd);
     ui->widget->addGraph();
+
     data_task_t data;
-    init_input(&data);
     N = (-xBegin + h - xBegin)/h + 2;
+
     for (X = xBegin; X < N; X += h) {
       strncpy(c_input, qPrintable(input), 255);
+      init_input(&data);
       data.x = X;
       smart_calc(c_input, &data);
       x.push_back(X);
@@ -258,3 +261,25 @@ void MainWindow::on_push_calc_clicked()
 void MainWindow::on_type_an_clicked() { type = 1; }
 
 void MainWindow::on_type_diff_clicked() { type = 2;}
+
+
+void MainWindow::on_push_deposit_clicked()
+{
+    deposit_t deposit;
+    init_deposit(&deposit);
+    double sum = ui->sum_deposit->text().toDouble();
+    deposit.sum = sum;
+    deposit.term = ui->term_deposit->text().toInt();
+    QString input = ui->data_begin_term->text();
+    char begin_of_term[15] = {0};
+    strncpy(begin_of_term, qPrintable(input), 15);
+    deposit.interest_rate = ui->interest_rate->text().toDouble();
+    deposit.tax_rate = ui->tax_rate->text().toDouble();
+    deposit.frequency_of_payments = 1;
+
+    ui->deposit_sum->setText(QString::number(deposit.result, 'g', 7));
+    ui->tax_sum->setText(QString::number(deposit.result_tax, 'g', 7));
+    ui->oversum->setText(QString::number(deposit.result - sum, 'g', 7));
+
+}
+

@@ -114,6 +114,10 @@ private slots:
 
    void clean_edit();
 
+
+
+   void on_push_deposit_clicked();
+
 private:
     Ui::MainWindow *ui;
     double xBegin, xEnd, yBegin, yEnd, h, X;

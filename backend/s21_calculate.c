@@ -4,7 +4,7 @@ void init_stack(Stack *st) {
     st->n = 0;
 }
 
-char pop(Stack *st) {  //вытащить последний эл-т из стека
+char pop(Stack *st) {
     char res = st->a[st->n - 1];
     st->n--;
     return res;
@@ -21,17 +21,11 @@ int peek(Stack* head) {
     return head->n;
 }
 
-// void print(Stack *st) {
-//     for (unsigned int i = 0; i < st->n; i++)
-//         printf("%c ", st->a[i]);
-//     printf("\n");
-// }
-
 void init_stackn(Stack_number *st) {
     st->n = 0.0l;
 }
 
-double popn(Stack_number *st) {  //вытащить последний эл-т из стека
+double popn(Stack_number *st) {
     double res = st->a[st->n - 1];
     st->n--;
     return res;

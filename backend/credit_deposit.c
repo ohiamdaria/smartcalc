@@ -1,22 +1,5 @@
 #include "s21_calculate.c"
 
-typedef struct {
-  double sum;
-  int type_of_term;
-  int term;
-  double interest_rate;
-  double tax_rate;
-  int frequency_of_payments;
-  int capital;
-  double result;
-} deposit_t;
-
-typedef struct {
-  int day_begin;
-  int month_begin;
-  int year_begin;
-} dates_t;
-
 void init_deposit(deposit_t *deposit) {
   deposit->sum = 0.0;
   deposit->type_of_term = 0;
@@ -44,65 +27,67 @@ int know_days_or_months_or_years(char *begin_of_term, int i) {
     return number;
 }
 
-void convert_dates_to_struct(dates *data, char *begin_of_term) {
+void convert_dates_to_struct(dates_t *data, char *begin_of_term) {
     data->day_begin = know_days_or_months_or_years(begin_of_term, 1);
     data->month_begin = know_days_or_months_or_years(begin_of_term += 3, 1);
     data->year_begin = know_days_or_months_or_years(begin_of_term += 3, 3);
 }
 
-
-int count_period(deposit_t *deposit, dates *data) {
+int count_period(deposit_t *deposit, dates_t *data) {
+  int add_days = 0;
   if (deposit->type_of_term == 1) {
-    int add_days = 0;
-    if (month_number == 1) add_days = 31;
-    else if (month_number == 2 && fmod(year_number, 4) > 0.0) add_days = 28;
-    else if (month_number == 2 && !fmod(year_number, 4)) add_days = 29;
-    else if (month_number == 3) add_days = 31;
-    else if (month_number == 4) add_days = 30;
-    else if (month_number == 5) add_days = 31;
-    else if (month_number == 6) add_days = 30;
-    else if (month_number == 7) add_days = 31;
-    else if (month_number == 8) add_days = 31;
-    else if (month_number == 9) add_days = 30;
-    else if (month_number == 10) add_days = 31;
-    else if (month_number == 11) add_days = 30;
-    else if (month_number == 12) add_days = 31;
-    return add_days;
-  }
-
+    if (data->month_begin == 1) add_days = 31;
+    else if (data->month_begin == 2 && fmod(data->year_begin, 4) > 0.0) add_days = 28;
+    else if (data->month_begin == 2 && !fmod(data->year_begin, 4)) add_days = 29;
+    else if (data->month_begin == 3) add_days = 31;
+    else if (data->month_begin == 4) add_days = 30;
+    else if (data->month_begin == 5) add_days = 31;
+    else if (data->month_begin == 6) add_days = 30;
+    else if (data->month_begin == 7) add_days = 31;
+    else if (data->month_begin == 8) add_days = 31;
+    else if (data->month_begin == 9) add_days = 30;
+    else if (data->month_begin == 10) add_days = 31;
+    else if (data->month_begin == 11) add_days = 30;
+    else if (data->month_begin == 12) add_days = 31;
+   } else if (deposit->type_of_term == 2) {
+    add_days = 1;
+   }
+   return add_days;
 }
 
-int count_days_between_dates(deposit *dep) {
+int count_days_between_dates(deposit_t *deposit, dates_t *data) {
     int result_days = 0, i = 1;
-    while (i < dep->day_begin) {
-        result_days += count_days_from_months(i, dep->year_begin);
+    while (i < data->day_begin) {
+        result_days += count_period(deposit, data);
         i++;
     }
-    result_days += dep->day_begin;
-    if (dep->month_begin < 3 && !fmod(dep->year_begin, 4)) {
+    result_days += data->day_begin;
+    if (data->month_begin < 3 && !fmod(data->year_begin, 4)) {
         result_days--;
     }
-    if (!fmod(dep->year_begin, 4)) result_days = 366 - result_days;
+    if (!fmod(data->year_begin, 4)) result_days = 366 - result_days;
     else
         result_days = 365 - result_days;
     return result_days;
 }
 
-int depositcalc(deposit_t *deposit, dates *data) {
-  deposit->tax_percent = tax_percent * pay_period / 1200;
-  deposit->interest_rate = interest_rate * pay_period / 1200;
-  int status = 0, add_days = count_period(deposit);
+int depositcalc(deposit_t *deposit, dates_t *data) {
+  int L = 1200;
+  if (deposit->type_of_term == 1) L = 36500;
+  deposit->tax_rate = deposit->tax_rate * deposit->term / L;
+  deposit->interest_rate = deposit->interest_rate * deposit->term / L;
+  int status = 0, add_days = count_period(deposit, data);
 
   double added = 0;
 
   for (int i = add_days; i <= deposit->term; i += add_days) {
     double tmp = deposit->sum * deposit->interest_rate;
-    deposit->result_tax += tmp * (deposit->tax_percent);
+    deposit->result_tax += tmp * (deposit->tax_rate);
 
-    if (capitalize)
-      deposit->sum += tmp * (1 - deposit->tax_percent);
+    if (deposit->capital)
+      deposit->sum += tmp * (1 - deposit->tax_rate);
     else
-      added += tmp * (1 - deposit->tax_percent);
+      added += tmp * (1 - deposit->tax_rate);
 
     if (deposit->sum < 0) {
         status = 1;
@@ -110,9 +95,9 @@ int depositcalc(deposit_t *deposit, dates *data) {
     }
   }
 
-  deposit->result_sum = deposit->sum;
-  if (!deposit->capital) deposit->result_sum += added;
-  if (deposit->type_of_term == 1) add_days = count_period(deposit);
+  deposit->result = deposit->sum;
+  if (!deposit->capital) deposit->result += added;
+  if (deposit->type_of_term == 1) add_days = count_period(deposit, data);
 
   return status;
 }
