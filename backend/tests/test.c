@@ -141,6 +141,63 @@ END_TEST
 // }
 // END_TEST
 
+START_TEST(credit_1) {
+    credit_t credit;
+    init_credit(&credit);
+
+    int code = OK;
+    double sum = 100000.0, prozent = 4.5;
+    int year = 3, month = 0, type = 1;
+
+    creditcalc(&credit, sum, prozent, year, month, type);
+    printf("%lf\n", credit.overpayment);
+    printf("%lf\n", credit.result_edit);
+    printf("%lf\n", credit.overpayment_edit);
+}
+END_TEST
+
+START_TEST(credit_2) {
+    credit_t credit;
+    init_credit(&credit);
+
+    int code = OK;
+    double sum = 100000.0, prozent = 4.5;
+    int year = 3, month = 0, type = 2;
+
+    creditcalc(&credit, sum, prozent, year, month, type);
+    printf("%lf\n", credit.overpayment);
+    printf("%lf\n", credit.result_edit);
+    printf("%lf\n", credit.overpayment_edit);
+}
+END_TEST
+
+START_TEST(deposit_1) {
+    deposit_t deposit;
+    init_deposit(&deposit);
+    dates_t date;
+    init_deposit_dates(&date);
+
+    int code = OK;
+    double sum = 100000.0, type_of_term = 1,
+        interest_rate = 4.7, tax_rate = 5.5;
+    deposit.sum = sum;
+    deposit.type_of_term = type_of_term;
+    deposit.interest_rate = interest_rate;
+    deposit.tax_rate = tax_rate;
+    int term = 90, capital = 0,
+        day_begin = 5, month_begin = 5, year_begin = 2000;
+    deposit.term = term;
+    deposit.capital = capital;
+    date.day_begin = day_begin;
+    date.month_begin = month_begin;
+    date.year_begin = year_begin;
+
+    depositcalc(&deposit, &date);
+    printf("%lf\n", deposit.result);
+    printf("%lf\n", deposit.result_tax);
+}
+END_TEST
+
 
 Suite *suite_smartcalc(void) {
     Suite *s = suite_create("suite_s21_smartcalc");
@@ -158,7 +215,12 @@ Suite *suite_smartcalc(void) {
     tcase_add_test(tc, test_error_1);
     tcase_add_test(tc, test_error_2);
     tcase_add_test(tc, test_error_3);
-    // tcase_add_test(tc, test_nan);
+
+    tcase_add_test(tc, credit_1);
+    tcase_add_test(tc, credit_2);
+
+    tcase_add_test(tc, deposit_1);
+    // tcase_add_test(tc, credit_2);
 
     suite_add_tcase(s, tc);
     return s;

@@ -2,6 +2,7 @@
 #define SRC_TESTS_SRC_TEST_H
 
 #include "../s21_calculate.h"
+#include "../s21_credit_deposit.h"
 #include <check.h>
 #include <stdlib.h>
 #include <time.h>

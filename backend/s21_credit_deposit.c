@@ -1,4 +1,4 @@
-#include "s21_calculate.c"
+#include "s21_credit_deposit.h"
 
 void init_deposit(deposit_t *deposit) {
   deposit->sum = 0.0;
@@ -34,6 +34,7 @@ void convert_dates_to_struct(dates_t *data, char *begin_of_term) {
 }
 
 int count_period(deposit_t *deposit, dates_t *data) {
+  data->month_begin++;
   int add_days = 0;
   if (deposit->type_of_term == 1) {
     if (data->month_begin == 1) add_days = 31;
@@ -55,25 +56,25 @@ int count_period(deposit_t *deposit, dates_t *data) {
    return add_days;
 }
 
-int count_days_between_dates(deposit_t *deposit, dates_t *data) {
-    int result_days = 0, i = 1;
-    while (i < data->day_begin) {
-        result_days += count_period(deposit, data);
-        i++;
-    }
-    result_days += data->day_begin;
-    if (data->month_begin < 3 && !fmod(data->year_begin, 4)) {
-        result_days--;
-    }
-    if (!fmod(data->year_begin, 4)) result_days = 366 - result_days;
-    else
-        result_days = 365 - result_days;
-    return result_days;
-}
+// int count_days_between_dates(deposit_t *deposit, dates_t *data) {
+//     int result_days = 0, i = 1;
+//     while (i < data->day_begin) {
+//         result_days += count_period(deposit, data);
+//         i++;
+//     }
+//     result_days += data->day_begin;
+//     if (data->month_begin < 3 && !fmod(data->year_begin, 4)) {
+//         result_days--;
+//     }
+//     if (!fmod(data->year_begin, 4)) result_days = 366 - result_days;
+//     else
+//         result_days = 365 - result_days;
+//     return result_days;
+// }
 
 int depositcalc(deposit_t *deposit, dates_t *data) {
   int L = 1200;
-  if (deposit->type_of_term == 1) L = 36500;
+  if (deposit->frequency_of_payments == 1) L = 36500;
   deposit->tax_rate = deposit->tax_rate * deposit->term / L;
   deposit->interest_rate = deposit->interest_rate * deposit->term / L;
   int status = 0, add_days = count_period(deposit, data);
@@ -112,7 +113,8 @@ void init_credit(credit_t *credit) {
     credit->result_edit = 0.0;
 }
 
-double creditcalc(credit_t *credit, double sum, double prozent, int year, int month, int type) {
+int creditcalc(credit_t *credit, double sum, double prozent, int year, int month, int type) {
+    int status = OK;
     credit->sum = sum;
     credit->prozent = prozent;
     credit->year = year;
@@ -140,5 +142,5 @@ double creditcalc(credit_t *credit, double sum, double prozent, int year, int mo
         credit->overpayment_edit = overpayment_all - sum;
         credit->result_edit = overpayment_all;
     }
-    return 0.0;
+    return status;
 }
