@@ -58,7 +58,7 @@ QLabel {
 }</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="Calculator">
      <property name="styleSheet">
@@ -1796,7 +1796,7 @@ QDateEdit {
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="comboBox">
+          <widget class="QComboBox" name="term_comboBox">
            <property name="styleSheet">
             <string notr="true">QComboBox {
 	color: #000000;

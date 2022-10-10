@@ -254,10 +254,10 @@ void MainWindow::on_push_calc_clicked() {
              ui->time_year_edit->text().toDouble(),
              ui->time_month_edit->text().toDouble(), type);
 
-  ui->every_month_edit->setText(QString::number(credit.overpayment, 'g', 7));
+  ui->every_month_edit->setText(QString::number(credit.overpayment, 'f', 2));
   ui->overpayment_edit->setText(
-      QString::number(credit.overpayment_edit, 'g', 7));
-  ui->result_edit->setText(QString::number(credit.result_edit, 'g', 7));
+      QString::number(credit.overpayment_edit, 'f', 2));
+  ui->result_edit->setText(QString::number(credit.result_edit, 'f', 2));
 }
 
 void MainWindow::on_type_an_clicked() { type = 1; }
@@ -271,13 +271,24 @@ void MainWindow::on_push_deposit_clicked() {
   deposit.sum = sum;
   deposit.term = ui->term_deposit->text().toInt();
   QString input = ui->data_begin_term->text();
+
+  dates_t date;
+  init_deposit_dates(&date);
   char begin_of_term[15] = {0};
   strncpy(begin_of_term, qPrintable(input), 15);
+  convert_dates_to_struct(&date, &begin_of_term[0]);
+
   deposit.interest_rate = ui->interest_rate->text().toDouble();
   deposit.tax_rate = ui->tax_rate->text().toDouble();
-  deposit.frequency_of_payments = 1;
+  deposit.type_of_term = ui->term_comboBox->currentIndex();
+  deposit.frequency_of_payments = ui->frequency_of_pay->currentIndex();
 
-  ui->deposit_sum->setText(QString::number(deposit.result, 'g', 7));
-  ui->tax_sum->setText(QString::number(deposit.result_tax, 'g', 7));
-  ui->oversum->setText(QString::number(deposit.result - sum, 'g', 7));
+  depositcalc(&deposit, &date);
+
+  ui->deposit_sum->clear();
+  ui->deposit_sum->setText(QString::number(deposit.result, 'f', 2));
+  ui->tax_sum->clear();
+  ui->tax_sum->setText(QString::number(deposit.result_tax, 'f', 2));
+  ui->oversum->clear();
+  ui->oversum->setText(QString::number(deposit.result - sum, 'f', 2));
 }

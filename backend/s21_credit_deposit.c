@@ -77,12 +77,10 @@ int convert_term(deposit_t *deposit, dates_t *data) {
 
 int depositcalc(deposit_t *deposit, dates_t *data) {
   int L = 36500;
-  // if (deposit->frequency_of_payments == 1 || deposit->type_of_term == 1) L = 36500;
 
   int status = 0, add_days = count_period(data);
-  deposit->term = ((deposit->type_of_term == 1) ? deposit->term : convert_term(deposit, data));
+  deposit->term = ((deposit->type_of_term == 0) ? deposit->term : convert_term(deposit, data));
   int copy_term = deposit->term, count = 0;
-  printf("%d\n", copy_term);
   double added = 0;
 
   for (int i = add_days; i <= deposit->term; i += add_days) {
@@ -94,19 +92,16 @@ int depositcalc(deposit_t *deposit, dates_t *data) {
       deposit->sum += round(tmp * (1 - deposit->tax_rate * div) * 100) / 100.0;
     else
       added += round(tmp * (1 - deposit->tax_rate * div) * 100) / 100.0;
-
     if (deposit->sum < 0) {
       status = 1;
       break;
     }
-
     copy_term -= add_days;
     add_days = count_period(data);
     if (L == 36500 && (copy_term - add_days < 0) && count < 1) {
       add_days = copy_term;
       count++;
     }
-
   }
 
   deposit->result = deposit->sum;
@@ -114,9 +109,6 @@ int depositcalc(deposit_t *deposit, dates_t *data) {
 
   return status;
 }
-
-
-
 
 void init_credit(credit_t *credit) {
   credit->sum = 0.0;

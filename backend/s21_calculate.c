@@ -69,7 +69,6 @@ double parser_numbers(char *str) {
 }
 
 void calc(char *s, data_task_t *data) {
-  printf("%s\n", s);
   double d = 0.0l, otvet = 0.0l;
   Stack_number num;
   init_stackn(&num);
