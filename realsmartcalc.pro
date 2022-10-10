@@ -16,18 +16,20 @@ DESTDIR= .
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    backend/s21_credit_deposit.c \
     qcustomplot.cpp \
     backend/s21_calculate.c \
-    backend/credit_deposit.c \
     frontend/main.cpp \
     frontend/mainwindow.cpp
 
 HEADERS += \
+    backend/s21_credit_deposit.h \
     qcustomplot.h \
     backend/s21_calculate.h \
     frontend/mainwindow.h
 
 FORMS += \
+    ui/mainwindow.ui \
     ui/mainwindow.ui
 
 # Default rules for deployment.
@@ -36,4 +38,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    Makefile
+    Makefile \
+    backend/makefile

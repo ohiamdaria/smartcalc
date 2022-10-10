@@ -45,6 +45,17 @@ START_TEST(test_4) {
 }
 END_TEST
 
+START_TEST(test_5) {
+    printf("u a here\n");
+    data_task_t data;
+    init_input(&data);
+    char str[1024] = "2 ^ 3 ^ 2";
+    double result = 0.0l, check_result = 512.0;
+    smart_calc(&str[0], &data);
+    ck_assert_double_eq_tol(data.result, check_result, 1e-7);
+}
+END_TEST
+
 START_TEST(test_x_1) {
     data_task_t data;
     init_input(&data);
@@ -129,17 +140,16 @@ START_TEST(test_error_3) {
 }
 END_TEST
 
-// START_TEST(test_nan) {
-//     int mycode = 1, libcode = 1;
-//     char str[1024] = "555.666 mod 3.456 + ( ( ( atan(0.9876/x) + (-asin(2.222)  )  )  * cos(x * 10 ^ (  0.7889 ) ) - 2222.2 / ( -777.7 ) )";
-//     double x = 17.239;
-//     double result = 0.0l, check_result = fmod(555.666, 3.456) + ((atan(0.9876/x) + (-asin(2.222))) * cos(pow(x * 10, 0.7889)) - 2222.2 / (-777.7));
-//     result = smart_calc(&str[0], x);
-//     if (result == NAN) mycode = 0;
-//     if (check_result == NAN) libcode = 0;
-//     ck_assert_int_eq(mycode, libcode);
-// }
-// END_TEST
+START_TEST(test_null) {
+    int expectedcode = ERROR;
+    char str[1024] = "555.666 / x";
+    data_task_t data;
+    init_input(&data);
+    data.x = 0.0;
+    smart_calc(&str[0], &data);
+    ck_assert_int_eq(data.code, expectedcode);
+}
+END_TEST
 
 START_TEST(credit_1) {
     credit_t credit;
@@ -178,8 +188,8 @@ START_TEST(deposit_1) {
     init_deposit_dates(&date);
 
     int code = OK;
-    double sum = 100000.0, type_of_term = 1,
-        interest_rate = 4.7, tax_rate = 5.5;
+    double sum = 250000.0, type_of_term = 1,
+        interest_rate = 13.6, tax_rate = 0.0;
     deposit.sum = sum;
     deposit.type_of_term = type_of_term;
     deposit.interest_rate = interest_rate;
@@ -188,6 +198,7 @@ START_TEST(deposit_1) {
         day_begin = 5, month_begin = 5, year_begin = 2000;
     deposit.term = term;
     deposit.capital = capital;
+    deposit.frequency_of_payments = 1;
     date.day_begin = day_begin;
     date.month_begin = month_begin;
     date.year_begin = year_begin;
@@ -195,6 +206,34 @@ START_TEST(deposit_1) {
     depositcalc(&deposit, &date);
     printf("%lf\n", deposit.result);
     printf("%lf\n", deposit.result_tax);
+    printf("%lf\n", deposit.result - sum);
+}
+END_TEST
+
+START_TEST(deposit_2) {
+    deposit_t deposit;
+    init_deposit(&deposit);
+    dates_t date;
+    init_deposit_dates(&date);
+
+    int code = OK;
+    double sum = 250000.0, type_of_term = 2,
+        interest_rate = 24.1, tax_rate = 0.0;
+    deposit.sum = sum;
+    deposit.type_of_term = type_of_term;
+    deposit.interest_rate = interest_rate;
+    deposit.tax_rate = tax_rate;
+    int term = 9, capital = 0;
+    char begin_of_term[15] = "07.07.2022";
+    convert_dates_to_struct(&date, &begin_of_term);
+    deposit.term = term;
+    deposit.capital = capital;
+    deposit.frequency_of_payments = 2;
+
+    depositcalc(&deposit, &date);
+    printf("%lf\n", deposit.result);
+    printf("%lf\n", deposit.result_tax);
+    printf("%lf\n", deposit.result - sum);
 }
 END_TEST
 
@@ -207,6 +246,7 @@ Suite *suite_smartcalc(void) {
     tcase_add_test(tc, test_2);
     tcase_add_test(tc, test_3);
     tcase_add_test(tc, test_4);
+    tcase_add_test(tc, test_5);
     tcase_add_test(tc, test_x_1);
     tcase_add_test(tc, test_x_2);
     tcase_add_test(tc, test_x_3);
@@ -215,13 +255,15 @@ Suite *suite_smartcalc(void) {
     tcase_add_test(tc, test_error_1);
     tcase_add_test(tc, test_error_2);
     tcase_add_test(tc, test_error_3);
+    tcase_add_test(tc, test_null);
 
     tcase_add_test(tc, credit_1);
     tcase_add_test(tc, credit_2);
 
     tcase_add_test(tc, deposit_1);
-    // tcase_add_test(tc, credit_2);
+    tcase_add_test(tc, deposit_2);
 
     suite_add_tcase(s, tc);
     return s;
 }
+

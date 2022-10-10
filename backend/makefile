@@ -23,7 +23,7 @@ CALC_TEST := calc_test.c
 CALC_LIB	:= s21_smartcalc.a 
 
 
-all: $(CALC_LIB)
+all: clean $(CALC_LIB) test gcov_report
 
 test: $(CALC_LIB)  $(TEST_OBJ_DIR)/main.o $(TEST_OBJ)
 	$(CC) $(LFLAGS) $(TEST_OBJ) $(TEST_OBJ_DIR)/main.o $(CALC_LIB)  -o test
@@ -54,6 +54,7 @@ gcov_report: $(TEST_OBJ_DIR)/main.o $(GCOV_OBJ) $(MATRIX_SRC)
 	gcovr	-r	.	--html	--html-details	-o	coverage_report.html
 	rm	-rf	*.o	*.out	*.gcno	*.gcna	*gcda
 	open	./coverage_report.html
+	
 
 
 $(GCOV_OBJ_DIR)/%.o: %.c
