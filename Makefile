@@ -1,28 +1,37 @@
-CC          := gcc
-WARNINGS    := -Wall -Werror -Wextra 
-CFLAGS      := -std=c11 -pedantic $(WARNINGS)
-INC_CHECK   ?= $(shell pkg-config --cflags check)
-LFLAGS      ?= $(shell pkg-config --cflags --libs check) 
-TEST_FLAGS  := --coverage -c -g
+CC					= 	gcc
+CXX					= 	g++
+TEST_TARGET			=	test
+TEST_GCOV_EXE		=	test_gcov
+GCOV_TARGET			=	./coverage
+GCOV_INFO			=	coverage.info
+CFLAGS				=	-std=c11 -Wall -Wextra #-fsanitize=address -g #-Werror
+CXXFLAGS			=	-std=c++17
+GCOV_FLAGS			=	-fprofile-arcs -ftest-coverage
+TEST_LIBS			=	-lcheck
+QMAKEFILE			=	RealMakefile
 
-OBJ_DIR     := obj
-TEST_SRC_DIR:= tests_src
-TEST_OBJ_DIR:= tests_obj
-GCOV_OBJ_DIR:= gcov_res
-CALC_DIR		:= ./backend
+TARGET_DIR			=	.
+TEST_DIR			=	./tests
+CALCULATOR_DIR 		= 	./backend
+OBJ_DIR				=	./objs
+GCOV_OBJ_DIR		=	./gcov_objs
 
-TEST_SRC  := $(shell find $(TEST_SRC_DIR) -maxdepth 1 -name "*.c")
-search_wildcards := $(addsuffix /s21_*.c,$(CALC_DIR)) 
-CALC_SRC  := $(wildcard $(search_wildcards))
+SRC_C 				:=	$(shell find $(CALCULATOR_DIR) -maxdepth 1 -name "*.c")
+TEST_SRC	 		:=	$(shell find $(TEST_DIR) -maxdepth 1 -name "*.c")
 
-TEST_OBJ  := $(addprefix $(TEST_OBJ_DIR)/, $(notdir $(TEST_SRC:.c=.o)))
-CALC_OBJ  := $(patsubst %.c, %.o, $(CALC_SRC))
-GCOV_OBJ  := $(addprefix $(GCOV_OBJ_DIR)/, $(patsubst %.c, %.o, $(CALC_SRC)))
-QMAKEFILE := RealMakefile
-CALC_TEST := $(CALC_DIR)/calc_test.c
+OBJ_C 				=	$(addprefix $(OBJ_DIR)/, $(notdir $(SRC_C:.c=.o)))
+GCOV_OBJ_C			=	$(addprefix $(GCOV_OBJ_DIR)/, $(notdir $(SRC_C:.c=.o)))
+TEST_OBJ			=	$(addprefix $(OBJ_DIR)/, $(notdir $(TEST_SRC:.c=.o)))
+GCOV_TEST_OBJ		= 	$(addprefix $(GCOV_OBJ_DIR)/, $(notdir $(TEST_SRC:.c=.o)))
 
-CALC_LIB	:= s21_smartcalc.a 
-QMAKEFILE	:=	RealMakefile
+INCLUDES			=	$(shell find . -maxdepth 1 -name "*.h")
+TEST_INCLUDES		=	$(shell find $(TEST_DIR) -name "*.h")
+
+RM					=	rm -f
+MK					=	mkdir -p
+COPY_FILE     		=	cp -f
+
+.DEFAULT_GOAL := all
 
 all: $(OBJ_DIR)
 	$(MAKE) -f $(QMAKEFILE)
@@ -30,77 +39,31 @@ all: $(OBJ_DIR)
 %: $(OBJ_DIR)
 	@$(MAKE) -f $(QMAKEFILE) $@
 
-$(OBJ_DIR):
-	mkdir $(OBJ_DIR)
+$(OBJ_DIR)			:
+	$(MK) $(OBJ_DIR)
 
-test: $(CALC_LIB)  $(TEST_OBJ_DIR)/main.o $(TEST_OBJ)
-	$(CC) $(LFLAGS) $(TEST_OBJ) $(TEST_OBJ_DIR)/main.o $(CALC_LIB)  -o test
-	- ./test
+clean				:
+	$(MAKE) -f $(QMAKEFILE) clean
+	$(RM) -r $(OBJ_DIR)
+	$(RM) moc_*
+	$(RM) qrc_*
+	$(RM) -r realsmartcalc.app
+	$(RM) ui/ui_mainwindow.h
+	$(RM) .qmake.stash
 
-$(CALC_LIB): $(CALC_OBJ)
-	ar rc $(CALC_LIB) $(CALC_OBJ)
-	ranlib 	$(CALC_LIB)
-
-$(OBJ_DIR)/%.o: %.c
-	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $^ -o $@
-
-$(TEST_OBJ_DIR)/main.o: $(CALC_TEST) 
-	@mkdir -p $(TEST_OBJ_DIR)
-	$(CC)  $(INC_CHECK) -c -o $(TEST_OBJ_DIR)/main.o $(CALC_TEST)
-
-$(TEST_OBJ_DIR)/%.o: $(TEST_SRC_DIR)/%.c
-	@mkdir -p $(TEST_OBJ_DIR)
-	$(CC) $(INC_CHECK) -c $^ -o $@
-
-
-gcov_report: $(TEST_OBJ_DIR)/main.o $(GCOV_OBJ) $(MATRIX_SRC)
-	ar rc $(CALC_LIB) $(GCOV_OBJ)
-	ranlib 	s21_smartcalc.a
-	$(CC) $(LFLAGS) --coverage $(TEST_OBJ) $(TEST_OBJ_DIR)/main.o s21_smartcalc.a -o test
-	- ./test
-	gcovr	-r	.	--html	--html-details	-o	coverage_report.html
-	rm	-rf	*.o	*.out	*.gcno	*.gcna	*gcda
-	open	./coverage_report.html
-
-
-$(GCOV_OBJ_DIR)/%.o: %.c
-	@mkdir -p $(GCOV_OBJ_DIR)
-	$(CC) $(CFLAGS) $(TEST_FLAGS) $^ -o $@
+run:
+	open realsmartcalc.app/Contents/MacOS/realsmartcalc
 
 dist:
 	cat $(QMAKEFILE) | sed 's/--parents/-p/g' > /tmp/`basename $(QMAKEFILE)`
 	mv -f /tmp/`basename $(QMAKEFILE)` $(QMAKEFILE)
 	$(MAKE) -f $(QMAKEFILE) dist
 
+install:
+	/opt/homebrew/opt/qt/bin/qmake -o RealMakefile realsmartcalc.pro
+
 dvi:
 	latex -output-directory=./docs ./docs/docs.tex ./docs/brief.dvi
 	pdflatex -output-directory=./docs ./docs/docs.tex ./docs/brief.pdf
 
-install:
-	-mkdir build
-	qmake -project -r ./build realsmartcalc.app/Contents/MacOS/realsmartcalc
-
-run:
-	open realsmartcalc.app/Contents/MacOS/realsmartcalc
-
-.PHONY: clean_lib
-clean: clean_bin
-	rm -f *.gcda 
-	rm -f *.gcov 
-	rm -f *.gcno 
-	rm -f coverage.info
-	rm -f test
-	rm -f s21_smartcalc.a
-	rm -rf obj
-	rm -rf tests_obj
-	rm -rf gcov_res
-	rm	-rf	*.o	*.out *.gcno *.gcna	*.html *.gcda *.css	*.exe
-
-
-clean_bin: 
-	rm -f $(CALC_OBJ) 
-	rm -f $(TEST_OBJ) 
-	rm -f $(GCOV_OBJ) 
-
-rebuild: clean clean_lib clean_bin all
+.PHONY: test run clean dist open gcov_report all

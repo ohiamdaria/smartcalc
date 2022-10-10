@@ -1,7 +1,7 @@
 #ifndef SRC_TESTS_SRC_TEST_H
 #define SRC_TESTS_SRC_TEST_H
 
-#include "../backend/s21_calculate.h"
+#include "../s21_calculate.h"
 #include <check.h>
 #include <stdlib.h>
 #include <time.h>
