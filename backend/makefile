@@ -4,9 +4,6 @@ CFLAGS      := -std=c11 -pedantic $(WARNINGS)
 INC_CHECK   ?= $(shell pkg-config --cflags check)
 LFLAGS      ?= $(shell pkg-config --cflags --libs check) 
 
-ifeq ($(shell uname), Linux)
-	LFLAGS = $(shell pkg-config --libs check) -lcheck_pic -lpthread -lrt -lsubunit -lm
-endif
 TEST_FLAGS  := --coverage -c -g
 
 OBJ_DIR     := obj

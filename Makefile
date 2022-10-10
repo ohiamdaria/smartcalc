@@ -2,56 +2,40 @@ CC					= 	gcc
 CXX					= 	g++
 CFLAGS				=	-std=c11 -Wall -Wextra #-fsanitize=address -g #-Werror
 CXXFLAGS			=	-std=c++17
-GCOV_FLAGS			=	-fprofile-arcs -ftest-coverage
 QMAKEFILE			=	RealMakefile
-
-TARGET_DIR			=	.
-CALCULATOR_DIR 		= 	./backend
-OBJ_DIR				=	./objs
-
-SRC_C 				:=	$(shell find $(CALCULATOR_DIR) -maxdepth 1 -name "*.c")
-TEST_SRC	 		:=	$(shell find $(TEST_DIR) -maxdepth 1 -name "*.c")
-OBJ_C 				=	$(addprefix $(OBJ_DIR)/, $(notdir $(SRC_C:.c=.o)))
-
-INCLUDES			=	$(shell find . -maxdepth 1 -name "*.h")
-
 RM					=	rm -f
 MK					=	mkdir -p
-COPY_FILE     		=	cp -f
+APP = build/s21_realsmartcalc.app
 
 .DEFAULT_GOAL := all
 
-all: $(OBJ_DIR)
-	$(MAKE) -f $(QMAKEFILE)
-
-%: $(OBJ_DIR)
-	@$(MAKE) -f $(QMAKEFILE) $@
-
-$(OBJ_DIR)			:
-	$(MK) $(OBJ_DIR)
+all: clean install run
 
 clean				:
-	$(MAKE) -f $(QMAKEFILE) clean
-	$(RM) -r $(OBJ_DIR)
-	$(RM) moc_*
-	$(RM) qrc_*
-	$(RM) -r realsmartcalc.app
-	$(RM) ui/ui_mainwindow.h
-	$(RM) .qmake.stash
+	$(RM) -rf build
+	$(RM) -rf $(HOME)/Desktop/SmartCalc_v1.0
 
 run:
-	open realsmartcalc.app/Contents/MacOS/realsmartcalc
-
-dist:
-	cat $(QMAKEFILE) | sed 's/--parents/-p/g' > /tmp/`basename $(QMAKEFILE)`
-	mv -f /tmp/`basename $(QMAKEFILE)` $(QMAKEFILE)
-	$(MAKE) -f $(QMAKEFILE) dist
+	open $(HOME)/Desktop/SmartCalc_v1.0/s21_realsmartcalc.app/Contents/MacOS/realsmartcalc
 
 install:
-	/opt/homebrew/opt/qt/bin/qmake realsmartcalc.pro -o RealMakefile
+	$(MK) ./build
+	cd ./build && qmake ../ && make && mv realsmartcalc.app s21_realsmartcalc.app
+	@mkdir $(HOME)/Desktop/SmartCalc_v1.0/
+	@cp -rf $(APP) $(HOME)/Desktop/SmartCalc_v1.0/
 
-dvi:
-	latex -output-directory=./docs ./docs/docs.tex ./docs/brief.dvi
-	pdflatex -output-directory=./docs ./docs/docs.tex ./docs/brief.pdf
+uninstall:
+	@rm -rf $(HOME)/Desktop/SmartCalc_v1.0
+
+dist:
+	rm -rf Archive_SmartCalc_v1.0/
+	mkdir Archive_SmartCalc_v1.0/
+	mkdir Archive_SmartCalc_v1.0/src
+	cp Makefile backend/*.c backend/*.h *.pro frontend/*.cpp \
+	 backend/tests/*.c backend/tests/*.h makefile\
+	 frontend/*.h ui/*.ui Archive_SmartCalc_v1.0/src/
+	tar cvzf Archive_SmartCalc_v1.0.tgz Archive_SmartCalc_v1.0/
+	mv Archive_SmartCalc_v1.0.tgz $(HOME)/Desktop/
+	rm -rf Archive_SmartCalc_v1.0/
 
 .PHONY: test run clean dist open gcov_report all
