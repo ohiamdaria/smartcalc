@@ -255,7 +255,7 @@ START_TEST(deposit_2) {
     deposit.tax_rate = tax_rate;
     int term = 9, capital = 0;
     char begin_of_term[15] = "07.07.2022";
-    convert_dates_to_struct(&date, &begin_of_term);
+    convert_dates_to_struct(&date, &begin_of_term[0]);
     deposit.term = term;
     deposit.capital = capital;
     deposit.frequency_of_payments = 2;

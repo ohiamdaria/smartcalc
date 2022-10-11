@@ -54,7 +54,7 @@ gcov_report: $(TEST_OBJ_DIR)/main.o $(GCOV_OBJ) $(MATRIX_SRC)
 	- ./test
 	gcovr	-r	.	--html	--html-details	-o	coverage_report.html
 	rm	-rf	*.o	*.out	*.gcno	*.gcna	*gcda
-	# open	./coverage_report.html
+	open	./coverage_report.html
 	
 
 

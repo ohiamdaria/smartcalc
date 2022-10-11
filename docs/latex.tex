@@ -1,0 +1,73 @@
+\documentclass[14pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+
+\begin{document}
+
+\title{Project: SmartCalc}
+\author{gloriagi}
+\date{Oct 11 2022} 
+
+\maketitle{}
+
+\pagebreak
+
+\section{Introduction}
+
+Hi, this is an Implementation of SmartCalculator v1.0. GUI implementation, based on any GUI library with Qt, and the backend developed in C language
+of C11 standard using gcc compiler. Application was developed on the MacOs Monterey with chip Apple M2
+
+This application can perform Calculations of arbitrary arithmetic expressions in brackets 
+in infix notation with the value of x replaced as a number
+
+The application implements most of the trigonometric functions, several logarithmic functions, 
+as well as all the mathematical operations 
+usually available in each calculator. 
+
+SmartCalculator provide plotting a graph of a function given by an expression in infix notation with the variable x.
+The Application also has two special modes: "credit calculator" and "deposit profitability calculator"
+
+\pagebreak
+
+\section{Functions and Operators}
+
+The following mathematical operations and functions are implemented in the calculator:
+  \begin{itemize}
+    \item Arithmetic operators
+    \begin{itemize}
+      \item Brackets -- "( )"
+      \item Addition -- "a + b"
+      \item Substraction -- "a - b"
+      \item Multiplication -- "a * b"
+      \item Division -- "a / b"
+      \item Power -- "a \^\ b"
+      \item Modulus -- "a mod b"
+      \item Unary plus -- "+a"
+      \item Unary minus -- "-a"
+    \end{itemize}
+    \item Functions
+    \begin{itemize}
+      \item $cos(x)$
+      \item $sin(x)$
+      \item $tan(x)$
+      \item $acos(x)$
+      \item $asin(x)$
+      \item $atan(x)$
+      \item $sqrt(x)$
+      \item $ln(x)$
+      \item $log(x)$
+    \end{itemize}
+  \end{itemize}
+
+\textit{These functions also are supported by the plotter.}
+
+\pagebreak
+
+\section{Plotter/Grapher}
+
+In this project, the Qcustomplot module is used.
+Animation plotting of the function is supported.
+It is possible to provide the user with the ability to change the scale
+
+\end{document}
