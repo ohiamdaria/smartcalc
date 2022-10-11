@@ -29,6 +29,7 @@ START_TEST(test_3) {
     char str[1024] = "2.4474 /8.0162/ 3.2142+tan( 0.6211 +sin(tan( 7.5952 +5.3702) ) - 4.7121^sin(  1.9427- 2.8496) )"
         "/cos(0.2688 ^0.5391+cos( tan(cos( cos(  5.6221 ))  ) /sin( 2.3295)  -tan( cos(tan( cos(9.2239)  ))"
         ") ) )";
+
     double check_result = 1.660108415837855;
     smart_calc(&str[0], &data);
     ck_assert_double_eq_tol(data.result, check_result, 1e-7);
@@ -46,11 +47,40 @@ START_TEST(test_4) {
 END_TEST
 
 START_TEST(test_5) {
-    printf("u a here\n");
     data_task_t data;
     init_input(&data);
     char str[1024] = "2 ^ 3 ^ 2";
     double result = 0.0l, check_result = 512.0;
+    smart_calc(&str[0], &data);
+    ck_assert_double_eq_tol(data.result, check_result, 1e-7);
+}
+END_TEST
+
+START_TEST(test_6) {
+    data_task_t data;
+    init_input(&data);
+    char str[1024] = "22 + - - 2";
+    double result = 0.0l, check_result = 24.0;
+    smart_calc(&str[0], &data);
+    ck_assert_double_eq_tol(data.result, check_result, 1e-7);
+}
+END_TEST
+
+START_TEST(test_7) {
+    data_task_t data;
+    init_input(&data);
+    char str[1024] = "22 * - - 2";
+    double result = 0.0l, check_result = 44.0;
+    smart_calc(&str[0], &data);
+    ck_assert_double_eq_tol(data.result, check_result, 1e-7);
+}
+END_TEST
+
+START_TEST(test_8) {
+    data_task_t data;
+    init_input(&data);
+    char str[1024] = "1 + --- 5";
+    double result = 0.0l, check_result = -4.0;
     smart_calc(&str[0], &data);
     ck_assert_double_eq_tol(data.result, check_result, 1e-7);
 }
@@ -247,6 +277,9 @@ Suite *suite_smartcalc(void) {
     tcase_add_test(tc, test_3);
     tcase_add_test(tc, test_4);
     tcase_add_test(tc, test_5);
+    tcase_add_test(tc, test_6);
+    tcase_add_test(tc, test_7);
+    tcase_add_test(tc, test_8);
     tcase_add_test(tc, test_x_1);
     tcase_add_test(tc, test_x_2);
     tcase_add_test(tc, test_x_3);

@@ -37,40 +37,39 @@ int count_period(dates_t *data) {
   data->month_begin++;
   int add_days = 0;
   if (data->month_begin > 12) data->month_begin = 1;
-    if (data->month_begin == 1)
-      add_days = 31;
-    else if (data->month_begin == 2 && fmod(data->year_begin, 4) > 0.0)
-      add_days = 28;
-    else if (data->month_begin == 2 && !fmod(data->year_begin, 4))
-      add_days = 29;
-    else if (data->month_begin == 3)
-      add_days = 31;
-    else if (data->month_begin == 4)
-      add_days = 30;
-    else if (data->month_begin == 5)
-      add_days = 31;
-    else if (data->month_begin == 6)
-      add_days = 30;
-    else if (data->month_begin == 7)
-      add_days = 31;
-    else if (data->month_begin == 8)
-      add_days = 31;
-    else if (data->month_begin == 9)
-      add_days = 30;
-    else if (data->month_begin == 10)
-      add_days = 31;
-    else if (data->month_begin == 11)
-      add_days = 30;
-    else if (data->month_begin == 12)
-      add_days = 31;
+  if (data->month_begin == 1)
+    add_days = 31;
+  else if (data->month_begin == 2 && fmod(data->year_begin, 4) > 0.0)
+    add_days = 28;
+  else if (data->month_begin == 2 && !fmod(data->year_begin, 4))
+    add_days = 29;
+  else if (data->month_begin == 3)
+    add_days = 31;
+  else if (data->month_begin == 4)
+    add_days = 30;
+  else if (data->month_begin == 5)
+    add_days = 31;
+  else if (data->month_begin == 6)
+    add_days = 30;
+  else if (data->month_begin == 7)
+    add_days = 31;
+  else if (data->month_begin == 8)
+    add_days = 31;
+  else if (data->month_begin == 9)
+    add_days = 30;
+  else if (data->month_begin == 10)
+    add_days = 31;
+  else if (data->month_begin == 11)
+    add_days = 30;
+  else if (data->month_begin == 12)
+    add_days = 31;
 
   return add_days;
 }
 
 int convert_term(deposit_t *deposit, dates_t *data) {
   int begin = data->month_begin, convert_term = 0;
-  for (int i = 0; i < deposit->term; i++)
-    convert_term += count_period(data);
+  for (int i = 0; i < deposit->term; i++) convert_term += count_period(data);
   data->month_begin = begin;
   return convert_term;
 }
@@ -79,13 +78,15 @@ int depositcalc(deposit_t *deposit, dates_t *data) {
   int L = 36500;
 
   int status = 0, add_days = count_period(data);
-  deposit->term = ((deposit->type_of_term == 0) ? deposit->term : convert_term(deposit, data));
+  deposit->term = ((deposit->type_of_term == 0) ? deposit->term
+                                                : convert_term(deposit, data));
   int copy_term = deposit->term, count = 0;
   double added = 0;
 
   for (int i = add_days; i <= deposit->term; i += add_days) {
-    double div = (double) add_days / (double) L;
-    double tmp = round(deposit->sum * deposit->interest_rate * div * 100) / 100.0;
+    double div = (double)add_days / (double)L;
+    double tmp =
+        round(deposit->sum * deposit->interest_rate * div * 100) / 100.0;
     deposit->result_tax += round(tmp * deposit->tax_rate * div * 100) / 100.0;
 
     if (deposit->capital)

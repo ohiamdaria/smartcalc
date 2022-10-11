@@ -160,10 +160,11 @@ char *add_from_stack(char *str, char *str_output, Stack *stack, int cases) {
     if (peek(stack) == 0 && cases == 1) *str_output++ = current_symbol;
     while (peek(stack) > 0 && current_symbol != '(') {
       if ((cases < check_priority(current_symbol) && cases != 1) ||
-        (cases == 2 && check_priority(current_symbol) == 2)) break;
+          (cases == 2 && check_priority(current_symbol) == 2))
+        break;
 
-        str_output = add_current_symbol(str_output, current_symbol);
-        current_symbol = pop(stack);
+      str_output = add_current_symbol(str_output, current_symbol);
+      current_symbol = pop(stack);
     }
     if (cases == 1) {
       if (current_symbol > 96 && current_symbol < 120)
@@ -223,58 +224,72 @@ char *add_space_to_str(char *str) {
 }
 char *add_null_to_str(char *str) {
   char str_null[1024] = "";
-  int i = 0;
+  int i = 0, need = 0;
   while (*str != '\0') {
-    if (*str == '-' && check_unary_minus(str) == 1)
-      str_null[i++] = '0';
-    else if (*str == '+' && check_unary_plus(str) == 1)
-      str_null[i++] = '0';
-    // if (*str == '+' && check_unary_plus(str) == 2)
-    //     str++;
-    // else
+    if (*str == '+' || *str == '-') {
+      int count_plus = 0, count_minus = 0;
+      while (*str == '+' || *str == '-') {
+        char current_op = *str;
+        if (check_unary_minus_plus(str, current_op) == 1) str_null[i++] = '0';
+        if (check_unary_minus_plus(str, current_op) == 3) need++;
+        if (current_op == '+')
+          count_plus++;
+        else
+          count_minus++;
+        str++;
+      }
+      if (need == 0) {
+        if (count_minus == 1)
+          str_null[i++] = '-';
+        else if (!fmod(count_minus, 2))
+          str_null[i++] = '+';
+        else
+          str_null[i++] = '-';
+      }
+    }
     str_null[i++] = *str++;
   }
   strcpy(str, str_null);
   return str;
 }
 
-int check_unary_minus(char *str) {
+int check_unary_minus_plus(char *str, char current_op) {
   int status = 0;  // no
   str--;
   while (*str == ' ') str--;
   char check_before = *str;
   str++;
-  while (*str != '-' || *str == ' ') str++;
+  while (*str != current_op || *str == ' ') str++;
   char check_after = *str;
   if ((check_before == '(' && check_after == ')') || !check_before)
-    status = 1;  // yes
+    status = 1;  // yes set null
   else if (check_before == '(')
     status = 1;
-  // else if ((check_priority(check_before) == 3 || check_priority(check_before)
-  // == 4))
-  //     status = 1;
+  else if (check_priority(check_before) == 3)
+    status = 3;  // yes set 1
+  else if (check_priority(check_before) == 4)
+    status = 2;  // no dont set null but count unary operation
   return status;
 }
 
-int check_unary_plus(char *str) {
-  int status = 0;  // no
-  str--;
-  while (*str == ' ') str--;
-  char check_before = *str;
-  str++;
-  while (*str != '+' || *str == ' ') str++;
-  char check_after = *str;
-  if (check_before == '-')
-    status = 2;
-  else if ((check_before == '(' && check_after == ')') || !check_before)
-    status = 1;  // yes
-  else if (check_before == '(')
-    status = 1;
-  // else if (check_priority(check_before) == 3 || check_priority(check_before)
-  // == 4)
-  //     status = 1;
-  return status;
-}
+// int check_unary_plus(char *str) {
+//   int status = 0;  // no
+//   str--;
+//   while (*str == ' ') str--;
+//   char check_before = *str;
+//   str++;
+//   while (*str != '+' || *str == ' ') str++;
+//   char check_after = *str;
+//   if ((check_before == '(' && check_after == ')') || !check_before)
+//     status = 1;  // yes set null
+//   else if (check_before == '(')
+//     status = 1;
+//   else if (check_priority(check_before) == 3)
+//     status = 3; // yes set 1
+//   else if (check_priority(check_before) == 4)
+//       status = 2; // no dont set null but count unary operation
+//   return status;
+// }
 
 char *delete_space_str(char *str) {
   char str_output[1024] = "(";
@@ -315,9 +330,10 @@ char *from_str_to_notation(char *str, data_task_t *data) {
   char *str_output = NULL;
   if (!data->code) {
     str_output = (char *)calloc(1024, sizeof(char));
-    char *strcopy = delete_space_str(str);
-    notation(add_space_to_str(add_null_to_str(strcopy)), str_output, &stack);
-    // free(strcopy);
+    if (str_output) {
+      char *strcopy = delete_space_str(str);
+      notation(add_space_to_str(add_null_to_str(strcopy)), str_output, &stack);
+    }
   }
   return str_output;
 }
@@ -329,50 +345,11 @@ void init_input(data_task_t *data) {
 }
 
 void smart_calc(char *str, data_task_t *data) {
-  char *strcopy = from_str_to_notation(str, data);
+  char *strcopy = NULL;
+  strcopy = from_str_to_notation(str, data);
   if (!data->code) {
     calc(strcopy, data);
-  }
+  } else
+    strcopy = NULL;
+  free(strcopy);
 }
-
-// void init_credit(credit_t *credit) {
-//     credit->sum = 0.0;
-//     credit->prozent = 0.0;
-//     credit->year = 0;
-//     credit->month = 0;
-//     credit->overpayment = 0.0;
-//     credit->overpayment_edit = 0.0;
-//     credit->result_edit = 0.0;
-// }
-
-// double creditcalc(credit_t *credit, double sum, double prozent, int year, int
-// month, int type) {
-//     credit->sum = sum;
-//     credit->prozent = prozent;
-//     credit->year = year;
-//     credit->month = month;
-//     month += year * 12;
-//     double p = (double) prozent / ((double) 100 * (double) 12);
-//     if (type == 1) {
-//         double overpayment = sum * (p / (1 - (double) 1 / pow(1 + p,
-//         month))); credit->overpayment = overpayment; credit->overpayment_edit
-//         = overpayment * month - sum; credit->result_edit = overpayment *
-//         month;
-//     } else {
-//         double sn = sum;
-//         double b = (double) sum / (double) month;
-//         double P = sn * p;
-//         double overpayment = b + P;
-//         double overpayment_all = overpayment;
-//         credit->overpayment = overpayment;
-//         while(sn - b > 0) {
-//             sn -= b;
-//             P = sn * p;
-//             overpayment = b + P;
-//             overpayment_all += overpayment;
-//         }
-//         credit->overpayment_edit = overpayment_all - sum;
-//         credit->result_edit = overpayment_all;
-//     }
-//     return 0.0;
-// }

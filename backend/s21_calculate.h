@@ -51,8 +51,7 @@ char *change_functions_in_str(char *str);
 char *add_current_symbol(char *str_output, char current_symbol);
 char *add_from_stack(char *str, char *str_output, Stack *stack, int cases);
 char *add_numbers(char *str, char *str_output);
-int check_unary_minus(char *str);
-int check_unary_plus(char *str);
+int check_unary_minus_plus(char *str, char current_op);
 int check_priority(char k);
 // working with stack
 void init_stack(Stack *st);
