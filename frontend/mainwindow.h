@@ -117,7 +117,9 @@ class MainWindow : public QMainWindow {
 
   void on_push_deposit_clicked();
 
- private:
+  void on_capital_clicked();
+
+private:
   Ui::MainWindow *ui;
   double xBegin, xEnd, yBegin, yEnd, h, X;
   int N, graph = 0, count = 0;
@@ -125,13 +127,16 @@ class MainWindow : public QMainWindow {
   // credit
   double sum, prozent;
   int month, year, type = 1;
-
   double result, overpayment;
 
+  // animation
   QVector<double> x, y;
   QTimer *timer;
   int time;
   bool flag = true;
+
+  // deposit
+  int capital = 0;
 };
 
 #endif  // MAINWINDOW_H

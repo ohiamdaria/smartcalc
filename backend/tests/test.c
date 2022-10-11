@@ -219,13 +219,13 @@ START_TEST(deposit_1) {
 
     int code = OK;
     double sum = 250000.0, type_of_term = 1,
-        interest_rate = 13.6, tax_rate = 0.0;
+        interest_rate = 24.1, tax_rate = 0.0;
     deposit.sum = sum;
     deposit.type_of_term = type_of_term;
     deposit.interest_rate = interest_rate;
     deposit.tax_rate = tax_rate;
     int term = 90, capital = 0,
-        day_begin = 5, month_begin = 5, year_begin = 2000;
+        day_begin = 1, month_begin = 1, year_begin = 2000;
     deposit.term = term;
     deposit.capital = capital;
     deposit.frequency_of_payments = 1;

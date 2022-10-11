@@ -278,6 +278,7 @@ void MainWindow::on_push_deposit_clicked() {
   strncpy(begin_of_term, qPrintable(input), 15);
   convert_dates_to_struct(&date, &begin_of_term[0]);
 
+  deposit.capital = capital;
   deposit.interest_rate = ui->interest_rate->text().toDouble();
   deposit.tax_rate = ui->tax_rate->text().toDouble();
   deposit.type_of_term = ui->term_comboBox->currentIndex();
@@ -291,4 +292,9 @@ void MainWindow::on_push_deposit_clicked() {
   ui->tax_sum->setText(QString::number(deposit.result_tax, 'f', 2));
   ui->oversum->clear();
   ui->oversum->setText(QString::number(deposit.result - sum, 'f', 2));
+}
+
+void MainWindow::on_capital_clicked()
+{
+    capital = 1;
 }

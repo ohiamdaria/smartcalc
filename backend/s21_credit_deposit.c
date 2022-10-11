@@ -88,7 +88,7 @@ int depositcalc(deposit_t *deposit, dates_t *data) {
     double tmp =
         round(deposit->sum * deposit->interest_rate * div * 100) / 100.0;
     deposit->result_tax += round(tmp * deposit->tax_rate * div * 100) / 100.0;
-
+    
     if (deposit->capital)
       deposit->sum += round(tmp * (1 - deposit->tax_rate * div) * 100) / 100.0;
     else
