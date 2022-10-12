@@ -23,7 +23,11 @@ void run_testcase(Suite *testcase) {
 }
 
 void run_tests(void) {
-  Suite *list_cases[] = {suite_smartcalc(), NULL};
+  Suite *list_cases[] = {suite_smartcalc(), 
+                        suite_smartcalc_x(),
+                        suite_smartcalc_credit(),
+                        suite_smartcalc_deposit(),
+                        NULL};
 
   for (Suite **current_testcase = list_cases; *current_testcase != NULL;
        current_testcase++) {

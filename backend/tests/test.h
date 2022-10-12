@@ -8,6 +8,9 @@
 #include <time.h>
 
 Suite *suite_smartcalc(void);
+Suite *suite_smartcalc_x(void);
+Suite *suite_smartcalc_credit(void);
+Suite *suite_smartcalc_deposit(void);
 
 void run_tests(void);
 void run_testcase(Suite *testcase);

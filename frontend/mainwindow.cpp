@@ -158,6 +158,7 @@ void MainWindow::if_graph_exist() {
   ui->widget->clearGraphs();
   QString input = ui->Display->text();
   char c_input[512] = {0};
+  int code = OK;
 
   strncpy(c_input, qPrintable(input), 255);
 
@@ -187,10 +188,19 @@ void MainWindow::if_graph_exist() {
     init_input(&data);
     data.x = X;
     smart_calc(c_input, &data);
-    x.push_back(X);
-    y.push_back(data.result);
+    code = data.code;
+    if (!code) {
+        x.push_back(X);
+        y.push_back(data.result);
+    } else {
+        break;
+    }
   }
 
+  if (code) {
+    ui->Display->clear();
+    ui->Display->setText("Error");
+  }
   ui->widget->graph(0)->addData(x, y);
   ui->widget->replot();
 
@@ -202,15 +212,19 @@ void MainWindow::if_graph_not_exist() {
   QString input = ui->Display->text();
   char c_input[512] = {0};
   strncpy(c_input, qPrintable(input), 255);
+  int code = OK;
 
   X = ui->add_x->text().toDouble();
   data_task_t data;
   init_input(&data);
   data.x = X;
   smart_calc(c_input, &data);
-  QString result_string = QString::number(data.result);
+  code = data.code;
+
   ui->Display->clear();
-  ui->Display->setText(result_string);
+  if (!code) ui->Display->setText(QString::number(data.result, 'f', 7));
+  else
+    ui->Display->setText("Error");
 }
 
 void MainWindow::on_push_run_clicked() {
@@ -251,8 +265,8 @@ void MainWindow::on_push_calc_clicked() {
   init_credit(&credit);
   creditcalc(&credit, ui->sum_edit->text().toDouble(),
              ui->proz_edit->text().toDouble(),
-             ui->time_year_edit->text().toDouble(),
-             ui->time_month_edit->text().toDouble(), type);
+             ui->time_year_edit->text().toInt(),
+             ui->time_month_edit->text().toInt(), type);
 
   ui->every_month_edit->setText(QString::number(credit.overpayment, 'f', 2));
   ui->overpayment_edit->setText(
@@ -296,5 +310,17 @@ void MainWindow::on_push_deposit_clicked() {
 
 void MainWindow::on_capital_clicked()
 {
+  flag2 = !flag2;
+  if (flag2) {
+    capital = 0;
+  } else {
     capital = 1;
+  }
 }
+
+void MainWindow::on_push_clear_2_clicked()
+{
+  ui->Display->clear();
+  ui->Display->setText("");
+}
+

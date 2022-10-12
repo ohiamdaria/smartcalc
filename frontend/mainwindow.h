@@ -119,6 +119,8 @@ class MainWindow : public QMainWindow {
 
   void on_capital_clicked();
 
+  void on_push_clear_2_clicked();
+
 private:
   Ui::MainWindow *ui;
   double xBegin, xEnd, yBegin, yEnd, h, X;
@@ -133,7 +135,7 @@ private:
   QVector<double> x, y;
   QTimer *timer;
   int time;
-  bool flag = true;
+  bool flag = true, flag2 = true;
 
   // deposit
   int capital = 0;

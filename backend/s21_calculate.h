@@ -9,14 +9,14 @@
 #include <string.h>
 
 typedef struct {
-  char a[256];  // данные
-  unsigned int n;  // сколько элементов хранится в стеке
+  char a[256]; // данные
+  unsigned int n; // сколько элементов хранится в стеке
   size_t size;
 } Stack;
 
 typedef struct {
-  double a[256];  // данные
-  unsigned int n;  // сколько элементов хранится в стеке
+  double a[256]; // данные
+  unsigned int n; // сколько элементов хранится в стеке
   size_t size;
 } Stack_number;
 
@@ -67,4 +67,4 @@ void init_input(data_task_t *data);
 void catch_a_beach(char *str, data_task_t *data);
 int count_braces(char *str);
 
-#endif  // CALCULATE_H_
+#endif // CALCULATE_H_

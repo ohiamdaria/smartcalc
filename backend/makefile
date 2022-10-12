@@ -1,8 +1,12 @@
 CC          := gcc
 WARNINGS    := -Wall -Werror -Wextra 
 CFLAGS      := -std=c11 -pedantic $(WARNINGS)
-INC_CHECK   ?= $(shell pkg-config --cflags check)
-LFLAGS      ?= $(shell pkg-config --cflags --libs check) 
+INC_CHECK   := $(shell pkg-config --cflags check)
+LFLAGS      ?= $(shell pkg-config --libs check) 
+
+ifeq ($(shell uname), Linux)
+	LFLAGS = $(shell pkg-config --libs check) -lcheck_pic -lpthread -lrt -lsubunit -lm
+endif
 
 TEST_FLAGS  := --coverage -c -g
 
@@ -55,7 +59,6 @@ gcov_report: $(TEST_OBJ_DIR)/main.o $(GCOV_OBJ) $(MATRIX_SRC)
 	gcovr	-r	.	--html	--html-details	-o	coverage_report.html
 	rm	-rf	*.o	*.out	*.gcno	*.gcna	*gcda
 	open	./coverage_report.html
-	
 
 
 $(GCOV_OBJ_DIR)/%.o: %.c

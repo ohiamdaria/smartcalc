@@ -7,7 +7,7 @@ START_TEST(test_1) {
     data_task_t data;
     init_input(&data);
     char str[1024] = "cos( 9.456+ 909  /sin((-1  )*log(2.3  ))) + 5689.98 ^ (-1.9)";
-    double  check_result = cos(9.456+909/sin((-1)*log(2.3)))+pow(5689.98, (-1.9));
+    double  check_result = cos(9.456+909/sin((-1)*log10(2.3)))+pow(5689.98, (-1.9));
     smart_calc(&str[0], &data);
     ck_assert_double_eq_tol(data.result, check_result, 1e-7);
 }
@@ -17,7 +17,7 @@ START_TEST(test_2) {
     data_task_t data;
     init_input(&data);
     char str[1024] = "tan(6.08123 / log(5.6321 + 345 * (-5.2345) * (-13.111))) / ln(45.32 / (+99.1334)) ^ (  +2)";
-    double check_result = tan(6.08123 / log(5.6321 + 345 * (-5.2345) * (-13.111))) / pow(ln(45.32 / (+99.1334)), 2);
+    double check_result = tan(6.08123 / log10(5.6321 + 345 * (-5.2345) * (-13.111))) / pow(ln(45.32 / (+99.1334)), 2);
     smart_calc(&str[0], &data);
     ck_assert_double_eq_tol(data.result, check_result, 1e-7);
 }
@@ -90,7 +90,7 @@ START_TEST(test_x_1) {
     data_task_t data;
     init_input(&data);
     char str[1024] = "tan(6.08123 /log(   5.6321 + 345 * (-x) *(-   13.111))   ) /ln(45.32 / (+99.1334)   )^(  +2)";
-    double check_result = tan(6.08123 / log(5.6321 + 345 * (-5.2345) * (-13.111))) / pow(ln(45.32 / (+99.1334)), 2);
+    double check_result = tan(6.08123 / log10(5.6321 + 345 * (-5.2345) * (-13.111))) / pow(ln(45.32 / (+99.1334)), 2);
     data.x = 5.2345;
     smart_calc(&str[0], &data);
     ck_assert_double_eq_tol(data.result, check_result, 1e-7);
@@ -113,7 +113,7 @@ START_TEST(test_x_3) {
     init_input(&data);
     char str[1024] = "-1678.2322 * x +  sqrt( log  (38.38 /24.55 ) + ln(58.2 - (-300.4))) * x * x * (-x)";
     data.x = 0.009;
-    double check_result = -1678.2322 * 0.009 +  sqrt( log  (38.38 /24.55 ) + ln(58.2 - (-300.4)))* 0.009 * 0.009 * (-0.009);
+    double check_result = -1678.2322 * 0.009 +  sqrt( log10 (38.38 /24.55 ) + ln(58.2 - (-300.4)))* 0.009 * 0.009 * (-0.009);
     smart_calc(&str[0], &data);
     ck_assert_double_eq_tol(data.result, check_result, 1e-7);
 }
@@ -190,9 +190,9 @@ START_TEST(credit_1) {
     int year = 3, month = 0, type = 1;
 
     creditcalc(&credit, sum, prozent, year, month, type);
-    printf("%lf\n", credit.overpayment);
-    printf("%lf\n", credit.result_edit);
-    printf("%lf\n", credit.overpayment_edit);
+    printf("%.6f\n", credit.overpayment);
+    printf("%.6f\n", credit.result_edit);
+    printf("%.6f\n", credit.overpayment_edit);
 }
 END_TEST
 
@@ -201,13 +201,13 @@ START_TEST(credit_2) {
     init_credit(&credit);
 
     int code = OK;
-    double sum = 100000.0, prozent = 4.5;
-    int year = 3, month = 0, type = 2;
+    double sum = 100000.0, prozent = 13.9;
+    int year = 5, month = 0, type = 2;
 
     creditcalc(&credit, sum, prozent, year, month, type);
-    printf("%lf\n", credit.overpayment);
-    printf("%lf\n", credit.result_edit);
-    printf("%lf\n", credit.overpayment_edit);
+    printf("%.6f\n", credit.overpayment);
+    printf("%.6f\n", credit.result_edit);
+    printf("%.6f\n", credit.overpayment_edit);
 }
 END_TEST
 
@@ -280,23 +280,52 @@ Suite *suite_smartcalc(void) {
     tcase_add_test(tc, test_6);
     tcase_add_test(tc, test_7);
     tcase_add_test(tc, test_8);
-    tcase_add_test(tc, test_x_1);
-    tcase_add_test(tc, test_x_2);
-    tcase_add_test(tc, test_x_3);
-    tcase_add_test(tc, test_x_4);
-    tcase_add_test(tc, test_x_5);
+
     tcase_add_test(tc, test_error_1);
     tcase_add_test(tc, test_error_2);
     tcase_add_test(tc, test_error_3);
     tcase_add_test(tc, test_null);
 
-    tcase_add_test(tc, credit_1);
-    tcase_add_test(tc, credit_2);
-
-    tcase_add_test(tc, deposit_1);
-    tcase_add_test(tc, deposit_2);
-
     suite_add_tcase(s, tc);
     return s;
 }
+
+
+Suite *suite_smartcalc_x(void) {
+    Suite *s1 = suite_create("suite_s21_smartcalc_x");
+    TCase *tc1 = tcase_create("s21_smartcalc_x");
+
+    tcase_add_test(tc1, test_x_1);
+    tcase_add_test(tc1, test_x_2);
+    tcase_add_test(tc1, test_x_3);
+    tcase_add_test(tc1, test_x_4);
+    tcase_add_test(tc1, test_x_5);
+
+    suite_add_tcase(s1, tc1);
+    return s1;
+}
+
+Suite *suite_smartcalc_credit(void) {
+    Suite *s2 = suite_create("suite_s21_smartcalc_2");
+    TCase *tc2 = tcase_create("s21_smartcalc_2");
+
+    tcase_add_test(tc2, credit_1);
+    tcase_add_test(tc2, credit_2);
+
+    suite_add_tcase(s2, tc2);
+    return s2;
+}
+
+
+Suite *suite_smartcalc_deposit(void) {
+    Suite *s3 = suite_create("suite_s21_smartcalc_3");
+    TCase *tc3 = tcase_create("s21_smartcalc_3");
+
+    tcase_add_test(tc3, deposit_1);
+    tcase_add_test(tc3, deposit_2);
+
+    suite_add_tcase(s3, tc3);
+    return s3;
+}
+
 

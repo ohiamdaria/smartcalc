@@ -58,7 +58,7 @@ QLabel {
 }</string>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="Calculator">
      <property name="styleSheet">
@@ -193,8 +193,8 @@ QLabel {
      <widget class="QPushButton" name="push_mod">
       <property name="geometry">
        <rect>
-        <x>310</x>
-        <y>230</y>
+        <x>360</x>
+        <y>70</y>
         <width>51</width>
         <height>41</height>
        </rect>
@@ -559,8 +559,8 @@ QLabel {
      <widget class="QPushButton" name="push_unary">
       <property name="geometry">
        <rect>
-        <x>360</x>
-        <y>70</y>
+        <x>310</x>
+        <y>230</y>
         <width>51</width>
         <height>41</height>
        </rect>
@@ -575,7 +575,7 @@ QLabel {
 }</string>
       </property>
       <property name="text">
-       <string>+/-</string>
+       <string/>
       </property>
       <attribute name="buttonGroup">
        <string notr="true">buttonGroup</string>

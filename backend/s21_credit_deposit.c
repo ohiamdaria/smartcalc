@@ -36,7 +36,8 @@ void convert_dates_to_struct(dates_t *data, char *begin_of_term) {
 int count_period(dates_t *data) {
   data->month_begin++;
   int add_days = 0;
-  if (data->month_begin > 12) data->month_begin = 1;
+  if (data->month_begin > 12)
+    data->month_begin = 1;
   if (data->month_begin == 1)
     add_days = 31;
   else if (data->month_begin == 2 && fmod(data->year_begin, 4) > 0.0)
@@ -69,7 +70,8 @@ int count_period(dates_t *data) {
 
 int convert_term(deposit_t *deposit, dates_t *data) {
   int begin = data->month_begin, convert_term = 0;
-  for (int i = 0; i < deposit->term; i++) convert_term += count_period(data);
+  for (int i = 0; i < deposit->term; i++)
+    convert_term += count_period(data);
   data->month_begin = begin;
   return convert_term;
 }
@@ -86,13 +88,13 @@ int depositcalc(deposit_t *deposit, dates_t *data) {
   for (int i = add_days; i <= deposit->term; i += add_days) {
     double div = (double)add_days / (double)L;
     double tmp =
-        round(deposit->sum * deposit->interest_rate * div * 100) / 100.0;
-    deposit->result_tax += round(tmp * deposit->tax_rate * div * 100) / 100.0;
-    
+        floor(deposit->sum * deposit->interest_rate * div * 1e+6) / 1e+6;
+    deposit->result_tax += floor(tmp * deposit->tax_rate * div * 1e+6) / 1e+6;
+
     if (deposit->capital)
-      deposit->sum += round(tmp * (1 - deposit->tax_rate * div) * 100) / 100.0;
+      deposit->sum += floor(tmp * (1 - deposit->tax_rate * div) * 1e+6) / 1e+6;
     else
-      added += round(tmp * (1 - deposit->tax_rate * div) * 100) / 100.0;
+      added += floor(tmp * (1 - deposit->tax_rate * div) * 1e+6) / 1e+6;
     if (deposit->sum < 0) {
       status = 1;
       break;
@@ -105,9 +107,10 @@ int depositcalc(deposit_t *deposit, dates_t *data) {
     }
   }
 
-  deposit->result = deposit->sum;
-  if (!deposit->capital) deposit->result += added;
-
+  deposit->result = floor(deposit->sum * 1e+6) / 1e+6;
+  if (!deposit->capital)
+    deposit->result += added;
+  deposit->result = floor(deposit->result * 1e+6) / 1e+6;
   return status;
 }
 
@@ -130,6 +133,7 @@ int creditcalc(credit_t *credit, double sum, double prozent, int year,
   credit->month = month;
   month += year * 12;
   double p = (double)prozent / ((double)100 * (double)12);
+
   if (type == 1) {
     double overpayment = sum * (p / (1 - (double)1 / pow(1 + p, month)));
     credit->overpayment = overpayment;
@@ -140,16 +144,18 @@ int creditcalc(credit_t *credit, double sum, double prozent, int year,
     double b = (double)sum / (double)month;
     double P = sn * p;
     double overpayment = b + P;
-    double overpayment_all = overpayment;
+    double overpayment_all = floor(overpayment * 1e+6) / 1e+6;
     credit->overpayment = overpayment;
-    while (sn - b > 0) {
+
+    while (sn - b > 1) {
       sn -= b;
       P = sn * p;
       overpayment = b + P;
-      overpayment_all += overpayment;
+      overpayment_all += floor(overpayment * 1e+6) / 1e+6;
     }
-    credit->overpayment_edit = overpayment_all - sum;
+
     credit->result_edit = overpayment_all;
+    credit->overpayment_edit = overpayment_all - sum;
   }
   return status;
 }

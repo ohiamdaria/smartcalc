@@ -14,7 +14,8 @@ void push(Stack *st, int data) {
 }
 
 int peek(Stack *head) {
-  if (head == NULL) return 0;
+  if (head == NULL)
+    return 0;
   return head->n;
 }
 
@@ -51,12 +52,14 @@ int check_priority(char k) {
 double parser_numbers(char *str) {
   double whole_part = 0.0l, fract_part = 0.0l;
   char wp[256] = "!", *whole_part_str = &wp[1];
-  while (*str != '.' && *str != ' ') *whole_part_str++ = *str++;
+  while (*str != '.' && *str != ' ')
+    *whole_part_str++ = *str++;
   whole_part_str--;
 
   if (*str++ == '.') {
     int j = -1;
-    while (*str != ' ') fract_part += (int)(*str++ - '0') * pow(10, j--);
+    while (*str != ' ')
+      fract_part += (int)(*str++ - '0') * pow(10, j--);
   }
 
   int i = 0;
@@ -77,7 +80,8 @@ void calc(char *s, data_task_t *data) {
       if (check_priority(*s) == 5 && *s != 'x') {
         d = parser_numbers(s);
         pushn(&num, d);
-        while (*s != ' ') ++s;
+        while (*s != ' ')
+          ++s;
       } else if (*s == 'x')
         pushn(&num, data->x);
       s++;
@@ -113,9 +117,15 @@ void calc(char *s, data_task_t *data) {
       } else if (*s == 't') {
         otvet = atan(popn(&num));
       } else if (*s == 'g') {
-        otvet = log(popn(&num));
+        otvet = log10(popn(&num));
       } else if (*s == 'q') {
-        otvet = sqrt(popn(&num));
+        double d9 = popn(&num);
+        if (d9 < 1e-6) {
+          data->code = ERROR;
+          data->result = 0.0;
+          break;
+        } else
+          otvet = sqrt(d9);
       } else if (*s == 'n') {
         otvet = ln(popn(&num));
       } else if (*s == 'm') {
@@ -133,17 +143,22 @@ char *change_functions_in_str(char *str) {
   if (*str != 'm') {
     if (*str == 'l') {
       *str++ = ' ';
-      if (*str == 'o') *str++ = ' ';
+      if (*str == 'o')
+        *str++ = ' ';
     } else {
       *str++ = ' ';
     }
     str++;
-    while (*str != ' ') *str++ = ' ';
-    while (str && *str == ' ') str--;
+    while (*str != ' ')
+      *str++ = ' ';
+    while (str && *str == ' ')
+      str--;
   } else {
     str++;
-    while (*str != ' ') *str++ = ' ';
-    while (str && *str == ' ') str--;
+    while (*str != ' ')
+      *str++ = ' ';
+    while (str && *str == ' ')
+      str--;
   }
   return str;
 }
@@ -157,7 +172,8 @@ char *add_current_symbol(char *str_output, char current_symbol) {
 char *add_from_stack(char *str, char *str_output, Stack *stack, int cases) {
   if (peek(stack) > 0) {
     char current_symbol = pop(stack);
-    if (peek(stack) == 0 && cases == 1) *str_output++ = current_symbol;
+    if (peek(stack) == 0 && cases == 1)
+      *str_output++ = current_symbol;
     while (peek(stack) > 0 && current_symbol != '(') {
       if ((cases < check_priority(current_symbol) && cases != 1) ||
           (cases == 2 && check_priority(current_symbol) == 2))
@@ -178,7 +194,8 @@ char *add_from_stack(char *str, char *str_output, Stack *stack, int cases) {
 }
 
 char *add_numbers(char *str, char *str_output) {
-  while (*str != ' ' && str) *str_output++ = *str++;
+  while (*str != ' ' && str)
+    *str_output++ = *str++;
   *str_output++ = ' ';
   return str_output;
 }
@@ -186,7 +203,8 @@ char *add_numbers(char *str, char *str_output) {
 void notation(char *str, char *str_output, Stack *stack) {
   for (; *str != '\0'; str++) {
     int check = check_priority(*str);
-    if (*str == 'm' || check == 1) str = change_functions_in_str(str);
+    if (*str == 'm' || check == 1)
+      str = change_functions_in_str(str);
     if (check == 0 || check == 1) {
       if (*str == ')')
         str_output = add_from_stack(str, str_output, stack, 1);
@@ -196,10 +214,12 @@ void notation(char *str, char *str_output, Stack *stack) {
       str_output = add_from_stack(str, str_output, stack, check);
     } else if (check == 5) {
       str_output = add_numbers(str, str_output);
-      while (*str != ' ') str++;
+      while (*str != ' ')
+        str++;
     }
   }
-  while (peek(stack) > 0) *str_output++ = pop(stack);
+  while (peek(stack) > 0)
+    *str_output++ = pop(stack);
 }
 
 char *add_space_to_str(char *str) {
@@ -213,7 +233,8 @@ char *add_space_to_str(char *str) {
       while (check_priority(*str) == 1 && (*str != '\0'))
         str_space[i++] = *str++;
     } else if (*str == 'm') {
-      for (int j = 0; j < 3; j++) str_space[i++] = *str++;
+      for (int j = 0; j < 3; j++)
+        str_space[i++] = *str++;
     } else {
       str_space[i++] = *str++;
     }
@@ -230,8 +251,10 @@ char *add_null_to_str(char *str) {
       int count_plus = 0, count_minus = 0;
       while (*str == '+' || *str == '-') {
         char current_op = *str;
-        if (check_unary_minus_plus(str, current_op) == 1) str_null[i++] = '0';
-        if (check_unary_minus_plus(str, current_op) == 3) need++;
+        if (check_unary_minus_plus(str, current_op) == 1)
+          str_null[i++] = '0';
+        if (check_unary_minus_plus(str, current_op) == 3)
+          need++;
         if (current_op == '+')
           count_plus++;
         else
@@ -254,48 +277,32 @@ char *add_null_to_str(char *str) {
 }
 
 int check_unary_minus_plus(char *str, char current_op) {
-  int status = 0;  // no
+  int status = 0; // no
   str--;
-  while (*str == ' ') str--;
+  while (*str == ' ')
+    str--;
   char check_before = *str;
   str++;
-  while (*str != current_op || *str == ' ') str++;
+  while (*str != current_op || *str == ' ')
+    str++;
   char check_after = *str;
   if ((check_before == '(' && check_after == ')') || !check_before)
-    status = 1;  // yes set null
+    status = 1; // yes set null
   else if (check_before == '(')
     status = 1;
   else if (check_priority(check_before) == 3)
-    status = 3;  // yes set 1
+    status = 3; // yes set 1
   else if (check_priority(check_before) == 4)
-    status = 2;  // no dont set null but count unary operation
+    status = 2; // no dont set null but count unary operation
   return status;
 }
-
-// int check_unary_plus(char *str) {
-//   int status = 0;  // no
-//   str--;
-//   while (*str == ' ') str--;
-//   char check_before = *str;
-//   str++;
-//   while (*str != '+' || *str == ' ') str++;
-//   char check_after = *str;
-//   if ((check_before == '(' && check_after == ')') || !check_before)
-//     status = 1;  // yes set null
-//   else if (check_before == '(')
-//     status = 1;
-//   else if (check_priority(check_before) == 3)
-//     status = 3; // yes set 1
-//   else if (check_priority(check_before) == 4)
-//       status = 2; // no dont set null but count unary operation
-//   return status;
-// }
 
 char *delete_space_str(char *str) {
   char str_output[1024] = "(";
   int i = 1;
   while (*str != '\0') {
-    if (*str != ' ') str_output[i++] = *str;
+    if (*str != ' ')
+      str_output[i++] = *str;
     str++;
   }
 
@@ -310,8 +317,10 @@ int count_braces(char *str) {
 
   int count_left = 0, count_right = 0, i = 0;
   while (str_check[i] != '\0') {
-    if (str_check[i] == '(') count_left++;
-    if (str_check[i] == ')') count_right++;
+    if (str_check[i] == '(')
+      count_left++;
+    if (str_check[i] == ')')
+      count_right++;
     i++;
   }
 
@@ -326,7 +335,7 @@ void catch_a_beach(char *str, data_task_t *data) {
 char *from_str_to_notation(char *str, data_task_t *data) {
   Stack stack;
   init_stack(&stack);
-  catch_a_beach(str, data);  // find errors :3
+  catch_a_beach(str, data); // find errors :3
   char *str_output = NULL;
   if (!data->code) {
     str_output = (char *)calloc(1024, sizeof(char));
@@ -349,7 +358,6 @@ void smart_calc(char *str, data_task_t *data) {
   strcopy = from_str_to_notation(str, data);
   if (!data->code) {
     calc(strcopy, data);
-  } else
-    strcopy = NULL;
+  }
   free(strcopy);
 }

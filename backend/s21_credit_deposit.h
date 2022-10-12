@@ -44,4 +44,4 @@ int know_days_or_months_or_years(char *begin_of_term, int i);
 void convert_dates_to_struct(dates_t *data, char *begin_of_term);
 int depositcalc(deposit_t *deposit, dates_t *data);
 
-#endif  // CREDIT_DEPOSIT_H_
+#endif // CREDIT_DEPOSIT_H_
