@@ -2,6 +2,8 @@
 
 #include <QMainWindow>
 #include <cstring>
+#include <QMouseEvent>
+#include <QPoint>
 
 #include "ui_mainwindow.h"
 
@@ -9,9 +11,24 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
   ui->push_run->setText("START");
+
 }
 
 MainWindow::~MainWindow() { delete ui; }
+
+void MainWindow::addPoint(double x1, double y1)
+{
+    x.append(x1);
+    y.append(y1);
+}
+
+void MainWindow::clickedEvent(QMouseEvent* event)
+{
+    QPoint point = event->pos();
+    addPoint(ui->widget->xAxis->pixelToCoord(point.x()), ui->widget->yAxis->pixelToCoord(point.y()));
+    ui->widget->graph(0)->setData(x, y);
+    ui->widget->replot();
+}
 
 void MainWindow::clicked_text_add(QString toAdd) {
   QString text = ui->Display->text();
@@ -143,6 +160,8 @@ void MainWindow::TimerSlot() {
   ui->widget->replot();
 }
 
+
+
 void MainWindow::Animation() {
   timer = new QTimer(this);
   connect(timer, SIGNAL(timeout()), this, SLOT(TimerSlot()));
@@ -166,6 +185,7 @@ void MainWindow::if_graph_exist() {
   yBegin = ui->y_Begin->text().toDouble();
   h = ui->add_h->text().toDouble();
 
+    connect(ui->widget, SIGNAL(mousePress(QMouseEvent*)), SLOT(clickedEvent(QMouseEvent*)));
   ui->widget->addGraph();
   QPen DotPen;
   DotPen.setWidthF(2);

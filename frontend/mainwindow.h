@@ -22,11 +22,17 @@ class MainWindow;
 class MainWindow : public QMainWindow {
   Q_OBJECT
 
+
  public:
   explicit MainWindow(QWidget *parent = nullptr);
   ~MainWindow();
 
+
  private slots:
+
+void clickedEvent(QMouseEvent* event);
+  void addPoint(double x1, double y1);
+
   void on_push_1_clicked();
 
   void on_push_2_clicked();
@@ -121,6 +127,9 @@ class MainWindow : public QMainWindow {
 
   void on_push_clear_2_clicked();
 
+
+
+
 private:
   Ui::MainWindow *ui;
   double xBegin, xEnd, yBegin, yEnd, h, X;
@@ -139,6 +148,10 @@ private:
 
   // deposit
   int capital = 0;
+
+signals:
+  void mousePress();
+
 };
 
 #endif  // MAINWINDOW_H
