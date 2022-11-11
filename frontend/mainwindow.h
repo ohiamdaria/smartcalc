@@ -30,7 +30,12 @@ class MainWindow : public QMainWindow {
 
  private slots:
 
-void clickedEvent(QMouseEvent* event);
+//    void clickedEvent(QPoint* point);
+    bool deletePoint(int x1, int y1);
+    void clickedEvent(QMouseEvent* event);
+    void clickedEvent2(QMouseEvent* event);
+
+
   void addPoint(double x1, double y1);
 
   void on_push_1_clicked();
@@ -151,6 +156,7 @@ private:
 
 signals:
   void mousePress();
+  void mouseDoubleClick();
 
 };
 

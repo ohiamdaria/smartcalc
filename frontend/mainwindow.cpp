@@ -1,9 +1,11 @@
 #include "mainwindow.h"
 
+#include <iostream>
 #include <QMainWindow>
 #include <cstring>
 #include <QMouseEvent>
 #include <QPoint>
+
 
 #include "ui_mainwindow.h"
 
@@ -22,11 +24,40 @@ void MainWindow::addPoint(double x1, double y1)
     y.append(y1);
 }
 
+bool MainWindow::deletePoint(int index1, int index2)
+{
+
+
+    qDebug() << x.value(index1) << '\n';
+    qDebug() << y.value(index2) << '\n';
+
+       x.remove(index1);
+       y.remove(index2);
+           return true;
+
+}
+
+void MainWindow::clickedEvent2(QMouseEvent* event)
+{
+    QPoint point = event->pos();
+     deletePoint(ui->widget->xAxis->pixelToCoord(point.x()), ui->widget->yAxis->pixelToCoord(point.y()));
+     ui->widget->graph(0)->setData(x, y);
+     ui->widget->replot();
+//    else
+//        clickedEvent(event);
+}
+
 void MainWindow::clickedEvent(QMouseEvent* event)
 {
     QPoint point = event->pos();
-    addPoint(ui->widget->xAxis->pixelToCoord(point.x()), ui->widget->yAxis->pixelToCoord(point.y()));
-    ui->widget->graph(0)->setData(x, y);
+    int index1 = x.indexOf(ui->widget->xAxis->pixelToCoord(point.x()));
+    int index2 = y.indexOf(ui->widget->yAxis->pixelToCoord(point.y()));
+    if (index1 == -1 || index2 == -1)
+        addPoint(ui->widget->xAxis->pixelToCoord(point.x()), ui->widget->yAxis->pixelToCoord(point.y()));
+    else
+        deletePoint(index1, index2);
+      ui->widget->graph(0)->data()->clear();
+    ui->widget->graph(0)->addData(x, y);
     ui->widget->replot();
 }
 
@@ -132,11 +163,11 @@ void MainWindow::TimerSlot() {
 
   ui->widget->addGraph();
   QPen DotPen;
-  DotPen.setWidthF(2);
+  DotPen.setWidthF(5);
   ui->widget->graph(0)->setPen(DotPen);
   ui->widget->graph(0)->setLineStyle(QCPGraph::lsNone);
   ui->widget->graph(0)->setScatterStyle(
-      QCPScatterStyle(QCPScatterStyle::ssDisc, 1));
+      QCPScatterStyle(QCPScatterStyle::ssDisc, 5));
 
   if (time <= 20 * N) {
     if (X <= -xBegin) {
@@ -185,14 +216,15 @@ void MainWindow::if_graph_exist() {
   yBegin = ui->y_Begin->text().toDouble();
   h = ui->add_h->text().toDouble();
 
-    connect(ui->widget, SIGNAL(mousePress(QMouseEvent*)), SLOT(clickedEvent(QMouseEvent*)));
+connect(ui->widget, SIGNAL(mousePress(QMouseEvent*)), SLOT(clickedEvent(QMouseEvent*)));
+//    connect(ui->widget, SIGNAL(mouseDoubleClick(QMouseEvent*)), SLOT(clickedEvent2(QMouseEvent*)));
   ui->widget->addGraph();
   QPen DotPen;
-  DotPen.setWidthF(2);
+  DotPen.setWidthF(5);
   ui->widget->graph(0)->setPen(DotPen);
   ui->widget->graph(0)->setLineStyle(QCPGraph::lsNone);
   ui->widget->graph(0)->setScatterStyle(
-      QCPScatterStyle(QCPScatterStyle::ssDisc, 1));
+      QCPScatterStyle(QCPScatterStyle::ssDisc, 5));
 
   ui->widget->graph(0)->setName("Sine envelope");
 
